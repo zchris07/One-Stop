@@ -53,4 +53,4 @@
 - Server stores user documents (local and cloud), client allows user interaction and graphical elements.
 
 ## Prototype GUI
-![alt text](https://github.com/jhu-oose/2021-fall-group-placeholders/blob/dev/docs/images/prototypeappgui.drawio.png)
+![alt text](./prototypeappgui.drawio.png)
