@@ -31,7 +31,7 @@ public class Job {
     private String requirements;
     @DatabaseField
     private int payAmount;
-    @DatabaseField(foreign = true,columnDefinition = "integer references employer(id) on delete cascade")
+    @DatabaseField(foreign = true,foreignAutoRefresh = true)
     private Employer employer;
 
     public Job() {
