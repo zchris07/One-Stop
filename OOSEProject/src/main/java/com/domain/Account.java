@@ -2,6 +2,8 @@ package com.domain;
 
 import java.io.Serializable;
 
+
+
 public class Account implements Serializable {
     private Integer id;
     private String username;

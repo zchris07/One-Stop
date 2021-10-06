@@ -12,7 +12,7 @@ public interface Accountdao {
     @Select("select * from account")
     public List<Account> findAll();
 
-    @Insert("insert into userlocal (id, username,registerDate) values(110,#{username},#{registerDate})")
+    @Insert("insert into userlocal (id, username,registerDate,birthday) values(110,'123','134','124');")
     public void saveAccount(Account account);
 
     @Insert("insert into account (name, money) values(#{name},#{money})")
