@@ -1,1 +1,9 @@
+# Using SSM framework
+We are not using the Spark + Velocity + SQLite framework. Instead, we are using Spring + SpringMVC + Mybatis framework.
 
+# Current progress
+- We implemented the Account and Notes classes for the user story. 
+- The database is a MySQL database created locally.
+- The database has a connection problem, which prevents us to implement further development.
+- The index.jsp is a dummy temp index page for testing the SSM framework, and it is working except for the database post part.
+- The index_backup.jsp is our main page for the project purpose.
