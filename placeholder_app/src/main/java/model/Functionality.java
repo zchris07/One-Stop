@@ -15,6 +15,7 @@ public class Functionality {
     @DatabaseField
     private boolean hascloud;
 
+
     // TODO: more functions to be added later with more ideas
 //    @DatabaseField
 //    private boolean hasfunctionx;
@@ -31,6 +32,39 @@ public class Functionality {
 
     // TODO: setters and getters
 
+
+
+    public Integer getListid() {
+        return listid;
+    }
+
+    public void setListid(Integer listid) {
+        this.listid = listid;
+    }
+
+    public boolean isHasdate() {
+        return hasdate;
+    }
+
+    public void setHasdate(boolean hasdate) {
+        this.hasdate = hasdate;
+    }
+
+    public boolean isHaslocal() {
+        return haslocal;
+    }
+
+    public void setHaslocal(boolean haslocal) {
+        this.haslocal = haslocal;
+    }
+
+    public boolean isHascloud() {
+        return hascloud;
+    }
+
+    public void setHascloud(boolean hascloud) {
+        this.hascloud = hascloud;
+    }
 
 
 }
