@@ -17,4 +17,38 @@ public class PItem {
         this.listid = listid;
     }
     // TODO: setters and getters
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getContentshown() {
+        return contentshown;
+    }
+
+    public void setContentshown(String contentshown) {
+        this.contentshown = contentshown;
+    }
+
+    public Integer getListid() {
+        return listid;
+    }
+
+    public void setListid(Integer listid) {
+        this.listid = listid;
+    }
+
+    @Override
+    public String toString() {
+        return "PItem{" +
+                "id=" + id +
+                ", contentshown='" + contentshown + '\'' +
+                ", listid=" + listid +
+                '}';
+    }
 }
