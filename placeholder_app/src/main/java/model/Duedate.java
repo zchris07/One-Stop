@@ -55,4 +55,14 @@ public class Duedate {
     public void setItemid(Integer itemid) {
         this.itemid = itemid;
     }
+
+    @Override
+    public String toString() {
+        return "Duedate{" +
+                "id=" + id +
+                ", duedate=" + duedate +
+                ", startdate=" + startdate +
+                ", itemid=" + itemid +
+                '}';
+    }
 }

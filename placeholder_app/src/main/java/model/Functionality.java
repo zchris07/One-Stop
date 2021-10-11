@@ -66,5 +66,13 @@ public class Functionality {
         this.hascloud = hascloud;
     }
 
-
+    @Override
+    public String toString() {
+        return "Functionality{" +
+                "listid=" + listid +
+                ", hasdate=" + hasdate +
+                ", haslocal=" + haslocal +
+                ", hascloud=" + hascloud +
+                '}';
+    }
 }

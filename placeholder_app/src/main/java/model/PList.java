@@ -36,4 +36,12 @@ public class PList {
     public void setUserid(Integer userid) {
         this.userid = userid;
     }
+
+    @Override
+    public String toString() {
+        return "PList{" +
+                "id=" + id +
+                ", userid=" + userid +
+                '}';
+    }
 }

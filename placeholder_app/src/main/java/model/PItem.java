@@ -42,4 +42,13 @@ public class PItem {
     public void setListid(Integer listid) {
         this.listid = listid;
     }
+
+    @Override
+    public String toString() {
+        return "PItem{" +
+                "id=" + id +
+                ", contentshown='" + contentshown + '\'' +
+                ", listid=" + listid +
+                '}';
+    }
 }
