@@ -8,24 +8,54 @@ import model.Employer;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.velocity.VelocityTemplateEngine;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static spark.Spark.get;
+import static spark.Spark.port;
+
 public class Main {
 
-    private static Dao getEmployerORMLiteDao() throws SQLException {
-        final String URI = "jdbc:sqlite:./JBApp.db";
-        ConnectionSource connectionSource = new JdbcConnectionSource(URI);
+    static int PORT = 7000;
+    private static int getPort() {
+        String herokuPort = System.getenv("PORT");
+        if (herokuPort != null) {
+            PORT = Integer.parseInt(herokuPort);
+        }
+        return PORT;
+    }
+
+    private static Dao getEmployerORMLiteDao() throws SQLException, URISyntaxException {
+        String databaseUrl = System.getenv("DATABASE_URL");
+        if (databaseUrl == null) {
+            // Not on Heroku, so use SQLite
+            final String URI = "jdbc:sqlite:./JBApp.db";
+
+            ConnectionSource connectionSource = new JdbcConnectionSource(URI);
+            TableUtils.createTableIfNotExists(connectionSource, Employer.class);
+            return DaoManager.createDao(connectionSource, Employer.class);
+        }
+
+        URI dbUri = new URI(databaseUrl);
+
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':'
+                + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+
+        ConnectionSource connectionSource = new JdbcConnectionSource(dbUrl, username, password);
         TableUtils.createTableIfNotExists(connectionSource, Employer.class);
         return DaoManager.createDao(connectionSource, Employer.class);
     }
 
     public static void main(String[] args) {
 
-        final int PORT_NUM = 7000;
-        Spark.port(PORT_NUM);
+        Spark.port(getPort());
         Spark.staticFiles.location("/public");
 
 
