@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/hw/hw4final/hw4_starter" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/hw/hw4final/hw4_starter" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/hw/hw5final/hw5/hw5_starter" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/hw/hw5final/hw5/hw5_starter" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/placeholder_app" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/placeholder_app" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/tempfiles/OOSEProject" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/tempfiles/OOSEProject" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
