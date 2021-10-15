@@ -1,11 +1,11 @@
 function deleteEmployer(employerName) {
-    fetch('http://localhost:7000/employers?name=' + employerName, {
+    fetch('https://hw6-jbapp.herokuapp.com/employers?name=' + employerName, {
             method: 'Delete',
         }
     ).then(res => window.location.reload = window.location.reload(true));
 }
 function  addEmployer(employerName, sector, summary) {
-    fetch('http://localhost:7000/employers?name=' + employerName + '&sector=' + sector + '&sumamry=' + summary, {
+    fetch('https://hw6-jbapp.herokuapp.com/employers?name=' + employerName + '&sector=' + sector + '&sumamry=' + summary, {
         method: 'Post',
     }).then(res => window.location.reload = window.location.reload(true));
 }
@@ -24,7 +24,7 @@ document.getElementById("add_btn").addEventListener('click', function () {
         console.log(name)
         console.log(sector)
         console.log(summary)
-        fetch('http://localhost:7000/employers?name=' + name + '&sector=' + sector + '&summary=' + summary, {
+        fetch('https://hw6-jbapp.herokuapp.com/employers?name=' + name + '&sector=' + sector + '&summary=' + summary, {
             method: 'Post',
         }).then(res => window.location.reload = window.location.reload(true));
     }
