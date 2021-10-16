@@ -16,8 +16,6 @@ public class PItem {
     public PItem(Integer listid) {
         this.listid = listid;
     }
-    // TODO: setters and getters
-
 
     public Integer getId() {
         return id;

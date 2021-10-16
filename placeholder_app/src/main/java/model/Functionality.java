@@ -30,9 +30,6 @@ public class Functionality {
         this.listid = listid;
     }
 
-    // TODO: setters and getters
-
-
 
     public Integer getListid() {
         return listid;
