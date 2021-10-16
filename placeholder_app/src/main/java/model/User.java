@@ -19,7 +19,6 @@ public class User {
     private String organization;
     @DatabaseField(canBeNull = true)
     private String email;
-    // TODO: finish the class
 
     public User(Integer userId, String firstName, String lastName, String userName) {
         this.userId = userId;
