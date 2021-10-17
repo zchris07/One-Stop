@@ -5,3 +5,7 @@ div {
 .extra_margin {
     margin-top: 10px;
 }
+
+.button_margin {
+    margin: 10px
+}

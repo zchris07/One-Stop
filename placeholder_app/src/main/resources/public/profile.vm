@@ -6,8 +6,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-##    <meta http-equiv="X-UA-Compatible" content="IE-scale=1">
-##    <meta name="viewport" content= width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE-scale=1">
+    <meta name="viewport" content= width=device-width, initial-scale=1">
     <title>Profile page</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="profile.css" rel="stylesheet" type="text/css">
