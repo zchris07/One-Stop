@@ -74,6 +74,25 @@ public class Server {
             return new Gson().toJson(lst);
         });
 
+        // TODO: only deleted the list, but not the items under it. Need to add
+        Spark.delete("/plists", (req, res) -> {
+
+            String listid = req.queryParams("listid");
+
+            List<PList> lstlst = srvList.getPListORMLiteDao().queryForEq("id", listid);
+            int del = 0;
+            if (lstlst != null  && !lstlst.isEmpty()) {
+                del = srvList.getPListORMLiteDao().deleteById(listid);
+            }
+            res.status(200);
+            res.type("application/json");
+
+            if (del > 0) {
+                return new Gson().toJson(lstlst.get(0));
+            }
+            return new Gson().toJson("{}");
+        });
+
         Spark.get("/pitems", (req, res) -> {
 
             // TODO: Get user input from front-end
@@ -99,6 +118,7 @@ public class Server {
             // TODO: make sure front-end content, modify model put
             model.put("pitems", lsItem);
             return new ModelAndView(model, "public/index.vm");
+
         }, new VelocityTemplateEngine());
 
         Spark.post("/pitems", (req, res) -> {
@@ -156,6 +176,25 @@ public class Server {
             return new Gson().toJson(itm);
         });
 
+        // TODO: only deleted the items, but not the associated elements (functionalities) under it. Need to add
+        Spark.delete("/pitems", (req, res) -> {
+
+            String itemid = req.queryParams("itemid");
+
+            List<PItem> itmlst = srvList.getPListORMLiteDao().queryForEq("id", itemid);
+            int del = 0;
+            if (itmlst != null  && !itmlst.isEmpty()) {
+                del = srvItem.getPItemORMLiteDao().deleteById(itemid);
+            }
+            res.status(200);
+            res.type("application/json");
+
+            if (del > 0) {
+                return new Gson().toJson(itmlst.get(0));
+            }
+            return new Gson().toJson("{}");
+        });
+
         // TODO: ask for front end specifics
         Spark.get("/userprofile", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -164,6 +203,8 @@ public class Server {
             model.put("theme", req.cookie("theme"));
             return new ModelAndView(model, "public/userprofile.vm");
         }, new VelocityTemplateEngine());
+
+
 
 //        Spark.post("/addlist", (req, res) -> {
 //            String username = req.queryParams("username");
