@@ -21,8 +21,6 @@ public class Duedate {
     public Duedate(Integer itemid) {
         this.itemid = itemid;
     }
-    // TODO: setters and getters
-
 
     public Integer getId() {
         return id;

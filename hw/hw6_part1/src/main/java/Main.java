@@ -1,4 +1,5 @@
 import com.google.gson.Gson;
+
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
@@ -8,24 +9,99 @@ import model.Employer;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.velocity.VelocityTemplateEngine;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static spark.Spark.get;
+import static spark.Spark.port;
+
 public class Main {
 
-    private static Dao getEmployerORMLiteDao() throws SQLException {
-        final String URI = "jdbc:sqlite:./JBApp.db";
-        ConnectionSource connectionSource = new JdbcConnectionSource(URI);
-        TableUtils.createTableIfNotExists(connectionSource, Employer.class);
+    static int PORT = 7000;
+    private static int getPort() {
+        String herokuPort = System.getenv("PORT");
+        if (herokuPort != null) {
+            PORT = Integer.parseInt(herokuPort);
+        }
+        return PORT;
+    }
+
+
+    private static Dao getEmployerORMLiteDao() throws SQLException, URISyntaxException {
+        String databaseUrl = System.getenv("DATABASE_URL");
+
+        if (databaseUrl == null) {
+            // Not on Heroku, so use SQLite
+            final String URI = "jdbc:sqlite:./JBApp.db";
+            ConnectionSource connectionSource = new JdbcConnectionSource(URI);
+            TableUtils.createTableIfNotExists(connectionSource, Employer.class);
+            return DaoManager.createDao(connectionSource, Employer.class);
+        }
+
+
+        URI dbUri = new URI(databaseUrl);
+
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':'
+                + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+
+        ConnectionSource connectionSource = new JdbcConnectionSource(dbUrl, username, password);
+        //TableUtils.createTableIfNotExists(connectionSource, Employer.class);
+        workWithDatabase();
         return DaoManager.createDao(connectionSource, Employer.class);
     }
 
+
+    private static void workWithDatabase(){
+        try (Connection conn = getConnection()) {
+            String sql = "";
+
+            if ("SQLite".equalsIgnoreCase(conn.getMetaData().getDatabaseProductName())) { // running locally
+                sql = "CREATE TABLE IF NOT EXISTS employers (id INTEGER PRIMARY KEY, " +
+                        "name VARCHAR(100) NOT NULL UNIQUE, sector VARCHAR(100), summary VARCHAR(10000));";
+            }
+            else {
+                sql = "CREATE TABLE IF NOT EXISTS employers (id serial PRIMARY KEY, name VARCHAR(100) NOT NULL UNIQUE," +
+                        " sector VARCHAR(100), summary VARCHAR(10000));";
+            }
+
+            Statement st = conn.createStatement();
+            st.execute(sql);
+
+            sql = "INSERT INTO employers(name, sector, summary) VALUES ('Boeing', 'Aerospace', '');";
+            st.execute(sql);
+
+        } catch (URISyntaxException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Connection getConnection() throws URISyntaxException, SQLException {
+        String databaseUrl = System.getenv("DATABASE_URL");
+
+        URI dbUri = new URI(databaseUrl);
+
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':'
+                + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+
+        return DriverManager.getConnection(dbUrl, username, password);
+    }
+
+
     public static void main(String[] args) {
 
-        final int PORT_NUM = 7000;
-        Spark.port(PORT_NUM);
+        Spark.port(getPort());
         Spark.staticFiles.location("/public");
 
 
