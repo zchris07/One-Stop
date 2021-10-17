@@ -18,7 +18,7 @@ public class User {
     @DatabaseField(canBeNull = true)
     private String email;
 
-    public User(Integer userId, String firstName, String lastName, String userName) {
+    public User(Integer userId, String firstName, String lastName) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
