@@ -11,14 +11,12 @@ public class Functionality {
     @DatabaseField
     private boolean hasdate;
     @DatabaseField
-    private boolean haslocal;
+    private boolean hascalendar;
     @DatabaseField
-    private boolean hascloud;
-
+    private boolean hasnotes;
 
     // TODO: more functions to be added later with more ideas
-//    @DatabaseField
-//    private boolean hasfunctionx;
+
 //    @DatabaseField
 //    private boolean hasfunctionx;
 //    @DatabaseField
@@ -39,7 +37,7 @@ public class Functionality {
         this.listid = listid;
     }
 
-    public boolean isHasdate() {
+    public boolean getHasdate() {
         return hasdate;
     }
 
@@ -47,29 +45,26 @@ public class Functionality {
         this.hasdate = hasdate;
     }
 
-    public boolean isHaslocal() {
-        return haslocal;
+    public boolean getHascalendar() {
+        return hascalendar;
     }
 
-    public void setHaslocal(boolean haslocal) {
-        this.haslocal = haslocal;
+    public void setHascalendar(boolean hascalendar) {
+        this.hascalendar = hascalendar;
     }
 
-    public boolean isHascloud() {
-        return hascloud;
+    public boolean getHasnotes() {
+        return hasnotes;
     }
 
-    public void setHascloud(boolean hascloud) {
-        this.hascloud = hascloud;
+    public void setHasnotes(boolean hasdate) {
+        this.hasdate = hasnotes;
     }
 
     @Override
     public String toString() {
         return "Functionality{" +
                 "listid=" + listid +
-                ", hasdate=" + hasdate +
-                ", haslocal=" + haslocal +
-                ", hascloud=" + hascloud +
-                '}';
+                ", hasdate=" + hasdate;
     }
 }
