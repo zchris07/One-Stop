@@ -60,6 +60,10 @@ for (let i of document.querySelectorAll(".delete_list"))
     i.addEventListener('click', function (event) {
         listId = event.target.parentElement.parentElement.firstElementChild.id.substring("taskList-id-".length);
         console.log("clicked")
+        if (listId==="1"){
+            alert("Sorry, you may not delete fist list");
+            return;
+        }
         console.log(listId)
         // console.log(duration_day)
         // console.log(date_string)
