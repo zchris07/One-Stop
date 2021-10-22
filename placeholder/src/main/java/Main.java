@@ -64,6 +64,15 @@ public class Main {
 
         Spark.get("/userprofile", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            if (req.cookie("login") == null && req.cookie("sign-up") == null)
+                res.redirect("/");
+            else {
+                if(req.cookie("login") == null)
+                    model.put("username", req.cookie("sign-up"));
+                else
+                    model.put("username", req.cookie("login"));
+            }
+
             return new ModelAndView(model, "public/profile.vm");
         }, new VelocityTemplateEngine());
 

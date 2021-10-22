@@ -1,7 +1,7 @@
-#set($username = "user")
-#set($firstname="Chris")
-#set($lastname ="Yu")
-#set($organization="Johns Hopkins University")
+###set($username = "user")
+#set($firstname="Firstname")
+#set($lastname ="Lastname")
+#set($organization= "Organization")
 ###set(($firstname="Chris")
 <!DOCTYPE html>
 <head>
@@ -40,7 +40,8 @@
             <div class="text-center">
                 <img width="300" height="300" src="https://i.imgur.com/hepj9ZS.png" class="rounded-circle"/>
                 #if($firstname && $lastname)
-                    <h1 class="display-5">$firstname $lastname</h1>
+                    <h2 class="display-5">$firstname $lastname</h2>
+                    <h3 class="display-5">$username</h3>
                     <h3 class="display-5">$organization</h3>
                     <button type="button" class="btn btn-success mt-2">Edit information</button>
                 #else
