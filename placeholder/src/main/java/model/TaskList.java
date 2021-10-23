@@ -68,6 +68,18 @@ public class TaskList {
         builder.where().eq("listId",listId);
         dao.update(builder.prepare());
     }
+    public void delTask(String taskName, Dao<TaskList,Integer> dao) throws SQLException {
+        for (int i = 0; i < taskList.size(); i++) {
+            if (Objects.equals(taskList.get(i).taskName, taskName)) {
+                taskList.remove(i);
+                break;
+            }
+        }
+        UpdateBuilder<TaskList, Integer> builder = dao.updateBuilder();
+        builder.updateColumnValue("taskList", taskList);
+        builder.where().eq("listId",listId);
+        dao.update(builder.prepare());
+    }
     public String getListName() {
         return listName;
     }

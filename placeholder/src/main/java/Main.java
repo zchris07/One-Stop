@@ -113,6 +113,18 @@ public class Main {
 
             return ems2.get(0).toJsonString();
         });
+        Spark.delete("/deleteTask", (req, res) -> {
+            String listId = req.queryParams("listId");
+            String taskName = req.queryParams("taskName");
+            Dao<TaskList, Integer> taskDao = getTaskListRMLiteDao();
+            List<TaskList> ems = taskDao.queryForEq("listId", listId);
+            ems.get(0).delTask(taskName, taskDao);
+            res.status(201);
+            res.type("application/json");
+            List<TaskList> ems2 = taskDao.queryForEq("listId", listId);
+
+            return ems2.get(0).toJsonString();
+        });
         Spark.get("/main", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             List<TaskList> tasklists = getTaskListRMLiteDao().queryForAll();
