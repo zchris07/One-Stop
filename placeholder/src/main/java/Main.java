@@ -6,10 +6,12 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 //import model.PItem;
 import model.TaskList;
+import model.User;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.velocity.VelocityTemplateEngine;
 
+import java.security.MessageDigest;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -24,41 +26,71 @@ public class Main {
         return DaoManager.createDao(connectionSource, TaskList.class);
     }
 
+    private static Dao getUserORMLiteDao() throws SQLException {
+        final String URI = "jdbc:sqlite:./JBApp.db";
+        ConnectionSource connectionSource = new JdbcConnectionSource(URI);
+        TableUtils.createTableIfNotExists(connectionSource, User.class);
+        return DaoManager.createDao(connectionSource, User.class);
+    }
+
     public static void main(String[] args) {
 
         final int PORT_NUM = 7000;
         Spark.port(PORT_NUM);
         Spark.staticFiles.location("/public");
 
-        Spark.get("/", (req, res) -> {
+        Spark.get("/signup", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            if (req.cookie("login") != null)
-                model.put("login", req.cookie("login"));
-            return new ModelAndView(model, "public/login.vm");
+            return new ModelAndView(model, "public/signup.vm");
         }, new VelocityTemplateEngine());
 
-        // used set a username cookie
-        Spark.post("/", (req, res) -> {
-            String emailAddress = req.queryParams("emailAddress");
+        Spark.post("/signup", (req, res) -> {
+            String email = req.queryParams("email");
             String password = req.queryParams("password");
-            res.cookie("sign-up", emailAddress);
+
+            // password secure hash
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            messageDigest.update(password.getBytes());
+            String hashedPassword = new String(messageDigest.digest());
+
+            User ur = new User(email, hashedPassword);
+            getUserORMLiteDao().create(ur);
+
+            res.status(201);
             res.redirect("/main");
             return null;
         });
 
-        Spark.get("/sign-up", (req, res) -> {
+        Spark.get("/login", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            if (req.cookie("sign-up") != null)
-                model.put("sign-up", req.cookie("sign-up"));
-            return new ModelAndView(model, "public/sign_up.vm");
+            return new ModelAndView(model, "public/login.vm");
         }, new VelocityTemplateEngine());
 
-        // used set a username cookie
-        Spark.post("/sign-up", (req, res) -> {
-            String emailAddress = req.queryParams("emailAddress");
+        Spark.post("/login", (req, res) -> {
+            String email = req.queryParams("email");
             String password = req.queryParams("password");
-            res.cookie("login", emailAddress);
-            res.redirect("/");
+
+            // password authentication
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            messageDigest.update(password.getBytes());
+            String hashedPassword = new String(messageDigest.digest());
+
+            List<User> lstur = getUserORMLiteDao().queryForEq("email", email);
+            if(lstur != null && !lstur.isEmpty()){
+                if (lstur.get(0).getHashedPassword().equals(hashedPassword)) {
+                    // do something login related
+                    res.redirect("/main");
+                }
+                else {
+                    // warn
+                    res.redirect("/warn");
+                }
+            }
+            else {
+                // warn
+                res.redirect("/warn");
+            }
+
             return null;
         });
 
