@@ -73,6 +73,18 @@ for (let i of document.querySelectorAll(".delete_list"))
     })
 }
 
+function deleteTask(taskName) {
+    console.log("clicked")
+    console.log(taskName)
+    console.log(currentList)
+    // console.log(duration_day)
+    // console.log(date_string)
+    fetch('http://localhost:7000/deleteTask?listId=' + currentList + '&taskName=' + taskName , {
+        method: 'Delete',
+    }).then(res => window.location.reload = window.location.reload(true));
+}
+const varToString = varObj => Object.keys(varObj)[0]
+let temp = null;
 const showTaskInList = listId => {
     console.log(`listId=${listId}`)
     fetch('http://localhost:7000/showList?listId=' + listId)
@@ -80,13 +92,15 @@ const showTaskInList = listId => {
         .then(json => {
             document.getElementById('all-tasks').innerHTML = '';
             for (let task of json["taskList"]) {
+                temp = task['taskName']
                 let html = `<tr>
 <td>${task['taskName']}</td>
 <td>Default Project</td>
 <td>${task['duration_day']}</td>
 <td>${task['date']}</td>
-<td><button class="delete_task btn btn-fail" type="button" >Delete Task</button></td>
-</tr>`
+<td><button class="delete_task btn btn-fail" onclick="deleteTask(temp)" type="button" >Delete Task</button></td>
+</tr>
+`
                 document.getElementById('all-tasks').innerHTML += html;
             }
             currentList = listId;

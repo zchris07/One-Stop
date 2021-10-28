@@ -164,15 +164,12 @@
                         </tr>
 
                         <tbody id="all-tasks">
-                        #foreach($pitem in $pitems)
-                        <tr>
-                            <td>$pitem.taskName</td>
-                            <td>Default Project</td>
-                            <td>$pitem.duration_day</td>
-                            <td>$pitem.date</td>
-                            <td><button class="delete_task btn btn-fail" type="button" >Delete Task</button></td>
-                        </tr>
-                        #end
+##                        #foreach($pitem in $pitems)
+##                        <tr>
+##                            <td><button class="delete_task btn btn-fail" type="button" >Delete Task</button></td>
+##                        </tr>
+
+##                        #end
                         </tbody>
                     </table>
                 </div>
