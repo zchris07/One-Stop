@@ -72,7 +72,6 @@ public class Main {
                 else
                     model.put("username", req.cookie("login"));
             }
-
             return new ModelAndView(model, "public/profile.vm");
         }, new VelocityTemplateEngine());
 
