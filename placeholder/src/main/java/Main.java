@@ -47,6 +47,11 @@ public class Main {
         Spark.port(PORT_NUM);
         Spark.staticFiles.location("/public");
 
+        Spark.get("/", (req, res) -> {
+            res.redirect("/signup");
+            return null;
+        });
+
         Spark.get("/signup", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return new ModelAndView(model, "public/signup.vm");
