@@ -2,12 +2,11 @@ import com.google.gson.Gson;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 //import model.PItem;
-import model.TaskList;
-import model.User;
-import model.WorksOn;
+import model.*;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.velocity.VelocityTemplateEngine;
@@ -41,6 +40,27 @@ public class Main {
         return DaoManager.createDao(connectionSource, WorksOn.class);
     }
 
+    private static Dao <TaskNote,Integer> getTaskNoteRMLiteDao() throws SQLException {
+        final String URI = "jdbc:sqlite:./JBApp.db";
+        ConnectionSource connectionSource = new JdbcConnectionSource(URI);
+        TableUtils.createTableIfNotExists(connectionSource, TaskNote.class);
+//        TableUtils.dropTable(connectionSource, TaskList.class,false);
+        return DaoManager.createDao(connectionSource, TaskNote.class);
+    }
+
+    private static void updateNote(String taskName, String taskNote, Dao<TaskNote, Integer> dao) throws SQLException {
+        List<TaskNote> check = dao.queryForEq("taskName", taskName);
+        if (check.size() == 0) {
+            TaskNote newTaskNote = new TaskNote(taskName, taskNote);
+            dao.create(newTaskNote);
+        } else {
+            UpdateBuilder<TaskNote, Integer> builder = dao.updateBuilder();
+            builder.updateColumnValue("taskNote", taskNote);
+            builder.where().eq("taskName", taskName);
+            dao.update(builder.prepare());
+        }
+    }
+
     public static void main(String[] args) {
 
         final int PORT_NUM = 7000;
@@ -48,7 +68,7 @@ public class Main {
         Spark.staticFiles.location("/public");
 
         Spark.get("/", (req, res) -> {
-            res.redirect("/signup");
+            res.redirect("/login");
             return null;
         });
 
@@ -56,7 +76,6 @@ public class Main {
             Map<String, Object> model = new HashMap<>();
             return new ModelAndView(model, "public/signup.vm");
         }, new VelocityTemplateEngine());
-
 
         Spark.post("/signup", (req, res) -> {
             String email = req.queryParams("email");
@@ -111,14 +130,6 @@ public class Main {
 
         Spark.get("/userprofile", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            if (req.cookie("login") == null && req.cookie("sign-up") == null)
-                res.redirect("/");
-            else {
-                if(req.cookie("login") == null)
-                    model.put("username", req.cookie("sign-up"));
-                else
-                    model.put("username", req.cookie("login"));
-            }
             return new ModelAndView(model, "public/profile.vm");
         }, new VelocityTemplateEngine());
 
@@ -200,6 +211,44 @@ public class Main {
 
             return ems2.get(0).toJsonString();
         });
+
+        Spark.get("/schedule", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return new ModelAndView(model, "public/schedule.vm");
+        }, new VelocityTemplateEngine());
+
+        Spark.put("/schedule", (req,res) -> {
+            Schedule schedule= new Schedule();
+            return schedule.getAllTaskDate();
+        });
+
+        Spark.get("/showDetail", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            String taskName = req.queryParams("taskName");
+            Dao<TaskNote, Integer> noteDao = getTaskNoteRMLiteDao();
+            List<TaskNote> ems = noteDao.queryForEq("taskName", taskName);
+            String notes = "";
+            if (ems.size() != 0) {
+                notes = ems.get(0).toString();
+            }
+            model.put("taskName", taskName);
+            model.put("notes", notes);
+            return new ModelAndView(model, "public/detail.vm");
+        }, new VelocityTemplateEngine());
+
+        Spark.put("/addNotes", (req, res) -> {
+            String taskName = req.queryParams("taskName");
+            String taskNote = req.queryParams("taskNote");
+
+            Dao<TaskNote, Integer> noteDao = getTaskNoteRMLiteDao();
+            updateNote(taskName, taskNote, noteDao);
+            res.status(201);
+            res.type("application/json");
+            List<TaskNote> ems2 = noteDao.queryForEq("taskName", taskName);
+            return ems2.get(0).toJsonString();
+        });
+
+
         Spark.get("/main", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             if (req.cookie("userid") != null) {
@@ -223,45 +272,6 @@ public class Main {
 
             return new ModelAndView(model, "public/index.vm");
         }, new VelocityTemplateEngine());
-//        // create a new task
-//        Spark.post("/main", (req, res) -> {
-////            String id = req.queryParams("id");
-//            String taskName = req.queryParams("taskName");
-//            String dueDay = req.queryParams("dueDay");
-//
-//            String date_string = req.queryParams("date");
-//
-//            String pattern = "yyyy-MM-dd";
-//            SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-//
-//            Date date = formatter.parse(date_string);
-//            Date dueDay_date = formatter.parse(dueDay);
-//            PItem pitem = new PItem (taskName,dueDay_date, date);
-//            getPItemRMLiteDao().create(pitem);
-//            res.status(201);
-//            res.type("application/json");
-//            return new Gson().toJson(pitem.toJsonString());
-//        });
-////
-//        // delete tasks
-//        Spark.delete("/Delete-task", (req, res) -> {
-//
-//            String taskName = req.queryParams("taskName");
-//            Dao<TaskList, Integer> emDao = getPItemRMLiteDao();
-//
-//            List<PItem> ems = emDao.queryForEq("taskName", taskName);
-//            int del = 0;
-////            System.out.println(getPItemRMLiteDao().queryForAll());
-//            if (ems != null  && !ems.isEmpty()) {
-//                del = emDao.deleteById(ems.get(0).getId());
-//            }
-//            res.status(200);
-//            res.type("application/json");
-//            if (del > 0) {
-//                return new Gson().toJson(ems.get(0).toString());
-//            }
-//            return new Gson().toJson("{}");
-//        });
 
 
 
