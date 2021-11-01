@@ -33,11 +33,14 @@ document.getElementById("submit_add_task").addEventListener('click', function ()
 document.getElementById("submit_add_list").addEventListener('click', function () {
         // if (validateTaskDuration()){
             listName = document.getElementById("listName").value;
-            userid = document.getElementById("userid").value;
+            // userid = document.getElementById("userid").value;
             colabidstring = document.getElementById("colabidstring").value;
             console.log("clicked")
             console.log(colabidstring)
-            fetch('http://localhost:7000/addList?listName=' + listName + '&userid=' + userid + '&colabidstring=' + colabidstring, {
+            // fetch('http://localhost:7000/addList?listName=' + listName + '&userid=' + userid + '&colabidstring=' + colabidstring, {
+            //     method: 'Post',
+            // });
+            fetch('http://localhost:7000/addList?listName=' + listName + '&colabidstring=' + colabidstring, {
                 method: 'Post',
             });
                 // .then(res => window.location.reload = window.location.reload(true))

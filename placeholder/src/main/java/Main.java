@@ -118,7 +118,14 @@ public class Main {
         });
         Spark.post("/addList", (req, res) -> {
             String listName = req.queryParams("listName");
-            String userid = req.queryParams("userid");
+//            String userid = req.queryParams("userid");
+            String userid;
+            if (req.cookie("userid") != null) {
+                userid = req.cookie("userid");
+            }
+            else {
+                userid = "";
+            }
             String colabidString = req.queryParams("colabidstring");
 
             // handle Collaborator
