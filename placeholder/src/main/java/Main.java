@@ -7,6 +7,7 @@ import com.j256.ormlite.table.TableUtils;
 //import model.PItem;
 import model.TaskList;
 import model.User;
+import model.WorksOn;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.velocity.VelocityTemplateEngine;
@@ -33,6 +34,13 @@ public class Main {
         return DaoManager.createDao(connectionSource, User.class);
     }
 
+    private static Dao getWorksOnORMLiteDao() throws SQLException {
+        final String URI = "jdbc:sqlite:./JBApp.db";
+        ConnectionSource connectionSource = new JdbcConnectionSource(URI);
+        TableUtils.createTableIfNotExists(connectionSource, WorksOn.class);
+        return DaoManager.createDao(connectionSource, WorksOn.class);
+    }
+
     public static void main(String[] args) {
 
         final int PORT_NUM = 7000;
@@ -55,7 +63,7 @@ public class Main {
 
             User ur = new User(email, hashedPassword);
             getUserORMLiteDao().create(ur);
-
+            res.cookie("userid", email);
             res.status(201);
             res.redirect("/main");
             return null;
@@ -79,6 +87,7 @@ public class Main {
             if(lstur != null && !lstur.isEmpty()){
                 if (lstur.get(0).getHashedPassword().equals(hashedPassword)) {
                     // do something login related
+                    res.cookie("userid", email);
                     res.redirect("/main");
                 }
                 else {
@@ -109,7 +118,20 @@ public class Main {
         });
         Spark.post("/addList", (req, res) -> {
             String listName = req.queryParams("listName");
+            String userid = req.queryParams("userid");
+            String colabidString = req.queryParams("colabidstring");
+
+            // handle Collaborator
+            String[] colabidStringArr = colabidString.split(";");
+            Dao worksOnDao = getWorksOnORMLiteDao();
+            for(int i=0; i<colabidStringArr.length;i++){
+                String colabid = colabidStringArr[i].trim();
+                WorksOn wks = new WorksOn(colabid, listName);
+                worksOnDao.create(wks);
+            }
+
             TaskList tasklist = new TaskList (listName);
+            tasklist.setUserid(userid);
             Dao<TaskList, Integer> taskDao = getTaskListRMLiteDao();
             taskDao.create(tasklist);
             List<TaskList> ems = taskDao.queryForEq("listName", listName);
@@ -159,8 +181,25 @@ public class Main {
         });
         Spark.get("/main", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            List<TaskList> tasklists = getTaskListRMLiteDao().queryForAll();
-            model.put("lists", tasklists);
+            if (req.cookie("userid") != null) {
+
+                // if log in info is available, make lists visible to the owner and collabrator
+                model.put("userid", req.cookie("userid"));
+                List<TaskList> tasklists = getTaskListRMLiteDao().queryForEq("userid", req.cookie("userid"));
+                List<WorksOn> worksons = getWorksOnORMLiteDao().queryForEq("collabratorid", req.cookie("userid"));
+                for(int i=0;i< worksons.size();i++){
+                    String listid = worksons.get(i).getListid();
+                    List<TaskList> cur = getTaskListRMLiteDao().queryForEq("listName", listid);
+                    if(cur.size()!=0)
+                        tasklists.addAll(cur);
+                }
+                model.put("lists", tasklists);
+            }
+            else {
+                List<TaskList> tasklists = getTaskListRMLiteDao().queryForEq("userid", "");
+                model.put("lists", tasklists);
+            }
+
             return new ModelAndView(model, "public/index.vm");
         }, new VelocityTemplateEngine());
 //        // create a new task
