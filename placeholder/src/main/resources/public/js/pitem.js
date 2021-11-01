@@ -23,7 +23,7 @@ document.getElementById("submit_add_task").addEventListener('click', function ()
         console.log(taskName)
         console.log(dueDay)
         console.log(date_string)
-        fetch('http://localhost:7000/addTask?listId='+currentList+'&taskName=' + taskName + '&dueDay=' +dueDay+ '&date='+ date_string, {
+        fetch('http://localhost:7000/addTask?listId=' + currentList + '&taskName=' + taskName + '&dueDay=' +dueDay+ '&date='+ date_string, {
             method: 'Post',
         })
             .then(res => showTaskInList(currentList))
@@ -33,8 +33,14 @@ document.getElementById("submit_add_task").addEventListener('click', function ()
 document.getElementById("submit_add_list").addEventListener('click', function () {
         // if (validateTaskDuration()){
             listName = document.getElementById("listName").value;
+            // userid = document.getElementById("userid").value;
+            colabidstring = document.getElementById("colabidstring").value;
             console.log("clicked")
-            fetch('http://localhost:7000/addList?listName=' + listName , {
+            console.log(colabidstring)
+            // fetch('http://localhost:7000/addList?listName=' + listName + '&userid=' + userid + '&colabidstring=' + colabidstring, {
+            //     method: 'Post',
+            // });
+            fetch('http://localhost:7000/addList?listName=' + listName + '&colabidstring=' + colabidstring, {
                 method: 'Post',
             });
                 // .then(res => window.location.reload = window.location.reload(true))

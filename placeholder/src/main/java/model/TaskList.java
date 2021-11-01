@@ -22,6 +22,8 @@ public class TaskList {
     private Integer listId;
     @DatabaseField(columnName="listName",canBeNull = false,unique = true)
     private String listName;
+    @DatabaseField(columnName = "userid", canBeNull = true)
+    private String userid;
     @DatabaseField(columnName="taskList",canBeNull = false,dataType = DataType.SERIALIZABLE)
     public SerializedList<Task> taskList = new SerializedList<>();
     public static class SerializedList<Task> extends ArrayList<Task> implements Serializable {
@@ -103,5 +105,7 @@ public class TaskList {
         return sb.toString();
     }
 
-
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
 }

@@ -6,10 +6,13 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 //import model.PItem;
 import model.TaskList;
+import model.User;
+import model.WorksOn;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.velocity.VelocityTemplateEngine;
 
+import java.security.MessageDigest;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -24,41 +27,79 @@ public class Main {
         return DaoManager.createDao(connectionSource, TaskList.class);
     }
 
+    private static Dao getUserORMLiteDao() throws SQLException {
+        final String URI = "jdbc:sqlite:./JBApp.db";
+        ConnectionSource connectionSource = new JdbcConnectionSource(URI);
+        TableUtils.createTableIfNotExists(connectionSource, User.class);
+        return DaoManager.createDao(connectionSource, User.class);
+    }
+
+    private static Dao getWorksOnORMLiteDao() throws SQLException {
+        final String URI = "jdbc:sqlite:./JBApp.db";
+        ConnectionSource connectionSource = new JdbcConnectionSource(URI);
+        TableUtils.createTableIfNotExists(connectionSource, WorksOn.class);
+        return DaoManager.createDao(connectionSource, WorksOn.class);
+    }
+
     public static void main(String[] args) {
 
         final int PORT_NUM = 7000;
         Spark.port(PORT_NUM);
         Spark.staticFiles.location("/public");
 
-        Spark.get("/", (req, res) -> {
+        Spark.get("/signup", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            if (req.cookie("login") != null)
-                model.put("login", req.cookie("login"));
-            return new ModelAndView(model, "public/login.vm");
+            return new ModelAndView(model, "public/signup.vm");
         }, new VelocityTemplateEngine());
 
-        // used set a username cookie
-        Spark.post("/", (req, res) -> {
-            String emailAddress = req.queryParams("emailAddress");
+        Spark.post("/signup", (req, res) -> {
+            String email = req.queryParams("email");
             String password = req.queryParams("password");
-            res.cookie("sign-up", emailAddress);
+
+            // password secure hash
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            messageDigest.update(password.getBytes());
+            String hashedPassword = new String(messageDigest.digest());
+
+            User ur = new User(email, hashedPassword);
+            getUserORMLiteDao().create(ur);
+            res.cookie("userid", email);
+            res.status(201);
             res.redirect("/main");
             return null;
         });
 
-        Spark.get("/sign-up", (req, res) -> {
+        Spark.get("/login", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            if (req.cookie("sign-up") != null)
-                model.put("sign-up", req.cookie("sign-up"));
-            return new ModelAndView(model, "public/sign_up.vm");
+            return new ModelAndView(model, "public/login.vm");
         }, new VelocityTemplateEngine());
 
-        // used set a username cookie
-        Spark.post("/sign-up", (req, res) -> {
-            String emailAddress = req.queryParams("emailAddress");
+        Spark.post("/login", (req, res) -> {
+            String email = req.queryParams("email");
             String password = req.queryParams("password");
-            res.cookie("login", emailAddress);
-            res.redirect("/");
+
+            // password authentication
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            messageDigest.update(password.getBytes());
+            String hashedPassword = new String(messageDigest.digest());
+
+            List<User> lstur = getUserORMLiteDao().queryForEq("email", email);
+            if(lstur != null && !lstur.isEmpty()){
+                if (lstur.get(0).getHashedPassword().equals(hashedPassword)) {
+                    // do something login related
+                    res.cookie("userid", email);
+                    res.redirect("/main");
+                }
+                else {
+                    // warn
+                    res.redirect("/warn");
+                }
+            }
+            else {
+                // warn
+                res.redirect("/warn");
+            }
+
             return null;
         });
 
@@ -77,7 +118,27 @@ public class Main {
         });
         Spark.post("/addList", (req, res) -> {
             String listName = req.queryParams("listName");
+//            String userid = req.queryParams("userid");
+            String userid;
+            if (req.cookie("userid") != null) {
+                userid = req.cookie("userid");
+            }
+            else {
+                userid = "";
+            }
+            String colabidString = req.queryParams("colabidstring");
+
+            // handle Collaborator
+            String[] colabidStringArr = colabidString.split(";");
+            Dao worksOnDao = getWorksOnORMLiteDao();
+            for(int i=0; i<colabidStringArr.length;i++){
+                String colabid = colabidStringArr[i].trim();
+                WorksOn wks = new WorksOn(colabid, listName);
+                worksOnDao.create(wks);
+            }
+
             TaskList tasklist = new TaskList (listName);
+            tasklist.setUserid(userid);
             Dao<TaskList, Integer> taskDao = getTaskListRMLiteDao();
             taskDao.create(tasklist);
             List<TaskList> ems = taskDao.queryForEq("listName", listName);
@@ -127,8 +188,25 @@ public class Main {
         });
         Spark.get("/main", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            List<TaskList> tasklists = getTaskListRMLiteDao().queryForAll();
-            model.put("lists", tasklists);
+            if (req.cookie("userid") != null) {
+
+                // if log in info is available, make lists visible to the owner and collabrator
+                model.put("userid", req.cookie("userid"));
+                List<TaskList> tasklists = getTaskListRMLiteDao().queryForEq("userid", req.cookie("userid"));
+                List<WorksOn> worksons = getWorksOnORMLiteDao().queryForEq("collabratorid", req.cookie("userid"));
+                for(int i=0;i< worksons.size();i++){
+                    String listid = worksons.get(i).getListid();
+                    List<TaskList> cur = getTaskListRMLiteDao().queryForEq("listName", listid);
+                    if(cur.size()!=0)
+                        tasklists.addAll(cur);
+                }
+                model.put("lists", tasklists);
+            }
+            else {
+                List<TaskList> tasklists = getTaskListRMLiteDao().queryForEq("userid", "");
+                model.put("lists", tasklists);
+            }
+
             return new ModelAndView(model, "public/index.vm");
         }, new VelocityTemplateEngine());
 //        // create a new task

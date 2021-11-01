@@ -63,6 +63,8 @@
                                         <div class="modal-content">
                                             <label>Add A List:</label>
                                             <input type="text" class="form-control" placeholder="List Name" aria-label="Task" aria-describedby="basic-addon2" id="listName">
+##                                            <input type="text" class="form-control" placeholder="Owner Email" aria-label="Owner" aria-describedby="basic-addon2" id="userid">
+                                            <input type="text" class="form-control" placeholder="Collaborator Emails. Separate by ;" aria-label="Collaborators" aria-describedby="basic-addon2" id="colabidstring">
                                             <div class="container" style="margin-top: 50px; margin-bottom: 50px">
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">

@@ -15,7 +15,7 @@
     <div class="border border-danger rounded" id="err-msg-wrapper">
         <p id="err-msg"></p>
     </div>
-    <form accept-charset="UTF-8" action="#" class="border rounded" id="login-form" method="post">
+    <form accept-charset="UTF-8" action="/signup" class="border rounded" id="login-form" method="post">
         <h3>
             Sign up for
         </h3>
