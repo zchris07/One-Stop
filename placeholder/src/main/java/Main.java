@@ -52,6 +52,11 @@ public class Main {
             return new ModelAndView(model, "public/signup.vm");
         }, new VelocityTemplateEngine());
 
+        Spark.get("/", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return new ModelAndView(model, "public/login.vm");
+        }, new VelocityTemplateEngine());
+
         Spark.post("/signup", (req, res) -> {
             String email = req.queryParams("email");
             String password = req.queryParams("password");
