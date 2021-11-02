@@ -46,6 +46,16 @@ The default end-point will re-direct to login page, if no cache was previously s
 - Click on the profile photo for the user profile page.
 - Navigate to Home Page, Profile Page, and Schedule Page through NavBar.
 
+### User Profile page
+
+- Once logged in, click the icon at the upper right cornor to enter user profile page. 
+- Newly registered user should only have his/her email displayed on the page. 
+![alt text](./docs/images/profile_1.png)
+- Update the user information and user summary using buttons on the page. 
+![alt text](./docs/images/profile_2.png)
+- Once updated, the page should look like this: 
+![alt text](./docs/images/profile_3.png)
+
 ### Task Detail Page
 - The defualt note of a task would be empty. Click on the Edit button in order to edit task notes.
 
