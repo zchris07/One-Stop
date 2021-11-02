@@ -65,11 +65,11 @@ public class Main {
                                    String summary, Dao<User, Integer> dao) throws SQLException {
         List<User> check = dao.queryForEq("email", useremail);
         UpdateBuilder<User, Integer> builder = dao.updateBuilder();
-        if (firstName != "") {builder.updateColumnValue("firstName", firstName);}
-        if (lastName != "") {builder.updateColumnValue("lastName", lastName);}
-        if (organization != "") {builder.updateColumnValue("organization", organization);}
-        if (status != "") {builder.updateColumnValue("status", status);}
-        if (summary != "") {builder.updateColumnValue("summary", summary);}
+        if (firstName != "" & firstName != null) {builder.updateColumnValue("firstName", firstName);}
+        if (lastName != "" & lastName!= null) {builder.updateColumnValue("lastName", lastName);}
+        if (organization != "" & organization != null) {builder.updateColumnValue("organization", organization);}
+        if (status != "" & status != null) {builder.updateColumnValue("status", status);}
+        if (summary != "" & summary != null) {builder.updateColumnValue("summary", summary);}
         builder.where().eq("email", useremail);
         dao.update(builder.prepare());
     }
