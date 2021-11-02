@@ -58,6 +58,7 @@ public class textFunctions {
         ArrayList<String> reformed_string_sentence = new ArrayList<>();
         for (int j = 0; j < list_split.length; j++) {
             if (list_split[j].split(" ").length < 20) {
+                reformed_string_sentence.add(list_split[j]);
                 continue;
             }
             //when we find a upper case letter, that is NOT contained
