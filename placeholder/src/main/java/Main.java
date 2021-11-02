@@ -50,30 +50,30 @@ public class Main {
     }
 
     private static void updateNote(String taskName, String taskNote, String isCheckedGrammar, String isCheckedSpelling, String isCheckedCapital, String isCheckedLongRunning, Dao<TaskNote, Integer> dao) throws SQLException {
-        textFunctions text_functions = new textFunctions();
 
         List<TaskNote> check = dao.queryForEq("taskName", taskName);
+
         if (check.size() == 0) {
+            textFunctions text_functions = new textFunctions();
+            TaskNote newTaskNote = new TaskNote(taskName, taskNote);
+
             if (isCheckedGrammar.equals("Yes")) {
                 taskNote = text_functions.fixMissingFullStop(taskNote);
-                System.out.print(taskNote);
             }
             if (isCheckedSpelling.equals("Yes")) {
                 taskNote = text_functions.fixSpellingIssues(taskNote);
-                System.out.print(taskNote);
             }
             if (isCheckedCapital.equals("Yes")) {
                 taskNote = text_functions.fixCapitalLettersInString(taskNote);
-                System.out.print(taskNote);
             }
             if (isCheckedLongRunning.equals("Yes")) {
                 taskNote = text_functions.fixLongRunningSentence(taskNote);
-                System.out.print(taskNote);
             }
 
-            TaskNote newTaskNote = new TaskNote(taskName, taskNote);
             dao.create(newTaskNote);
         } else {
+            textFunctions text_functions = new textFunctions();
+
             if (isCheckedGrammar.equals("Yes")) {
                 taskNote = text_functions.fixMissingFullStop(taskNote);
                 System.out.print(taskNote);
