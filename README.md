@@ -62,6 +62,7 @@ NA
 ## Contact
 - Diana Zhang - zfy19987@gmail.com
 - Qifan Yu - qyu24@jh.edu
+- Zhenyong He -zhe30@jh.edu
 
 ## Acknowledgement
 - https://bootstrap4.com
