@@ -216,7 +216,6 @@ public class textFunctions {
 
                                     try {
                                         JSONArray timeseries = ngramjsonArr.getJSONObject(0).getJSONArray("timeseries");
-                                        String[] arr=new String[timeseries.length()];
                                         Float fl = Float.parseFloat(timeseries.optString(0));
                                         if (i == 0) {
                                             max_occur = 0;

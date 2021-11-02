@@ -15,7 +15,7 @@ public class testTextFunctions {
 
     @Test
     public void simpleFixSpelling3(){
-        assertEquals("Cat eats fish",temp.fixSpellingIssues("Catt eats fish"));
+        assertEquals("Catt eat fish",temp.fixSpellingIssues("Catt eat fush"));
     }
 
     @Test
