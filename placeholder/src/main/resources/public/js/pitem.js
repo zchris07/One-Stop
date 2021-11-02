@@ -89,8 +89,11 @@ function deleteTask(taskName) {
         method: 'Delete',
     }).then(res => window.location.reload = window.location.reload(true));
 }
-const varToString = varObj => Object.keys(varObj)[0]
-let temp = null;
+// show details of task
+function showDetail(taskName) {
+    location.href = './showDetail?listId=' + currentList + '&taskName=' + taskName;
+}
+
 const showTaskInList = listId => {
     console.log(`listId=${listId}`)
     fetch('http://localhost:7000/showList?listId=' + listId)
@@ -98,13 +101,14 @@ const showTaskInList = listId => {
         .then(json => {
             document.getElementById('all-tasks').innerHTML = '';
             for (let task of json["taskList"]) {
-                temp = task['taskName']
                 let html = `<tr>
 <td>${task['taskName']}</td>
 <td>Default Project</td>
 <td>${task['duration_day']}</td>
 <td>${task['date']}</td>
-<td><button class="delete_task btn btn-fail" onclick="deleteTask(temp)" type="button" >Delete Task</button></td>
+<td><button class="delete_task btn btn-fail" onclick="deleteTask('${task['taskName']}')" type="button" >Delete Task</button></td>
+<!--show detail of a task-->
+<td><button class="delete_task btn btn-fail" onclick="showDetail('${task['taskName']}')" type="button" >Task Detail</button></td>
 </tr>
 `
                 document.getElementById('all-tasks').innerHTML += html;
