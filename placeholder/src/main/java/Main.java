@@ -61,6 +61,19 @@ public class Main {
         }
     }
 
+    private static void updateUser(String useremail, String firstName, String lastName, String organization, String status,
+                                   String summary, Dao<User, Integer> dao) throws SQLException {
+        List<User> check = dao.queryForEq("email", useremail);
+        UpdateBuilder<User, Integer> builder = dao.updateBuilder();
+        if (firstName != "") {builder.updateColumnValue("firstName", firstName);}
+        if (lastName != "") {builder.updateColumnValue("lastName", lastName);}
+        if (organization != "") {builder.updateColumnValue("organization", organization);}
+        if (status != "") {builder.updateColumnValue("status", status);}
+        if (summary != "") {builder.updateColumnValue("summary", summary);}
+        builder.where().eq("email", useremail);
+        dao.update(builder.prepare());
+    }
+
     public static void main(String[] args) {
 
         final int PORT_NUM = 7000;
@@ -129,9 +142,37 @@ public class Main {
         });
 
         Spark.get("/userprofile", (req, res) -> {
+            //TODO: LY - now the email is used as userid, fix that in the future.
+
+            String userid;
+            // if (req.cookie("userid") != null) {}
+            userid = req.cookie("userid");
+            Dao<User, Integer> userDao = getUserORMLiteDao();
+            List<User> aUser = userDao.queryForEq("email", userid);
             Map<String, Object> model = new HashMap<>();
+            model.put("aUser", aUser);
             return new ModelAndView(model, "public/profile.vm");
         }, new VelocityTemplateEngine());
+
+        Spark.put("/userprofile", (req, res) -> {
+            //TODO: LY - now the email is used as userid, fix that in the future.
+            String useremail;
+            useremail = req.cookie("userid");
+
+            String firstname = req.queryParams("firstName");
+            String lastname = req.queryParams("lastName");
+            String organization = req.queryParams("organization");
+            String summary = req.queryParams("summary");
+            String status = req.queryParams("status");
+
+            Dao<User, Integer> userDao = getUserORMLiteDao();
+            updateUser(useremail, firstname, lastname, organization, status, summary, userDao);
+            res.status(201);
+            res.type("application/json");
+            List<User> aUser = userDao.queryForEq("email", useremail);
+            return aUser.get(0).toJsonString();
+        });
+
 
         Spark.get("/showList", (req, res) -> {
             String listId = req.queryParams("listId");
