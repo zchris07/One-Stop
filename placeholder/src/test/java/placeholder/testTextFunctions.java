@@ -10,7 +10,12 @@ public class testTextFunctions {
 
     @Test
     public void simpleLongRunning2(){
-        assertEquals("The Ravens have been one of the more successful franchises ,since their inception compiling a record of.",temp.fixLongRunningSentence("The Ravens have been one of the more successful franchises since their inception compiling a record of."));
+        assertEquals("The Ravens have been one of the more successful franchises ,since their inception compiling a record of filler filler filler filler.",temp.fixLongRunningSentence("The Ravens have been one of the more successful franchises since their inception compiling a record of filler filler filler filler."));
+    }
+
+    @Test
+    public void simpleLongRunning1(){
+        assertEquals("This is short.",temp.fixLongRunningSentence("This is short"));
     }
 
     @Test
