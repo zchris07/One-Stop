@@ -33,7 +33,7 @@ document.getElementById("submit_notes").addEventListener('click', function () {
         fetch('http://localhost:7000/addNotes?taskName='+ taskName + '&taskNote=' + taskNote +
             '&isCheckedGrammar=' + isCheckedGrammar+
             '&isCheckedSpelling=' + isCheckedSpelling+ '&isCheckedCapital=' + isCheckedCapital
-            +'&isCheckedLongRunning' + isCheckedLongRunning, {
+            +'&isCheckedLongRunning=' + isCheckedLongRunning, {
             method: 'Put',
         }).then(res => window.location.reload = window.location.reload(true));
     }
