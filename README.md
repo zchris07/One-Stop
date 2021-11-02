@@ -1,23 +1,57 @@
 # Placeholder project documentation
 
-## Dependencies
+## About The Project
+> Placeholder Project is a Task Manager project that allow users to manage lists of tasks manually as well as automatically
+> suggest the best schedule pattern to a user.
+
+### Built With
+
+- Spark
+- Apache Velocity
+- JavaScript
+
+## Getting Started
+### Prerequisite
 - IntelliJ Idea integrated development environment
 	- The project development is done in Idea and is currently not deployed to a remote web server.
 	- Java version in use is Java 8. The configuration should be automatically loaded with the project folder.
+	
 
-## Runing the server and start the app
-- Run the file *2021-fall-group-placeholders/placeholder/src/main/java/Main.java* (change folder name or not)
-- Type in localhost:7000/main to direct to the main page of the app (/main or no /main)
+### Installation / Run
+- Run the file *2021-fall-group-placeholders/placeholder/src/main/java/Main.java* 
+- Type in localhost:7000/ in your browser to direct to app page 
 
-## Implemented app functions
-- Click on the Create List button to add a list
-- Click on a created list to check the items inside
-- Click on the Create Item button to add an item in the highlighted created list
-- Click on the profile photo for the user profile page
-- Click on the delete button to delete the list or task
-	- A minor issue still exists in the current code. For testing of the delete list, you shall not delete all the list. Just leave the first list without deleting when you want to delete list and add what ever task you want to any list or create list. A notification will be sent.
-- Note autocorrection function (Implemented the algorithm and test cases, but has not been integrated to the main project.)
-	- For a input string, we want to find all the missing punctuations, or fix the incorrect punctuations, based on the length of the sentence capital letters and context of the sentence.
+## Usage
+The default end-point will re-direct to login page, if no cache was previously stored. 
+
+### Login/Signup Page
+- Click on the signup button on the login page if you has not created an account. Or, type in localhost:7000/main in your browser to use it as a local app.
+- Login with an account and password if having an existing account, or sign up for a new account otherwise. The password will be encrypted using SHA-256.
+- After login/signup, user's task home page would be displayed.
+![alt text](./docs/images/loginpage.png)
+
+### Home Page
+- If logged in, the displayed lists belong to the lists owner or the logged in user is a collaborator for those lists. If using it as a local app, the lists that are visible are the ones that do not have an owen or a collaborator.
+![alt text](./docs/images/mainpage.png)
+- Click on the Create List button to add a list.
+![alt text](./docs/images/addlist1.png)
+- Add collaborators by inputing their user emails. Separate by semicolon.
+![alt text](./docs/images/addlist2.png)
+- The lists on the main page will be those that belong to the logged-in user or the user is a collaborator.
+- Click on the Delete List button to delete a list.
+- Click on a created list to check the items inside.
+- Click on the Add Task button to add a task in the highlighted created list.
+- Click on the Delete Task button to delete a task from the chosen list.
+- Click on the Task Detail button to view the notes, like special instruction, of a task.
+- Click on the profile photo for the user profile page.
+- Navigate to Home Page, Profile Page, and Schedule Page through NavBar.
+
+### Task Detail Page
+- The defualt note of a task would be empty. Click on the Edit button in order to edit task notes.
+
+### Schedule Page
+- A visualization of all tasks added would be displayed in the Monthly Calendar.
+- A weekly calendar would be added in the future so that a auto-schedule algorithm could be displayed more specifically.
 
 ## File structures
 - /placeholder/: project folder (change folder name or not)
@@ -28,9 +62,21 @@
 		- resources/public/: css files, js scripts, and .vm (Velocity) templetes
 	- JBApp.db: SQLite database (to be changed to remote server database once deploying in a remote host) (change database name or not)
 
-## Major app pages
-- Index page
-	- Index page is where the main functionalities were implemented
-- Login page
-- User registration page
-- Personal profile page
+## Contributing
+> The web application could provide everyone who wants to get a more organized life with a platform that they could manage their tasks and get shceduling advice.
+
+## Liscense
+NA
+
+## Contact
+- Diana Zhang - zfy19987@gmail.com
+- Qifan Yu - qyu24@jh.edu
+- Zhenyong He -zhe30@jh.edu
+- Yihao Liu - yliu333@jhu.edu
+- Leyang Feng - lfeng13@jhu.edu
+- Alex Zhang - azhang41@jhu.edu
+- Chris Zou - czou8@jhu.edu
+
+## Acknowledgement
+- https://bootstrap4.com
+- https://bootswatch.com
