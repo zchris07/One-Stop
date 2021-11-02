@@ -55,7 +55,6 @@ public class Main {
 
         if (check.size() == 0) {
             textFunctions text_functions = new textFunctions();
-            TaskNote newTaskNote = new TaskNote(taskName, taskNote);
 
             if (isCheckedGrammar.equals("Yes")) {
                 taskNote = text_functions.fixMissingFullStop(taskNote);
@@ -69,6 +68,7 @@ public class Main {
             if (isCheckedLongRunning.equals("Yes")) {
                 taskNote = text_functions.fixLongRunningSentence(taskNote);
             }
+            TaskNote newTaskNote = new TaskNote(taskName, taskNote);
 
             dao.create(newTaskNote);
         } else {
