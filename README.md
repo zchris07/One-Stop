@@ -18,17 +18,26 @@
 	
 
 ### Installation / Run
-- Run the file *2021-fall-group-placeholders/placeholder/src/main/java/Main.java* (change folder name or not)
-- Type in localhost:7000/main to direct to the main page of the app (/main or no /main)
+- Run the file *2021-fall-group-placeholders/placeholder/src/main/java/Main.java* 
+- Type in localhost:7000/ in your browser to direct to app page 
 
 ## Usage
+The default end-point will re-direct to login page, if no cache was previously stored. 
 
 ### Login/Signup Page
-- Login with an account and password if having an existing account, or sign up for a new account otherwise.
+- Click on the signup button on the login page if you has not created an account. Or, type in localhost:7000/main in your browser to use it as a local app.
+- Login with an account and password if having an existing account, or sign up for a new account otherwise. The password will be encrypted using SHA-256.
 - After login/signup, user's task home page would be displayed.
+![alt text](./docs/images/loginpage.png)
 
 ### Home Page
+- If logged in, the displayed lists belong to the lists owner or the logged in user is a collaborator for those lists. If using it as a local app, the lists that are visible are the ones that do not have an owen or a collaborator.
+![alt text](./docs/images/mainpage.png)
 - Click on the Create List button to add a list.
+![alt text](./docs/images/addlist1.png)
+- Add collaborators by inputing their user emails. Separate by semicolon.
+![alt text](./docs/images/addlist2.png)
+- The lists on the main page will be those that belong to the logged-in user or the user is a collaborator.
 - Click on the Delete List button to delete a list.
 - Click on a created list to check the items inside.
 - Click on the Add Task button to add a task in the highlighted created list.
@@ -63,6 +72,10 @@ NA
 - Diana Zhang - zfy19987@gmail.com
 - Qifan Yu - qyu24@jh.edu
 - Zhenyong He -zhe30@jh.edu
+- Yihao Liu - yliu333@jhu.edu
+- Leyang Feng - lfeng13@jhu.edu
+- Alex Zhang - azhang41@jhu.edu
+- Chris Zou - czou8@jhu.edu
 
 ## Acknowledgement
 - https://bootstrap4.com
