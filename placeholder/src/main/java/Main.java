@@ -76,15 +76,15 @@ public class Main {
 
             if (isCheckedGrammar.equals("Yes")) {
                 taskNote = text_functions.fixMissingFullStop(taskNote);
-                System.out.print(taskNote);
+                //System.out.print(taskNote);
             }
             if (isCheckedSpelling.equals("Yes")) {
                 taskNote = text_functions.fixSpellingIssues(taskNote);
-                System.out.print(taskNote);
+                //System.out.print(taskNote);
             }
             if (isCheckedCapital.equals("Yes")) {
                 taskNote = text_functions.fixCapitalLettersInString(taskNote);
-                System.out.print(taskNote);
+                //System.out.print(taskNote);
             }
 
             UpdateBuilder<TaskNote, Integer> builder = dao.updateBuilder();

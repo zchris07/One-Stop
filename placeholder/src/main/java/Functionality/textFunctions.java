@@ -187,8 +187,8 @@ public class textFunctions {
                         String[] possible_matches = jsonString.split(",");
                         if (!(possible_matches.length==0)){
                             int match_length;
-                            if (possible_matches.length>10) {
-                                match_length = possible_matches.length -1;
+                            if (possible_matches.length>5) {
+                                match_length = 5;
                             } else {
                                 match_length = possible_matches.length -1;
                             }
@@ -196,6 +196,7 @@ public class textFunctions {
                             //word we are interested and concatenate them.
                             int max_occur = 0;
                             float max_occur_val = 0;
+                            float fl = 0;
                             for (int i = 0; i<match_length; i++) {
                                 String ngram;
                                 if (j>0) { ngram = reformed_string.get(reformed_string.size()-1).replaceAll("[^a-zA-Z0-9]", "") + "%20" +possible_matches[i].replaceAll("[^a-zA-Z0-9]", ""); }
@@ -217,7 +218,7 @@ public class textFunctions {
 
                                     try {
                                         JSONArray timeseries = ngramjsonArr.getJSONObject(0).getJSONArray("timeseries");
-                                        Float fl = Float.parseFloat(timeseries.optString(0));
+                                        fl = Float.parseFloat(timeseries.optString(0));
                                         if (i == 0) {
                                             max_occur = 0;
                                             max_occur_val = fl;
