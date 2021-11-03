@@ -26,6 +26,16 @@ The default end-point will re-direct to login page, if no cache was previously s
 
 ### Login/Signup Page
 - Click on the signup button on the login page if you has not created an account. Or, type in localhost:7000/main in your browser to use it as a local app.
+
+
+```
+Toy accounts for testing (password 1234): 
+
+user1@test.com; user2@test.com; user3@test.com; user4@test.com 
+
+```
+
+
 - Login with an account and password if having an existing account, or sign up for a new account otherwise. The password will be encrypted using SHA-256.
 - After login/signup, user's task home page would be displayed.
 ![alt text](./docs/images/loginpage.png)
