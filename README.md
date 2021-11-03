@@ -72,6 +72,7 @@ user1@test.com; user2@test.com; user3@test.com; user4@test.com
 ### Schedule Page
 - A visualization of all tasks added would be displayed in the Monthly Calendar.
 - A weekly calendar would be added in the future so that a auto-schedule algorithm could be displayed more specifically.
+![alt text](./docs/images/schedule_1.png)
 
 ## File structures
 - /placeholder/: project folder (change folder name or not)
