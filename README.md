@@ -26,6 +26,16 @@ The default end-point will re-direct to login page, if no cache was previously s
 
 ### Login/Signup Page
 - Click on the signup button on the login page if you has not created an account. Or, type in localhost:7000/main in your browser to use it as a local app.
+
+
+```
+Toy accounts for testing (password 1234): 
+
+user1@test.com; user2@test.com; user3@test.com; user4@test.com 
+
+```
+
+
 - Login with an account and password if having an existing account, or sign up for a new account otherwise. The password will be encrypted using SHA-256.
 - After login/signup, user's task home page would be displayed.
 ![alt text](./docs/images/loginpage.png)
@@ -45,6 +55,16 @@ The default end-point will re-direct to login page, if no cache was previously s
 - Click on the Task Detail button to view the notes, like special instruction, of a task.
 - Click on the profile photo for the user profile page.
 - Navigate to Home Page, Profile Page, and Schedule Page through NavBar.
+
+### User Profile page
+
+- Once logged in, click the icon at the upper right cornor to enter user profile page. 
+- Newly registered user should only have his/her email displayed on the page. 
+![alt text](./docs/images/profile_1.png)
+- Update the user information and user summary using buttons on the page. 
+![alt text](./docs/images/profile_2.png)
+- Once updated, the page should look like this: 
+![alt text](./docs/images/profile_3.png)
 
 ### Task Detail Page
 - The defualt note of a task would be empty. Click on the Edit button in order to edit task notes.
