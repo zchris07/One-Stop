@@ -1,19 +1,239 @@
-#set($username="Username/email")
-#set($firstname="Firstname")
-#set($lastname ="Lastname")
-#set($organization= "Organization")
-#set($status= "Undergrad Student")
-#set($major= "Major")
-###set(($firstname="Chris")
+##<<<<<<< HEAD
+###set($username="Username/email")
+###set($firstname="Firstname")
+###set($lastname ="Lastname")
+###set($organization= "Organization")
+###set($status= "Undergrad Student")
+###set($major= "Major")
+#####set(($firstname="Chris")
+##<!DOCTYPE html>
+##<head>
+##    <meta charset="UTF-8">
+##    <meta http-equiv="X-UA-Compatible" content="IE-scale=1">
+##    <title>Profile page</title>
+##    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+##    <link rel="stylesheet" href="css/profile.css" />
+##</head>
+##<body>
+##
+##<div class="background">
+##
+##    <nav class="navbar navbar-expand-lg navbar-custom">
+##        <a class="navbar-brand" href="#">ONE STOP</a>
+##        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+##                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+##            <span class="navbar-toggler-icon"></span>
+##        </button>
+##        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+##            <ul class="navbar-nav mr-auto">
+##                <li class="nav-item active">
+##                    <a class="nav-link" href="./main">Home <span class="sr-only">(current)</span></a>
+##                </li>
+##                <li class="nav-item">
+##                    <a class="nav-link" href="#">Schedule</a>
+##                </li>
+##            </ul>
+##            ##        <form class="form-inline my-2 my-lg-0">
+##            ##            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+##            ##            <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+##            ##        </form>
+##            ##            <button type="button" class="btn btn-profile btn-circle btn-xl"></button>
+##        </div>
+##    </nav>
+##    <div class="container-fluid">
+##        <div class="backgroundImage"> </div>
+##        <div class="row extra_margin">
+##            <div class="col-md-3">
+##
+##
+##                <img width="300" height="300" src="https://i.imgur.com/hepj9ZS.png" class="rounded-circle mx-auto d-block"/>
+##                <div class="card p-4 mt-1">
+##                    #if($firstname && $lastname)
+##                        <h2 class="card-title">$firstname $lastname</h2>
+##
+##                        <h4 class="display-5">$username</h4>
+##                        <h4 class="display-5">$status</h4>
+##                        <h4 class="display-5">$major</h4>
+##                        <h4 class="display-5">$organization</h4>
+##                        ##                    <div class="card-body">
+##                        <div class="row">
+##                            <button type="button" class="btn btn-success btn-small btn-sm mt-2 ml-2 mr-2" data-toggle="modal" data-target="#userInfoModal" >
+##                                Edit information
+##                            </button>
+##
+##                            <button type="button" class="btn btn-danger btn-small btn-sm mt-2" data-toggle="modal" data-target="#changePasswordModal">
+##                                Change Password
+##                            </button>
+##                        </div>
+##                        ##                    </div>
+##                        <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel" aria-hidden="true">
+##                            <div class="modal-dialog" role="document">
+##                                <div class="modal-content">
+##                                    <div class="modal-header">
+##                                        <h5 class="modal-title" id="exampleModalLabel">Edit User Info</h5>
+##                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+##                                            <span aria-hidden="true">&times;</span>
+##                                        </button>
+##                                    </div>
+##                                    <div class="modal-body">
+##                                        ...
+##                                    </div>
+##                                    <div class="modal-footer">
+##                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+##                                        <button type="button" class="btn btn-primary">Save changes</button>
+##                                    </div>
+##                                </div>
+##                            </div>
+##                        </div>
+##
+##                        <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+##                            <div class="modal-dialog" role="document">
+##                                <div class="modal-content">
+##                                    <div class="modal-header">
+##                                        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+##                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+##                                            <span aria-hidden="true">&times;</span>
+##                                        </button>
+##                                    </div>
+##                                    <div class="modal-body">
+##                                        ...
+##                                    </div>
+##                                    <div class="modal-footer">
+##                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+##                                        <button type="button" class="btn btn-primary">Save changes</button>
+##                                    </div>
+##                                </div>
+##                            </div>
+##                        </div>
+##
+##                    #else
+##                    #end
+##                </div>
+##
+##
+##
+##            </div>
+##            <div class="col-md-9">
+##                <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#editSettingsModal">Edit settings</button>
+##
+##                <div class="modal fade" id="editSettingsModal" tabindex="-1" role="dialog" aria-labelledby="editSettingsModalLabel" aria-hidden="true">
+##                    <div class="modal-dialog" role="document">
+##                        <div class="modal-content">
+##                            <div class="modal-header">
+##                                <h5 class="modal-title" id="exampleModalLabel">Edit Settings</h5>
+##                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+##                                    <span aria-hidden="true">&times;</span>
+##                                </button>
+##                            </div>
+##                            <div class="modal-body">
+##                                ...
+##                            </div>
+##                            <div class="modal-footer">
+##                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+##                                <button type="button" class="btn btn-primary">Save changes</button>
+##                            </div>
+##                        </div>
+##                    </div>
+##
+##                </div>
+##
+##                <table class="table table-hover">
+##                    <tbody id="all-lists">
+##                        #foreach($taskList in $lists)
+##                        <tr>
+##                            <td class="list-row" id="taskList-id-$taskList.getId()" >$taskList.listName</td>
+##                            <td style="text-align: right"><button class="delete_list btn btn-fail " type="button"  >Delete List</button></td>
+##                        </tr>
+##                        #end
+##                    </tbody>
+##                </table>
+##
+##                <p class="lead" style="page-break-after: always">
+##                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+##                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+##                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+##                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+##                    culpa qui officia deserunt mollit anim id est laborum.
+##                </p>
+##                <p class="lead" style="page-break-after: always">
+##                    Here we could use the empty space to allow the user to adjust certain settings. Maybe we could include a dark mode,
+##                    or other options that allow the user to change the color patterns of the application. Similarly, we could allow the user to adjust
+##                    font size and screen layout for better accessibility, if time permits. We could also allow the user to upload documents and a biography,
+##                    which would give more depth to the profile page.
+##                </p>
+##            </div>
+##        </div>
+##    </div>
+##</div>
+##</body>
+##
+#####if($username)
+####<div id="root">
+####    <img width="100" height="100"
+####         style = "margin: 10px"
+####            class="rounded-circle" alt="100x100" src="https://i.imgur.com/hepj9ZS.png"
+####         data-holder-rendered="true">
+####    <h1 class="display-5">$firstname $lastname</h1>
+####
+######        <p id="err-msg"></p>
+####
+####
+####        <h3>
+####            $organization
+####        </h3>
+######        <p>
+####</div>
+####
+####    </form>
+####</div>
+#####else
+####    <h1> <a href="/login">Please Log in</a></h1>
+#####end
+##
+####</body>
+##<style>
+##    .btn-small {
+##        min-width: 150px;
+##        max-width: 150px;
+##    }
+##    .navbar-custom {
+##        background-color: darkblue;
+##        opacity: 0.75;
+##    }
+##    /* Modify brand and text color */
+##
+##    .navbar-custom .navbar-brand,
+##    .navbar-custom .navbar-text {
+##        color: beige;
+##    }
+##
+##    div {
+##        padding: 0px
+##    }
+##
+##    .extra_margin {
+##        margin-top: 20px;
+##    }
+##
+##    .card-body {
+##        margin: 5px
+##    }
+##</style>
+###parse("public/bottom.vm")
+##=======
+#set( $title = "User Profile" )
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE-scale=1">
-    <title>Profile page</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/profile.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css" integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
+    <title>$title</title>
 </head>
 <body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
 <div class="background">
 
@@ -43,123 +263,76 @@
         <div class="backgroundImage"> </div>
         <div class="row extra_margin">
             <div class="col-md-3">
-
-
                 <img width="300" height="300" src="https://i.imgur.com/hepj9ZS.png" class="rounded-circle mx-auto d-block"/>
                 <div class="card p-4 mt-1">
-                    #if($firstname && $lastname)
-                        <h2 class="card-title">$firstname $lastname</h2>
-
-                        <h4 class="display-5">$username</h4>
-                        <h4 class="display-5">$status</h4>
-                        <h4 class="display-5">$major</h4>
-                        <h4 class="display-5">$organization</h4>
+                    #if($aUser[0].firstName)
+                        <h2 class="card-title">$aUser[0].firstName $aUser[0].lastName</h2>
+                        <h4 class="display-5">$aUser[0].email</h4>
+                        <h4 class="display-5">$aUser[0].status</h4>
+                        <h4 class="display-5">$aUser[0].organization</h4>
                         ##                    <div class="card-body">
-                        <div class="row">
-                            <button type="button" class="btn btn-success btn-small btn-sm mt-2 ml-2 mr-2" data-toggle="modal" data-target="#userInfoModal" >
-                                Edit information
-                            </button>
-
-                            <button type="button" class="btn btn-danger btn-small btn-sm mt-2" data-toggle="modal" data-target="#changePasswordModal">
-                                Change Password
-                            </button>
-                        </div>
+                        ##<div class="row"></div>
                         ##                    </div>
-                        <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Edit User Info</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        ...
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        ...
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     #else
+                        <h4 class="display-5">$aUser[0].email</h4>
+                        Please update user information using the button below.
                     #end
+                    <button type="button" class="btn btn-success btn-small btn-sm mt-2 ml-2 mr-2" data-toggle="modal" data-target="#userInfoModal" >Edit Information</button>
+                    <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit User Info</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="text" class="form-control" placeholder="Firstname" aria-describedby="basic-addon2" id="user_firstname">
+                                    <input type="text" class="form-control" placeholder="Lastname" aria-describedby="basic-addon2" id="user_lastname">
+                                    <input type="text" class="form-control" placeholder="Status" aria-describedby="basic-addon2" id="user_status">
+                                    <input type="text" class="form-control" placeholder="Organization" aria-describedby="basic-addon2" id="user_organization">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" id="save_info">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-
-
             </div>
             <div class="col-md-9">
-                <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#editSettingsModal">Edit settings</button>
+                <p class="lead" style="page-break-after: always">
+                    #if($aUser[0].summary)
+                        $aUser[0].summary
+                    #else
+                        Please update user summary using the button below.
+                    #end
+                </p>
 
-                <div class="modal fade" id="editSettingsModal" tabindex="-1" role="dialog" aria-labelledby="editSettingsModalLabel" aria-hidden="true">
+                <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#editSummaryModal">Edit Summary</button>
+
+                <div class="modal fade" id="editSummaryModal" tabindex="-1" role="dialog" aria-labelledby="editSummaryModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Edit Settings</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Edit User Summary</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                ...
+                                <input type="text" class="form-control" placeholder="User summary" aria-describedby="basic-addon2" id="user_summary">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="submit" class="btn btn-primary" id="save_summary">Save changes</button>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
-                <table class="table table-hover">
-                    <tbody id="all-lists">
-                        #foreach($taskList in $lists)
-                        <tr>
-                            <td class="list-row" id="taskList-id-$taskList.getId()" >$taskList.listName</td>
-                            <td style="text-align: right"><button class="delete_list btn btn-fail " type="button"  >Delete List</button></td>
-                        </tr>
-                        #end
-                    </tbody>
-                </table>
-
-                <p class="lead" style="page-break-after: always">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                </p>
-                <p class="lead" style="page-break-after: always">
-                    Here we could use the empty space to allow the user to adjust certain settings. Maybe we could include a dark mode,
-                    or other options that allow the user to change the color patterns of the application. Similarly, we could allow the user to adjust
-                    font size and screen layout for better accessibility, if time permits. We could also allow the user to upload documents and a biography,
-                    which would give more depth to the profile page.
-                </p>
             </div>
         </div>
     </div>
@@ -218,4 +391,6 @@
         margin: 5px
     }
 </style>
-#parse("public/bottom.vm")
+<script src="js/user.js"></script>
+</html>
+>>>>>>> 396ee9479de5a8255a671e566e7500934122d302

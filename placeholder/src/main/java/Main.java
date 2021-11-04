@@ -1,3 +1,4 @@
+import Functionality.textFunctions;
 import com.google.gson.Gson;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
@@ -48,17 +49,63 @@ public class Main {
         return DaoManager.createDao(connectionSource, TaskNote.class);
     }
 
-    private static void updateNote(String taskName, String taskNote, Dao<TaskNote, Integer> dao) throws SQLException {
+    private static void updateNote(String taskName, String taskNote, String isCheckedGrammar, String isCheckedSpelling, String isCheckedCapital, String isCheckedLongRunning, Dao<TaskNote, Integer> dao) throws SQLException {
+
         List<TaskNote> check = dao.queryForEq("taskName", taskName);
+
         if (check.size() == 0) {
+            textFunctions text_functions = new textFunctions();
+
+            if (isCheckedGrammar.equals("Yes")) {
+                taskNote = text_functions.fixMissingFullStop(taskNote);
+            }
+            if (isCheckedSpelling.equals("Yes")) {
+                taskNote = text_functions.fixSpellingIssues(taskNote);
+            }
+            if (isCheckedCapital.equals("Yes")) {
+                taskNote = text_functions.fixCapitalLettersInString(taskNote);
+            }
+            if (isCheckedLongRunning.equals("Yes")) {
+                taskNote = text_functions.fixLongRunningSentence(taskNote);
+            }
             TaskNote newTaskNote = new TaskNote(taskName, taskNote);
+
             dao.create(newTaskNote);
         } else {
+            textFunctions text_functions = new textFunctions();
+
+            if (isCheckedGrammar.equals("Yes")) {
+                taskNote = text_functions.fixMissingFullStop(taskNote);
+                System.out.print(taskNote);
+            }
+            if (isCheckedSpelling.equals("Yes")) {
+                taskNote = text_functions.fixSpellingIssues(taskNote);
+                System.out.print(taskNote);
+            }
+            if (isCheckedCapital.equals("Yes")) {
+                taskNote = text_functions.fixCapitalLettersInString(taskNote);
+                System.out.print(taskNote);
+            }
+
             UpdateBuilder<TaskNote, Integer> builder = dao.updateBuilder();
+
             builder.updateColumnValue("taskNote", taskNote);
             builder.where().eq("taskName", taskName);
             dao.update(builder.prepare());
         }
+    }
+
+    private static void updateUser(String useremail, String firstName, String lastName, String organization, String status,
+                                   String summary, Dao<User, Integer> dao) throws SQLException {
+        List<User> check = dao.queryForEq("email", useremail);
+        UpdateBuilder<User, Integer> builder = dao.updateBuilder();
+        if (firstName != "" & firstName != null) {builder.updateColumnValue("firstName", firstName);}
+        if (lastName != "" & lastName!= null) {builder.updateColumnValue("lastName", lastName);}
+        if (organization != "" & organization != null) {builder.updateColumnValue("organization", organization);}
+        if (status != "" & status != null) {builder.updateColumnValue("status", status);}
+        if (summary != "" & summary != null) {builder.updateColumnValue("summary", summary);}
+        builder.where().eq("email", useremail);
+        dao.update(builder.prepare());
     }
 
     public static void main(String[] args) {
@@ -129,9 +176,37 @@ public class Main {
         });
 
         Spark.get("/userprofile", (req, res) -> {
+            //TODO: LY - now the email is used as userid, fix that in the future.
+
+            String userid;
+            // if (req.cookie("userid") != null) {}
+            userid = req.cookie("userid");
+            Dao<User, Integer> userDao = getUserORMLiteDao();
+            List<User> aUser = userDao.queryForEq("email", userid);
             Map<String, Object> model = new HashMap<>();
+            model.put("aUser", aUser);
             return new ModelAndView(model, "public/profile.vm");
         }, new VelocityTemplateEngine());
+
+        Spark.put("/userprofile", (req, res) -> {
+            //TODO: LY - now the email is used as userid, fix that in the future.
+            String useremail;
+            useremail = req.cookie("userid");
+
+            String firstname = req.queryParams("firstName");
+            String lastname = req.queryParams("lastName");
+            String organization = req.queryParams("organization");
+            String summary = req.queryParams("summary");
+            String status = req.queryParams("status");
+
+            Dao<User, Integer> userDao = getUserORMLiteDao();
+            updateUser(useremail, firstname, lastname, organization, status, summary, userDao);
+            res.status(201);
+            res.type("application/json");
+            List<User> aUser = userDao.queryForEq("email", useremail);
+            return aUser.get(0).toJsonString();
+        });
+
 
         Spark.get("/showList", (req, res) -> {
             String listId = req.queryParams("listId");
@@ -239,9 +314,17 @@ public class Main {
         Spark.put("/addNotes", (req, res) -> {
             String taskName = req.queryParams("taskName");
             String taskNote = req.queryParams("taskNote");
+            String isCheckedGrammar = req.queryParams("isCheckedGrammar");
+            //System.out.println(isCheckedGrammar);
+            String isCheckedSpelling = req.queryParams("isCheckedSpelling");
+            //System.out.println(isCheckedSpelling);
+            String isCheckedCapital = req.queryParams("isCheckedCapital");
+            //System.out.println(isCheckedCapital);
+            String isCheckedLongRunning = req.queryParams("isCheckedLongRunning");
+
 
             Dao<TaskNote, Integer> noteDao = getTaskNoteRMLiteDao();
-            updateNote(taskName, taskNote, noteDao);
+            updateNote(taskName, taskNote, isCheckedGrammar,isCheckedSpelling,isCheckedCapital, isCheckedLongRunning,noteDao);
             res.status(201);
             res.type("application/json");
             List<TaskNote> ems2 = noteDao.queryForEq("taskName", taskName);

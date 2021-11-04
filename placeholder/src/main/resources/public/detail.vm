@@ -69,6 +69,22 @@
                             </button>
                         </div>
                         <input type="text" class="form-control" placeholder="Notes" aria-label="Task" aria-describedby="basic-addon2" id = "taskNote">
+                        <div>
+                            <input type="checkbox" id="fixGrammar" name="fixGrammar" value="YesGrammar" style="margin-left: auto;">
+                            <label for="fixGrammar">Fix Fullstop</label>
+                            <div>
+                                <input type="checkbox" id="fixSpelling" name="fixSpelling" value="YesSpelling" style="margin-left: auto;">
+                                <label for="fixSpelling">Fix Spelling</label>
+                                <div>
+                                    <input type="checkbox" id="fixCapital" name="fixCapital" value="YesCapital" style="margin-left: auto;">
+                                    <label for="fixCapital">Fix Capital</label>
+                                    <div>
+                                        <input type="checkbox" id="fixLongRunning" name="fixLongRunning" value="YesLongRunning" style="margin-left: auto;">
+                                        <label for="fixLongRunning">Fix Long Running</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary" id="submit_notes">Save changes</button>
