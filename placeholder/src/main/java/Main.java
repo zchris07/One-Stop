@@ -307,7 +307,19 @@ public class Main {
 
         Spark.put("/schedule", (req,res) -> {
             Schedule schedule= new Schedule();
-            return schedule.getAllTaskDate();
+            String userid;
+            if (req.cookie("userid") != null) {
+                userid = req.cookie("userid");
+            }
+            else {
+                userid = "";
+            }
+            Dao<TaskList, Integer> emDao = getTaskListRMLiteDao();
+            QueryBuilder<TaskList, Integer> builder = emDao.queryBuilder();
+
+            List<TaskList> ems = builder.where().eq("userId", userid).query();
+//            res.type("application/json");
+            return schedule.getAllTaskDate(userid);
         });
 
         Spark.get("/showDetail", (req, res) -> {
