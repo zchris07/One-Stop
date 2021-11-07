@@ -3,6 +3,7 @@ import com.google.gson.Gson;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -209,11 +210,23 @@ public class Main {
 
 
         Spark.get("/showList", (req, res) -> {
+            String userid;
+            if (req.cookie("userid") != null) {
+                userid = req.cookie("userid");
+            }
+            else {
+                userid = "";
+            }
+            Dao<TaskList, Integer> emDao = getTaskListRMLiteDao();
             String listId = req.queryParams("listId");
             Integer listIdInt = Integer.parseInt(listId);
-            Dao<TaskList, Integer> emDao = getTaskListRMLiteDao();
-            List<TaskList> ems = emDao.queryForEq("listId", listIdInt);
+            QueryBuilder<TaskList, Integer> builder = emDao.queryBuilder();
+
+            List<TaskList> ems = builder.where().eq("userId", userid).and().eq("listId", listIdInt).query();
             res.type("application/json");
+            if (ems.size() == 0){
+                return "";
+            }
             return  ems.get(0).toJsonString();
         });
         Spark.post("/addList", (req, res) -> {
@@ -334,25 +347,37 @@ public class Main {
 
         Spark.get("/main", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+//            if (req.cookie("userid") != null) {
+//
+//                // if log in info is available, make lists visible to the owner and collabrator
+//                model.put("userid", req.cookie("userid"));
+//                List<TaskList> tasklists = getTaskListRMLiteDao().queryForEq("userid", req.cookie("userid"));
+//                List<WorksOn> worksons = getWorksOnORMLiteDao().queryForEq("collabratorid", req.cookie("userid"));
+//                for(int i=0;i< worksons.size();i++){
+//                    String listid = worksons.get(i).getListid();
+//                    List<TaskList> cur = getTaskListRMLiteDao().queryBuilder().where().eq("userId", userid).and().eq("listName", listIdInt).query();
+//                    if(cur.size()!=0)
+//                        tasklists.addAll(cur);
+//                }
+//                model.put("lists", tasklists);
+//            }
+//            else {
+//                List<TaskList> tasklists = getTaskListRMLiteDao().queryForEq("userid", "");
+//                model.put("lists", tasklists);
+//            }
+            String userid;
             if (req.cookie("userid") != null) {
-
-                // if log in info is available, make lists visible to the owner and collabrator
-                model.put("userid", req.cookie("userid"));
-                List<TaskList> tasklists = getTaskListRMLiteDao().queryForEq("userid", req.cookie("userid"));
-                List<WorksOn> worksons = getWorksOnORMLiteDao().queryForEq("collabratorid", req.cookie("userid"));
-                for(int i=0;i< worksons.size();i++){
-                    String listid = worksons.get(i).getListid();
-                    List<TaskList> cur = getTaskListRMLiteDao().queryForEq("listName", listid);
-                    if(cur.size()!=0)
-                        tasklists.addAll(cur);
-                }
-                model.put("lists", tasklists);
+                userid = req.cookie("userid");
             }
             else {
-                List<TaskList> tasklists = getTaskListRMLiteDao().queryForEq("userid", "");
-                model.put("lists", tasklists);
+                userid = "";
             }
+            Dao<TaskList, Integer> emDao = getTaskListRMLiteDao();
+            QueryBuilder<TaskList, Integer> builder = emDao.queryBuilder();
 
+            List<TaskList> ems = builder.where().eq("userId", userid).query();
+//            res.type("application/json");
+            model.put("lists",ems);
             return new ModelAndView(model, "public/index.vm");
         }, new VelocityTemplateEngine());
 
