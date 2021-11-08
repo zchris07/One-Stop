@@ -67,7 +67,7 @@
                         <h4 class="display-5">$aUser[0].email</h4>
                         Please update user information using the button below.
                     #end
-                    <button type="button" class="btn btn-success btn-small btn-sm mt-2 ml-2 mr-2" data-toggle="modal" data-target="#userInfoModal" >Edit Information</button>
+                    <button type="button" class="btn btn-success btn-small btn-sm mt-2 mr-2" data-toggle="modal" data-target="#userInfoModal" >Edit Information</button>
                     <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -155,8 +155,8 @@
     ##</body>
 <style>
     .btn-small {
-        min-width: 150px;
-        max-width: 150px;
+        min-width: 130px;
+        max-width: 130px;
     }
     .navbar-custom {
         background-color: darkblue;
