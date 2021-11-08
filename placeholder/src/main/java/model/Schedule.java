@@ -19,10 +19,9 @@ public class Schedule {
 //        TableUtils.dropTable(connectionSource, TaskList.class,false);
         return DaoManager.createDao(connectionSource, TaskList.class);
     }
-    public String getAllTaskDate() throws SQLException {
-        List<TaskList> tasklists = getTaskListRMLiteDao().queryForAll();
-
-        return taskDateListToJsonString(tasklists.get(0));
+    public String getAllTaskDate(String userid) throws SQLException {
+        List<TaskList> taskLists = getTaskListRMLiteDao().queryForEq("userId", userid);
+        return taskDateListToJsonString(taskLists.get(0));
     }
     public String taskDateListToJsonString(TaskList taskList_whole) {
         StringBuilder sb = new StringBuilder();

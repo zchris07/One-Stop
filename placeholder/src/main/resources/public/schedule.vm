@@ -180,6 +180,12 @@
         background-color: lightskyblue;
         border-color: steelblue;
     }
+    .text-light{
+        color: white;
+    }
+    .bg-primary{
+        color: white;
+    }
     .btn-fail {
         color: midnightblue;
         background-color: slateblue;

@@ -66,7 +66,7 @@ for (let i = 0; i < 6; i++) {
             }
             for (let date_in_result of result){
                 if (Number(date_in_result[0]) === year && Number(date_in_result[1])-1===month &&Number(date_in_result[2])===date ){
-                    cell.classList.add("bg-primary");
+                    cell.classList.add("text-light");
                     let to_return =  "Your Task : "+date_in_result[3]
                     cellText = document.createTextNode(to_return);
                 }
