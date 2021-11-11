@@ -1,0 +1,185 @@
+#set( $title = "User Profile" )
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css" integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
+    <title>$title</title>
+</head>
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+<div class="background">
+
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <a class="navbar-brand" href="#">ONE STOP</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="./main">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Schedule</a>
+                </li>
+            </ul>
+            ##        <form class="form-inline my-2 my-lg-0">
+            ##            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            ##            <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+            ##        </form>
+            ##            <button type="button" class="btn btn-profile btn-circle btn-xl"></button>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="backgroundImage"> </div>
+        <div class="row extra_margin">
+            <div class="col-md-3">
+                <img width="300" height="300" src="https://i.imgur.com/hepj9ZS.png" class="rounded-circle mx-auto d-block"/>
+                <div class="card p-4 mt-1">
+                    ## TODO: LY - better logic here.
+                    #if($aUser[0].firstName || $aUser[0].lastName || $aUser[0].status || $aUser[0].organization)
+
+                        #if($aUser[0].firstName && $aUser[0].lastName)
+                            <h2 class="card-title">$aUser[0].firstName $aUser[0].lastName</h2>
+                        #else
+                            Please update user information using the button below with at least first name and last name.
+                        #end
+                        #if($aUser[0].email)
+                            <h4 class="display-5">$aUser[0].email</h4>
+                        #end
+                        #if($aUser[0].status)
+                            <h4 class="display-5">$aUser[0].status</h4>
+                        #end
+                        #if($aUser[0].organization)
+                            <h4 class="display-5">$aUser[0].organization</h4>
+                        #end
+
+                        ##                    <div class="card-body">
+                        ##<div class="row"></div>
+                        ##                    </div>
+                    #else
+                        <h4 class="display-5">$aUser[0].email</h4>
+                        Please update user information using the button below.
+                    #end
+                    <button type="button" class="btn btn-success btn-small btn-sm mt-2 mr-2" data-toggle="modal" data-target="#userInfoModal" >Edit Information</button>
+                    <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit User Info</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="text" class="form-control" placeholder="Firstname" aria-describedby="basic-addon2" id="user_firstname">
+                                    <input type="text" class="form-control" placeholder="Lastname" aria-describedby="basic-addon2" id="user_lastname">
+                                    <input type="text" class="form-control" placeholder="Status" aria-describedby="basic-addon2" id="user_status">
+                                    <input type="text" class="form-control" placeholder="Organization" aria-describedby="basic-addon2" id="user_organization">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" id="save_info">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <p class="lead" style="page-break-after: always">
+                    #if($aUser[0].summary)
+                        $aUser[0].summary
+                    #else
+                        Please update user summary using the button below.
+                    #end
+                </p>
+
+                <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#editSummaryModal">Edit Summary</button>
+
+                <div class="modal fade" id="editSummaryModal" tabindex="-1" role="dialog" aria-labelledby="editSummaryModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Edit User Summary</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="text" class="form-control" placeholder="User summary" aria-describedby="basic-addon2" id="user_summary">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" id="save_summary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+    ###if($username)
+    ##<div id="root">
+    ##    <img width="100" height="100"
+    ##         style = "margin: 10px"
+    ##            class="rounded-circle" alt="100x100" src="https://i.imgur.com/hepj9ZS.png"
+    ##         data-holder-rendered="true">
+    ##    <h1 class="display-5">$firstname $lastname</h1>
+    ##
+    ####        <p id="err-msg"></p>
+    ##
+    ##
+    ##        <h3>
+    ##            $organization
+    ##        </h3>
+    ####        <p>
+    ##</div>
+    ##
+    ##    </form>
+    ##</div>
+    ###else
+    ##    <h1> <a href="/login">Please Log in</a></h1>
+    ###end
+
+    ##</body>
+<style>
+    .btn-small {
+        min-width: 130px;
+        max-width: 130px;
+    }
+    .navbar-custom {
+        background-color: darkblue;
+        opacity: 0.75;
+    }
+    /* Modify brand and text color */
+
+    .navbar-custom .navbar-brand,
+    .navbar-custom .navbar-text {
+        color: beige;
+    }
+
+    div {
+        padding: 0px
+    }
+
+    .extra_margin {
+        margin-top: 20px;
+    }
+
+    .card-body {
+        margin: 5px
+    }
+</style>
+<script src="js/user.js"></script>
+</html>

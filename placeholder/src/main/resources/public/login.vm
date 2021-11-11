@@ -1,0 +1,146 @@
+#set( $title = "Login Page" )
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Placeholder</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    ##    <link href="../public/css/login.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<div id="root">
+    <h1 class="h1"></h1>
+    <div class="border border-danger rounded" id="err-msg-wrapper">
+        <p id="err-msg"></p>
+    </div>
+    <form accept-charset="UTF-8" action="#" class="border rounded" id="login-form" method="post">
+        <h3>
+            Sign in to
+        </h3>
+        <h3>
+            Placeholder
+        </h3>
+        <p>
+
+        </p>
+        <div class="login_box">
+            <input class="email" name="email" placeholder="email" required type="email" >
+            <input class="password" name="password" placeholder="password" required type="password" >
+            <input name="type" type="text" value="customer" readonly style="display: none">
+            <input class="border rounded font-weight-bold" id="login-submit" type="submit" value="Log in" >
+            <a href = "./signup" class="border rounded font-weight-bold btn-primary" id="jump-to-sign-up" >Sign up</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<style>
+    #root, form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #root {
+        align-items: center;
+    }
+
+    form {
+        background-color: #fff;
+        padding: 20px;
+    }
+
+    h1 {
+        padding-top: 150px;
+    }
+
+    h2 {
+        padding-top: 80px;
+        padding-bottom: 100px;
+        text-align:center;
+    }
+
+    input {
+        display: block;
+        width: 300px;
+
+    }
+
+    input[type="submit"] {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        color: white;
+        cursor: pointer;
+        background-color: #007bff;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #006aee;
+    }
+
+    label {
+        margin-bottom: 20px;
+    }
+
+    body {
+        background-image: url('https://wallpaperaccess.com/full/513246.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+        opacity: 0.9;
+    }
+
+    #err-msg-wrapper {
+        background-color: #ffdce0;
+        padding: 10px 20px;
+        margin: 10px 0;
+        width: 340px;
+        display: none;
+    }
+
+    #err-msg {
+        margin: 0;
+        padding: 0;
+        color: #86181d;
+    }
+    .login_box .email{
+        display: block;
+        width: 100%;
+        margin-bottom: 20px;
+        border: 0;
+        padding: 10px;
+        border-bottom: 1px solid rgb(158, 157, 157);
+        font-size: 15px;
+        outline: none;
+    }
+    .login_box .password{
+        display: block;
+        width: 100%;
+        margin-bottom: 20px;
+        border: 0;
+        padding: 10px;
+        border-bottom: 1px solid rgb(163, 162, 162);
+        font-size: 15px;
+        outline: none;
+    }
+    .btn-primary {
+        display: block;
+        width: 100%;
+        margin-bottom: 20px;
+        border: 0;
+        padding: 10px;
+        border-bottom: 1px solid rgb(163, 162, 162);
+        font-size: 15px;
+        outline: none;
+        color: midnightblue;
+        background-color: lightskyblue;
+        border-color: steelblue;
+        text-align:center;
+    }
+
+    #login-submit {
+        margin-top: 10px;
+    }
+</style>
