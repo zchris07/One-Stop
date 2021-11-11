@@ -1,0 +1,312 @@
+#set( $title = "Welcome Page" )
+###set( $plists = ["list1","list2","list3"])
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css" integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
+    <title>$title</title>
+</head>
+<body>
+
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
+<!DOCTYPE html>
+<!-- to make responsive -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- include bootstrap css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css" integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
+<!-- include jquery and bootstrap js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+<!-- include sweetalert for displaying dialog messages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<head>
+<body>
+<div class="background">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">ONE STOP</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="./main">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./schedule">Schedule</a>
+                </li>
+            </ul>
+            ##        <form class="form-inline my-2 my-lg-0">
+            ##            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            ##            <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+            ##        </form>
+            <a href="./userprofile"  class="btn btn-profile btn-circle btn-xl" id ="profile-btn"> </a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm box gutter">
+                <div class="row" style="margin-top: 50px;">
+                    <div class="col-md-12">
+                        <div class="input-group">
+##                            <input type="text" class="form-control" placeholder="List Name" aria-label="List Name" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-example-modal-lg">Create List</button>
+                                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <label>Add A List:</label>
+                                            <input type="text" class="form-control" placeholder="List Name" aria-label="Task" aria-describedby="basic-addon2" id="listName">
+##                                            <input type="text" class="form-control" placeholder="Owner Email" aria-label="Owner" aria-describedby="basic-addon2" id="userid">
+                                            <input type="text" class="form-control" placeholder="Collaborator Emails. Separate by ;" aria-label="Collaborators" aria-describedby="basic-addon2" id="colabidstring">
+                                            <div class="container" style="margin-top: 50px; margin-bottom: 50px">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                    <label class="form-check-label" for="flexSwitchCheckDefault">List Functional Option</label>
+                                                </div>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" >
+                                                    <label class="form-check-label" for="flexSwitchCheckDefault">List Functional Option</label>
+                                                </div>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" >
+                                                    <label class="form-check-label" for="flexSwitchCheckDefault">List Functional Option</label>
+                                                </div>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" >
+                                                    <label class="form-check-label" for="flexSwitchCheckDefault">List Functional Option</label>
+                                                </div>
+                                                <button class="btn btn-primary" type="submit" data-toggle="modal" data-target=".bd-list-modal-lg" id = "submit_add_list">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+##                                <button class="btn btn-fail" type="button">Delete List</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container" style="margin-top: 50px; margin-bottom: 50px;">
+                    <table class="table table-hover">
+##                        <tbody>
+##                        <tr style="transform: rotate(0);">
+##                            <th scope="row"><a href="#" class="stretched-link">1</a></th>
+##                            <td>List 1</td>
+##                        </tr>
+##                        <tr>
+##                            <th scope="row">2</th>
+##                            <td>List 2</td>
+##                        </tr>
+##                        <tr>
+##                            <th scope="row">3</th>
+##                            <td>List 3</td>
+##                        </tr>
+##                        </tbody>
+                        <tbody id="all-lists">
+                            #foreach($taskList in $lists)
+                            <tr>
+                                <td class="list-row" id="taskList-id-$taskList.getId()" >$taskList.listName</td>
+                                <td style="text-align: right"><button class="delete_list btn btn-fail " type="button"  >Delete List</button></td>
+                            </tr>
+                            #end
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm box gutter">
+                <div class="container" style="margin-top: 50px; margin-bottom: 50px;">
+
+                    <!-- button to add task -->
+                    <div class="row" style="margin-bottom: 50px">
+                        <div class="col-md-12">
+                            <div class="input-group">
+##                                <input type="text" class="form-control" placeholder="Task" aria-label="Task" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-list-modal-lg" id = "add_task_button">Add Task</button>
+                                    <div class="modal fade bd-list-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <h4>Add A Task:</h4>
+                                                <input type="text" class="form-control" placeholder="Task Name" aria-label="Task" aria-describedby="basic-addon2" id = "taskName">
+                                                <label for="start">Due date:</label>
+
+                                                <input type="date" id="dueDay" name="trip-start"
+                                                       value="2021-10-19"
+                                                       min="1901-01-01" max="2030-12-31" >
+                                                <label for="start">Start date:</label>
+
+                                                <input type="date" id="date" name="trip-start"
+                                                       value="2021-10-19"
+                                                       min="1901-01-01" max="2030-12-31" >
+                                                <button class="btn btn-primary" type="submit" data-toggle="modal" data-target=".bd-list-modal-lg" id = "submit_add_task">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- show all tasks -->
+                    <table class="table">
+                        <caption class="text-center">All Tasks</caption>
+                        <tr>
+                            <th>Task</th>
+                            <th>Project</th>
+                            <th>EndDate</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+
+                        <tbody id="all-tasks">
+##                        #foreach($pitem in $pitems)
+##                        <tr>
+##                            <td><button class="delete_task btn btn-fail" type="button" >Delete Task</button></td>
+##                        </tr>
+
+##                        #end
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- modal to add project and task -->
+                <div class="modal fade" id="addTaskModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Add Task</h5>
+                                <button class="close" type="button" data-dismiss="modal">x</button>
+                            </div>
+
+                            <div class="modal-body">
+                                <form method="POST" onsubmit="return taskObj.addTask(this);" id="form-task-hour-calculator">
+
+                                    <!-- select project from already created -->
+                                    <div class="form-group">
+                                        <label>Project</label>
+                                        <select name="project" id="add-task-project" class="form-control" required></select>
+                                    </div>
+
+                                    <!-- create new project -->
+                                    <div class="form-group">
+                                        <label>New Project</label>
+                                        <input type="text" name="new_project" id="add-project" class="form-control" placeholder="Project Name">
+
+                                        <button type="button" onclick="taskObj.addProject();" class="btn btn-primary" style="margin-top: 10px;">Add Project</button>
+                                    </div>
+
+                                    <!-- enter task -->
+                                    <div class="form-group">
+                                        <label>Task</label>
+                                        <input type="text" name="task" class="form-control" placeholder="What are you going to do ?" required />
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- form submit button -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" form="form-task-hour-calculator" class="btn btn-primary">Add Task</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</head>
+
+
+<style>
+    /* style when project is started */
+    .started {
+        color: white;
+        font-weight: bold;
+        background: green;
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+    /* style when project is completed */
+    .completed {
+        color: white;
+        font-weight: bold;
+        background: greenyellow;
+        padding: 5px;
+        border-radius: 5px;
+    }
+    .navbar-custom {
+        background-color: darkblue;
+        opacity: 0.75;
+    }
+    /* Modify brand and text color */
+
+    .navbar-custom .navbar-brand,
+    .navbar-custom .navbar-text {
+        color: beige;
+    }
+    .btn-primary {
+        color: midnightblue;
+        background-color: lightskyblue;
+        border-color: steelblue;
+    }
+    .btn-fail {
+        color: midnightblue;
+        background-color: slateblue;
+        border-color: darkslateblue;
+    }
+    .btn-profile {
+        background-image: url("https://www.pngfind.com/pngs/m/282-2828527_supermario-supermariomaker-mystery-mushroom-mariomushroom-8-bit-kirby.png");
+        background-size: 70px;
+        width: 70px;
+        height: 70px;
+    }
+    .btn-circle.btn-xl {
+        width: 70px;
+        height: 70px;
+        padding: 10px 16px;
+        border-radius: 35px;
+        font-size: 12px;
+        text-align: center;
+    }
+    .gutter {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 25px;
+    }
+    .box{
+        position: relative;
+    }
+    .box:after {
+        content:'';
+        background-color: whitesmoke;
+        position: absolute;
+        top:0px;
+        left: 0px;
+        width:100%;
+        height:100%;
+        z-index:-1;
+        opacity: 0.7; /* Here is your opacity */
+    }
+    body {
+        background-image: url('https://wallpaperaccess.com/full/513246.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+        opacity: 0.9;
+    }
+</style>
+<script src="js/pitem.js"></script>
+</body>
+
+</html>
