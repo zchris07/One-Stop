@@ -43,22 +43,24 @@ public class APIEndpoint {
             String email = req.queryParams("email");
             String password = req.queryParams("password");
 
-            // password secure hash
-            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-            messageDigest.update(password.getBytes());
-            String hashedPassword = new String(messageDigest.digest());
 
-            User ur = new User(email, hashedPassword);
             Dao userDao = getUserORMLiteDao();
             List<User> aUser = userDao.queryForEq("email", email);
-            if (aUser != null) {
+            System.out.println(aUser);
+            if (!aUser.isEmpty()) {
+                System.out.println("here");
                 res.redirect("/accountexist");
-                return null;
+            } else {
+                // password secure hash
+                MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+                messageDigest.update(password.getBytes());
+                String hashedPassword = new String(messageDigest.digest());
+                User ur = new User(email, hashedPassword);
+                userDao.create(ur);
+                res.cookie("userid", email);
+                res.status(201);
+                res.redirect("/main");
             }
-            userDao.create(ur);
-            res.cookie("userid", email);
-            res.status(201);
-            res.redirect("/main");
             return null;
         });
     }
