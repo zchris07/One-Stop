@@ -128,18 +128,6 @@ window.addEventListener('DOMContentLoaded', e => {
     showTaskInList(currentList || 1);
 })
 
-// document.querySelectorAll(".delete_task").item(0)
-// document.querySelectorAll(".delete_task").item(0).addEventListener('click', function (event) {
-//     taskName = event.target.parentElement.parentElement.firstElementChild.innerHTML
-//     console.log("clicked")
-//     console.log(taskName)
-//     // console.log(duration_day)
-//     // console.log(date_string)
-//     fetch('http://localhost:7000/main?taskName=' + taskName , {
-//         method: 'Delete',
-//     });
-// });
-//
 function validateTaskDuration() {
     const taskName = document.getElementById("taskName").value;
     if (taskName ==="" ) {

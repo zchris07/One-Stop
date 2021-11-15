@@ -27,7 +27,7 @@
         </p>
         <div class="sign-up-box">
             <input class="email" name="email" placeholder="email" required type="email" >
-            <input class="password" name="password" placeholder="password" required type="password" >
+            <input class="password" name="password" id="signup_psw" placeholder="password" required type="password" >
             <input name="type" type="text" value="customer" readonly style="display: none">
             <input class="border rounded font-weight-bold btn-primary" id="sign-up-submit" type="submit" value="Sign up" >
         </div>
