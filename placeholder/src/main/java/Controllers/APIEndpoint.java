@@ -363,6 +363,11 @@ public class APIEndpoint {
                 model.put("lists", tasklists);
             }
 
+//            for profile image
+            Dao userDao = getUserORMLiteDao();
+            List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
+            model.put("imageUrl", aUser.get(0).getProfileImage());
+
             return new ModelAndView(model, "public/index.vm");
         }, new VelocityTemplateEngine());
     }

@@ -64,3 +64,8 @@ document.getElementById("image4").addEventListener('click', function () {
         method: 'Put',
     }).then(res => window.location.reload = window.location.reload(true));
 });
+document.getElementById("profile-btn").addEventListener('click', function () {
+    console.log("clicked");
+    let source = document.getElementById("profile").src;
+    console.log(source)
+});
