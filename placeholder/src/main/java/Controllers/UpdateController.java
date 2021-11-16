@@ -60,7 +60,7 @@ public class UpdateController {
     }
 
     public static void updateUser(String useremail, String firstName, String lastName, String organization, String status,
-                                   String summary, Dao<User, Integer> dao) throws SQLException {
+                                   String summary, String image, Dao<User, Integer> dao) throws SQLException {
         List<User> check = dao.queryForEq("email", useremail);
         UpdateBuilder<User, Integer> builder = dao.updateBuilder();
         if (firstName != "" & firstName != null) {
@@ -77,6 +77,9 @@ public class UpdateController {
         }
         if (summary != "" & summary != null) {
             builder.updateColumnValue("summary", summary);
+        }
+        if (image != "" & image != null) {
+            builder.updateColumnValue("profileImage", image);
         }
         builder.where().eq("email", useremail);
         dao.update(builder.prepare());

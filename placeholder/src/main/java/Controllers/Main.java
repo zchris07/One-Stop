@@ -17,6 +17,8 @@ public class Main {
         APIEndpoint.loginGet();
         APIEndpoint.resetGet();
         APIEndpoint.resetPost();
+        APIEndpoint.nonexistGet();
+        APIEndpoint.nonexistPswGet();
         APIEndpoint.userprofileGet();
         APIEndpoint.userprofilePut();
         APIEndpoint.showlistGet();

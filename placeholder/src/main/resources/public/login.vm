@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <title>Placeholder</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css" integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
     ##    <link href="../public/css/login.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-
 <div id="root">
     <h1 class="h1"></h1>
     <div class="border border-danger rounded" id="err-msg-wrapper">
@@ -31,6 +31,7 @@
             <input name="type" type="text" value="customer" readonly style="display: none">
             <input class="border rounded font-weight-bold" id="login-submit" type="submit" value="Log in" >
             <a href = "./signup" class="border rounded font-weight-bold btn-primary" id="jump-to-sign-up" >Sign up</a>
+            <a href = "./resetPassword" class="border rounded font-weight-bold btn-primary" id="jump-to-reset" >Reset Password</a>
         </div>
     </form>
 </div>
