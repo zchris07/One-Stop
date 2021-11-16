@@ -47,7 +47,7 @@
             ##            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             ##            <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
             ##        </form>
-            <input onclick="location.href='./userprofile'" type="image" height="100" width="100"  class="btn btn-profile btn-circle btn-xl" id ="profile-btn" src=$imageUrl>
+            <input onclick="location.href='./userprofile'" type="image" height="100" width="100"  class="btn-xl rounded-circle" id ="profile-btn" src=$imageUrl>
         </div>
     </nav>
     <div class="container">

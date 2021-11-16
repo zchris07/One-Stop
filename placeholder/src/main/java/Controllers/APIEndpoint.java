@@ -286,6 +286,9 @@ public class APIEndpoint {
     public static void scheduleGet(){
         Spark.get("/schedule", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            Dao userDao = getUserORMLiteDao();
+            List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
+            model.put("imageUrl", aUser.get(0).getProfileImage());
             return new ModelAndView(model, "public/schedule.vm");
         }, new VelocityTemplateEngine());
     }
