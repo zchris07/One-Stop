@@ -120,16 +120,22 @@ public class APIEndpoint {
                     res.redirect("/main");
                 } else {
                     // warn
-                    res.redirect("/warn");
+                    res.redirect("/nonexist");
                 }
             } else {
                 // warn
-                res.redirect("/warn");
+                res.redirect("/nonexist");
             }
 
             return null;
         });
 
+    }
+    public static void nonexistGet() {
+        Spark.get("/nonexist", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return new ModelAndView(model, "public/nonexist.vm");
+        }, new VelocityTemplateEngine());
     }
     public static void userprofileGet(){
         Spark.get("/userprofile", (req, res) -> {
