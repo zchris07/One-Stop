@@ -154,6 +154,12 @@ public class APIEndpoint {
             List<User> aUser = userDao.queryForEq("email", userid);
             Map<String, Object> model = new HashMap<>();
             model.put("aUser", aUser);
+            System.out.println(aUser.get(0).getProfileImage());
+            if (aUser.get(0).getProfileImage() == null) {
+                model.put("imageUrl", "https://i.imgur.com/hepj9ZS.png");
+            } else {
+                model.put("imageUrl", aUser.get(0).getProfileImage());
+            }
             return new ModelAndView(model, "public/profile.vm");
         }, new VelocityTemplateEngine());
     }
@@ -168,9 +174,10 @@ public class APIEndpoint {
             String organization = req.queryParams("organization");
             String summary = req.queryParams("summary");
             String status = req.queryParams("status");
+            String image = req.queryParams("profileImage");
 
             Dao<User, Integer> userDao = getUserORMLiteDao();
-            updateUser(useremail, firstname, lastname, organization, status, summary, userDao);
+            updateUser(useremail, firstname, lastname, organization, status, summary, image, userDao);
             res.status(201);
             res.type("application/json");
             List<User> aUser = userDao.queryForEq("email", useremail);
@@ -279,6 +286,9 @@ public class APIEndpoint {
     public static void scheduleGet(){
         Spark.get("/schedule", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            Dao userDao = getUserORMLiteDao();
+            List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
+            model.put("imageUrl", aUser.get(0).getProfileImage());
             return new ModelAndView(model, "public/schedule.vm");
         }, new VelocityTemplateEngine());
     }
@@ -355,6 +365,11 @@ public class APIEndpoint {
                 List<TaskList> tasklists = getTaskListRMLiteDao().queryForEq("userid", "");
                 model.put("lists", tasklists);
             }
+
+//            for profile image
+            Dao userDao = getUserORMLiteDao();
+            List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
+            model.put("imageUrl", aUser.get(0).getProfileImage());
 
             return new ModelAndView(model, "public/index.vm");
         }, new VelocityTemplateEngine());
