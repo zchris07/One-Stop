@@ -77,11 +77,17 @@ The default end-point will re-direct to login page, if no cache was previously s
   4. Fix Long Running-- by selecting this functionality, if the input string is too long, the program finds a conjunction in the sentence and split the
      sentence into half, by putting a comma in front of the conjunction. 
 
-The fix spelling has consistency issue- for some input strings, the Fix Spelling function doesn't work consistently. It will still generate a string that is free of spelling mistakes, but everytime it outputs different string that are similar. However, when we step into debugger hoping to discover where the inconsistency arises, the returning string suddenly becomes consistent. This is a issue that needs to be solved.
+The fix spelling has consistency issue- for some input strings, the Fix Spelling function doesn't work consistently. It will still generate a string that is free of spelling mistakes, but everytime it outputs different string that are similar. However, when we step into debugger hoping to discover where the inconsistency arises, the returning string suddenly becomes consistent. (Update: the string functions still need to be fixed)
 ### Schedule Page
 - A visualization of all tasks added would be displayed in the Monthly Calendar.
 - A weekly calendar would be added in the future so that a auto-schedule algorithm could be displayed more specifically.
 ![alt text](./docs/images/schedule_1.png)
+
+### Auto-scheduling
+- An autoscheduling function is implemented: the program assumes that everyone is avaliable from 9:00 am to 9:00 pm. Then, for each task that user inputs, user needs to specify the duration of the task takes. Depending on the time that the task will take, the task might be split up into multiple parts so that it can fit in to the schedule: e.g. if a task takes 30 hours and the user has a start day of 10/25 and end day of 10/28, then this task will be split into 2 subtasks that takes 12 hours each on 10/26 and 10/27, and 1 subtask that takes 6 hours on 10/28. This feature also remembers the time that user already used: In the previous example, if we were to add another task that takes 4 hours and the user has a start day of 10/25 and end day of 10/28, then this task will be a 4-hour task on 10/28, because the 12 hours of 10/26 and 10/27 are already take.
+
+- When we delete a task, the time that is 'taken' by that task will be given back-- for example, suppose a task A takes 8 hours on 10/26. If we were to add a new task that starts on 10/26 and ends on 10/28, taking 6 hours, then this task will be split into a 4 hour task on 10/26 and a 2 hour task on 10/27. However, if we delete A, then when we add a new task that starts on 10/26 and ends on 10/28, takes 6 hours, then this task will be put as a 6 hour task on 10/26.
+
 
 ## File structures
 - /placeholder/: project folder (change folder name or not)
