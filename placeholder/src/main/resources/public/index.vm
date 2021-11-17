@@ -145,6 +145,8 @@
                                                 <input type="date" id="date" name="trip-start"
                                                        value="2021-10-19"
                                                        min="1901-01-01" max="2030-12-31" >
+                                                <label for="start">Duration: </label>
+                                                <input type="number" id="duration" name="time takes" step = 0.1 min="0">
                                                 <button class="btn btn-primary" type="submit" data-toggle="modal" data-target=".bd-list-modal-lg" id = "submit_add_task">Submit</button>
                                             </div>
                                         </div>
@@ -163,6 +165,7 @@
                             <th>Project</th>
                             <th>EndDate</th>
                             <th>Date</th>
+                            <th>Duration</th>
                             <th></th>
                         </tr>
 

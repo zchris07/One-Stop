@@ -7,6 +7,7 @@ import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 //import model.PItem;
+import kotlin.Pair;
 import model.*;
 import spark.ModelAndView;
 import spark.Spark;
@@ -16,6 +17,7 @@ import java.security.MessageDigest;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import Functionality.scheduleFunctions;
 
 public class Main {
 
@@ -100,6 +102,7 @@ public class Main {
         final int PORT_NUM = 7000;
         Spark.port(PORT_NUM);
         Spark.staticFiles.location("/public");
+        Availability this_available = new Availability();
 
         Spark.get("/", (req, res) -> {
             res.redirect("/login");
@@ -218,6 +221,7 @@ public class Main {
             String taskName = req.queryParams("taskName");
             String dueDay = req.queryParams("dueDay");
             String date_string = req.queryParams("date");
+            Double duration = Double.parseDouble(req.queryParams("duration"));
 
             String pattern = "yyyy-MM-dd";
             SimpleDateFormat formatter = new SimpleDateFormat(pattern);
@@ -226,11 +230,24 @@ public class Main {
             Date dueDay_date = formatter.parse(dueDay);
             Dao<TaskList, Integer> taskDao = getTaskListRMLiteDao();
             List<TaskList> ems = taskDao.queryForEq("listId", listId);
-            ems.get(0).addTask(taskName, dueDay_date, date, taskDao);
+            /*ems.get(0).addTask(taskName, dueDay_date, date, duration,
+                    taskDao);*/
+            /*scheduleFunctions temp = new scheduleFunctions();
+            if (null.equals(this_available)) {
+                this_available = new Availability();
+            }*/
+            scheduleFunctions temp = new scheduleFunctions();
+            Pair<TaskList, Availability> new_avail = temp.scheduleOne(ems.get(0),dueDay_date,date,
+                    taskName,duration,this_available,taskDao);
             res.status(201);
             res.type("application/json");
+            this_available.setThisMap(new_avail.component2().getThisMap());
+
+
             List<TaskList> ems2 = taskDao.queryForEq("listId", listId);
 
+
+            /*return new_avail.component1().toJsonString();*/
             return ems2.get(0).toJsonString();
         });
         Spark.delete("/deleteTask", (req, res) -> {

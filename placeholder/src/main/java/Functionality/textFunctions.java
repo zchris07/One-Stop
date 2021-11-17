@@ -158,6 +158,7 @@ public class textFunctions {
                 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
                 con.setRequestMethod("GET");
                 int response = con.getResponseCode();
+                System.out.print(response);
                 if (response== 200) {
                     Scanner responseReader = new Scanner(con.getInputStream());
                     StringBuffer buffer = new StringBuffer();
@@ -206,6 +207,7 @@ public class textFunctions {
                                 HttpURLConnection ngramcon = (HttpURLConnection) ngramObj.openConnection();
                                 ngramcon.setRequestMethod("GET");
                                 int ngramresponse = ngramcon.getResponseCode();
+                                System.out.print(ngramresponse);
                                 if (ngramresponse== 200) {
                                     Scanner ngramresponseReader = new Scanner(ngramcon.getInputStream());
                                     StringBuffer ngrambuffer = new StringBuffer();

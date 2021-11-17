@@ -29,11 +29,11 @@ public class testTextFunctions {
         textFunctions temp2 = new textFunctions();
         assertEquals("This should work",temp2.fixSpellingIssues("Thise shsould work"));
     }
-    /*
+
     @Test
     public void simpleFixSpelling2(){
         assertEquals("This should be very surreptitious to our users",temp.fixSpellingIssues("Thiiss shuld be verry surreptittious tp our users"));
-    }*/
+    }
 
     @Test
     public void simpleFixFullStop(){
