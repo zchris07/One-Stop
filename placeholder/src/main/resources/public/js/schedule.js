@@ -5,7 +5,7 @@ let selectYear = document.getElementById("year");
 let selectMonth = document.getElementById("month");
 let result = [];
 // function get_date() {
-    // console.log("get dates list")
+// console.log("get dates list")
 
 // }
 let year = 2021;
@@ -64,13 +64,22 @@ for (let i = 0; i < 6; i++) {
             if (result.length === 0){
                 console.log(result);
             }
+            let to_return = ""
+            let flag =0
             for (let date_in_result of result){
                 if (Number(date_in_result[0]) === year && Number(date_in_result[1])-1===month &&Number(date_in_result[2])===date ){
-                    cell.classList.add("text-light");
-                    let to_return =  "Your Task : "+date_in_result[3]
-                    cellText = document.createTextNode(to_return);
+                    // cell.classList.add("text-light");
+                    to_return += "Your task:"+date_in_result[3]
+                    flag =1
+
                 }
             }
+            // console.log(result);
+            if(flag===1){
+                cellText = document.createTextNode(to_return);
+            }
+            // console.log(to_return);
+
             if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                 cell.classList.add("bg-info");
             } // color today's date
@@ -115,29 +124,8 @@ function jump() {
 
 // document.addEventListener('DOMContentLoaded', () => {console.log(result);showCalendar(currentMonth, currentYear)});
 function showCalendar(month, year) {
-
-    // fetch('http://localhost:7000/schedule' , {
-    //     method: 'put',
-    // }).then(res => res.json())
-    //     .then(json=> {
-    //         // console.log(json);
-    //         let firstDay = (new Date(year, month)).getDay();
-    //         let daysInMonth = 32 - new Date(year, month, 32).getDate();
-    //
-    //         let tbl = document.getElementById("calendar-body"); // body of the calendar
-    //         for (let task of json) {
-    //             const result_of_task = task["date"].split("-");
-    //             let current_date_day =Number(result_of_task[0]);
-    //             let current_date_month =Number(result_of_task[1]);
-    //             let current_date_year =Number(result_of_task[2]);
-    //             // console.log(result);
-    //             result.push([current_date_day,current_date_month,current_date_year]);
-    //
-    //         }
-    //         showCalendar(10,2021);
-    //     })
-        console.log(result);
-        if (result.length!==0){
+    console.log(result);
+    if (result.length!==0){
         let firstDay = (new Date(year, month)).getDay();
         let daysInMonth = 32 - new Date(year, month, 32).getDate();
 
@@ -174,20 +162,25 @@ function showCalendar(month, year) {
                     if (result.length === 0){
                         console.log(result);
                     }
+                    let to_return = ""
+                    let flag =0
+                    cell.appendChild(cellText);
                     for (let date_in_result of result){
                         if (Number(date_in_result[0]) === year && Number(date_in_result[1])-1===month &&Number(date_in_result[2])===date ){
-                            cell.classList.add("bg-primary");
-                            let to_return =  "Your Task : "+date_in_result[3]
-                            cellText = document.createTextNode(to_return);
-                        }
-                        else{
-                            // console.log(date_in_result);
+                            cell.appendChild(document.createElement('br'));
+                            to_return = " Your task: "+date_in_result[3]
+                            cellText = document.createTextNode(to_return)
+                            cell.appendChild(cellText);
+                            cell.appendChild(document.createElement('br'));
                         }
                     }
+                    // console.log(result);
+                    // if(flag===1){
+                    //     cellText = document.createTextNode(to_return);
+                    // }
                     if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                         cell.classList.add("bg-info");
                     } // color today's date
-                    cell.appendChild(cellText);
                     row.appendChild(cell);
                     date++;
                 }

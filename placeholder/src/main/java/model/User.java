@@ -27,6 +27,8 @@ public class User {
     private String organization;
     @DatabaseField(canBeNull = true)
     private String status;
+    @DatabaseField(canBeNull = false)
+    private String profileImage = "https://i.imgur.com/hepj9ZS.png";
 
     public User(){
     }
@@ -34,6 +36,7 @@ public class User {
     public User(String email, String hashedPassword) {
         this.email=email;
         this.hashedPassword=hashedPassword;
+        this.profileImage = "https://i.imgur.com/hepj9ZS.png";
     }
 
     public Integer getUserId() {
@@ -83,6 +86,8 @@ public class User {
     public String getStatus() {
         return status;
     }
+    public String getProfileImage() {return profileImage;}
+    public void setProfileImage(String imageUrl) {this.profileImage = imageUrl;}
 
     public void setStatus(String status) {
         this.status = status;
