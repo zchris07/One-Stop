@@ -60,7 +60,6 @@ public class scheduleFunctions {
         return new Pair<>(curr, new Availability(avaliable));
     }
 
-<<<<<<< HEAD
     public Pair<TaskList, Availability> addBackTask(TaskList curr, Date to_add_date,Date to_add_duedate,
                                                     String to_add_name,Double duration, Availability user, Dao<TaskList, Integer> d) throws SQLException, ParseException {
         Map<String, List<Pair<Double, Double>>> avaliable = user.getThisMap();
@@ -110,9 +109,6 @@ public class scheduleFunctions {
         }
         return new Pair<>(curr, new Availability(avaliable));
     }
-
-=======
->>>>>>> parent of 548813a (Merge remote-tracking branch 'origin/alex2' into dev_Zhenyong1)
     public Pair<TaskList, Availability> scheduleOneTest(TaskList curr, Date to_add_date,Date to_add_duedate,
                                                         String to_add_name,Double duration, Availability user) throws SQLException, ParseException {
         Map<String, List<Pair<Double, Double>>> avaliable = user.getThisMap();

@@ -9,12 +9,8 @@ import java.util.*;
 public class Availability {
     private Map<String, List<Pair<Double,Double>>> thisMap;
     public Availability() {
-<<<<<<< HEAD
-        String dt = "2021-10-10";  // Start date
 
-=======
         String dt = "2021-10-01";  // Start date
->>>>>>> parent of 548813a (Merge remote-tracking branch 'origin/alex2' into dev_Zhenyong1)
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         try {
