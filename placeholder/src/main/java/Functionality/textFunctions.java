@@ -158,7 +158,6 @@ public class textFunctions {
                 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
                 con.setRequestMethod("GET");
                 int response = con.getResponseCode();
-                System.out.print(response);
                 if (response== 200) {
                     Scanner responseReader = new Scanner(con.getInputStream());
                     StringBuffer buffer = new StringBuffer();
@@ -207,7 +206,6 @@ public class textFunctions {
                                 HttpURLConnection ngramcon = (HttpURLConnection) ngramObj.openConnection();
                                 ngramcon.setRequestMethod("GET");
                                 int ngramresponse = ngramcon.getResponseCode();
-                                System.out.print(ngramresponse);
                                 if (ngramresponse== 200) {
                                     Scanner ngramresponseReader = new Scanner(ngramcon.getInputStream());
                                     StringBuffer ngrambuffer = new StringBuffer();
@@ -237,7 +235,6 @@ public class textFunctions {
                                 }
                             }
                             if (Character.isUpperCase(list_split[j].charAt(0))) {
-                                System.out.print(max_occur);
                                 String match = possible_matches[max_occur].replaceAll("[^a-zA-Z0-9]","");
                                 reformed_string.add(Character.toUpperCase(match.charAt(0)) + match.substring(1));
                             } else {
