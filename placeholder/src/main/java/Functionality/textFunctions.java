@@ -237,6 +237,7 @@ public class textFunctions {
                                 }
                             }
                             if (Character.isUpperCase(list_split[j].charAt(0))) {
+                                System.out.print(max_occur);
                                 String match = possible_matches[max_occur].replaceAll("[^a-zA-Z0-9]","");
                                 reformed_string.add(Character.toUpperCase(match.charAt(0)) + match.substring(1));
                             } else {

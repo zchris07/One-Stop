@@ -42,13 +42,67 @@ public class scheduleFunctions {
                         curr.addTask(to_add_name+" part "+subtask,to_add_duedate,ent_date,duration,d);
                         return new Pair<>(curr, new Availability(avaliable));
                     } else {
+                        double end = endtime.get(i);
                         avaliable.remove(ent_date);
                         Pair<Double, Double> to_rem = new Pair<>(starttime.get(i), endtime.get(i));
+                        Pair<Double, Double> to_add = new Pair<>(end, end);
                         ent.getValue().remove(to_rem);
+                        ent.getValue().add(to_add);
+                        avaliable.put(ent_date_string,ent.getValue());
                         curr.addTask(to_add_name+" part "+subtask,
                                 to_add_duedate,ent_date,time_range,d);
                         subtask++;
                         duration = duration - time_range;
+                        /*to_add_date = ent_date;*/
+
+                    }
+                }
+
+            }
+
+        }
+        return new Pair<>(curr, new Availability(avaliable));
+    }
+
+    public Pair<TaskList, Availability> addBackTask(TaskList curr, Date to_add_date,Date to_add_duedate,
+                                                        String to_add_name,Double duration, Availability user, Dao<TaskList, Integer> d) throws SQLException, ParseException {
+        Map<String, List<Pair<Double, Double>>> avaliable = user.getThisMap();
+        for (Map.Entry<String, List<Pair<Double, Double>>> ent : avaliable.entrySet()) {
+
+            String ent_date_string = ent.getKey();
+            Date ent_date = new SimpleDateFormat("yyyy-MM-dd").parse(ent_date_string);
+            if ((ent_date.compareTo(to_add_date) >= 0) && (ent_date.compareTo(to_add_duedate) <= 0)) {
+                List<Double> starttime = new ArrayList<>();
+                List<Double> endtime = new ArrayList<>();
+                for (Pair<Double, Double> val_pair : ent.getValue()) {
+                    starttime.add(val_pair.getFirst());
+                    endtime.add(val_pair.getSecond());
+                }
+                Double earliest = 9.0;
+                for (int i = 0; i < starttime.size(); i++) {
+                    double time_range = starttime.get(i)-earliest;
+                    if (time_range >= duration) {
+                        double start = starttime.get(i) - duration;
+                        double end = endtime.get(i);
+                        avaliable.remove(ent_date);
+                        Pair<Double, Double> to_rem = new Pair<>(starttime.get(i), endtime.get(i));
+                        Pair<Double, Double> to_add = new Pair<>(start, end);
+                        ent.getValue().remove(to_rem);
+                        ent.getValue().add(to_add);
+                        avaliable.put(ent_date_string, ent.getValue());
+                        curr.delTask(to_add_name,d);
+                        return new Pair<>(curr, new Availability(avaliable));
+                    } else {
+                        double start = earliest;
+                        double end = endtime.get(i);
+                        avaliable.remove(ent_date);
+                        Pair<Double, Double> to_rem = new Pair<>(starttime.get(i),endtime.get(i));
+                        Pair<Double, Double> to_add = new Pair<>(start, end);
+                        ent.getValue().remove(to_rem);
+                        ent.getValue().add(to_add);
+                        avaliable.put(ent_date_string,ent.getValue());
+                        duration = duration - time_range;
+                        earliest = endtime.get(i);
                         /*to_add_date = ent_date;*/
 
                     }
@@ -78,7 +132,7 @@ public class scheduleFunctions {
                 }
                 for (int i = 0; i < starttime.size(); i++) {
                     double time_range = endtime.get(i) - starttime.get(i);
-                    if (time_range > duration) {
+                    if (time_range >= duration) {
                         double start = starttime.get(i) + duration;
                         double end = endtime.get(i);
                         avaliable.remove(ent_date);

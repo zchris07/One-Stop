@@ -212,7 +212,7 @@ public class Main {
             String listId = req.queryParams("listId");
             Dao<TaskList, Integer> taskDao = getTaskListRMLiteDao();
             List<TaskList> ems = taskDao.queryForEq("listId", listId);
-            taskDao.delete(ems.get(0));
+
             res.status(204);
             return "";
         });
@@ -237,7 +237,7 @@ public class Main {
                 this_available = new Availability();
             }*/
             scheduleFunctions temp = new scheduleFunctions();
-            Pair<TaskList, Availability> new_avail = temp.scheduleOne(ems.get(0),dueDay_date,date,
+            Pair<TaskList, Availability> new_avail = temp.scheduleOne(ems.get(0),date,dueDay_date,
                     taskName,duration,this_available,taskDao);
             res.status(201);
             res.type("application/json");
@@ -255,11 +255,15 @@ public class Main {
             String taskName = req.queryParams("taskName");
             Dao<TaskList, Integer> taskDao = getTaskListRMLiteDao();
             List<TaskList> ems = taskDao.queryForEq("listId", listId);
-            ems.get(0).delTask(taskName, taskDao);
+            /*ems.get(0).delTask(taskName, taskDao);*/
+            scheduleFunctions temp = new scheduleFunctions();
+            TaskList.Task this_task = ems.get(0).getTask(taskName,taskDao);
+            Pair<TaskList, Availability> new_avail = temp.addBackTask(ems.get(0),this_task.getDate()
+                    ,this_task.getDueDay(), taskName,this_task.getDuration(),this_available,taskDao);
             res.status(201);
             res.type("application/json");
+            this_available.setThisMap(new_avail.component2().getThisMap());
             List<TaskList> ems2 = taskDao.queryForEq("listId", listId);
-
             return ems2.get(0).toJsonString();
         });
 
