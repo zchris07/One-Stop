@@ -1,5 +1,4 @@
 package Controllers;
-import model.Availability;
 import spark.Spark;
 
 

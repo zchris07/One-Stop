@@ -1,6 +1,5 @@
 package Controllers;
 
-import Functionality.scheduleFunctions;
 import Functionality.textFunctions;
 import com.google.gson.Gson;
 import com.j256.ormlite.dao.Dao;
@@ -10,7 +9,6 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import kotlin.Pair;
 import model.*;
 import org.apache.commons.lang.ObjectUtils;
 import spark.ModelAndView;
@@ -27,9 +25,6 @@ import static Controllers.UpdateController.*;
 
 
 public class APIEndpoint {
-
-    static Availability this_available = new Availability();
-
     public static void rootGet(){
 
         Spark.get("/", (req, res) -> {
@@ -258,7 +253,6 @@ public class APIEndpoint {
             String taskName = req.queryParams("taskName");
             String dueDay = req.queryParams("dueDay");
             String date_string = req.queryParams("date");
-            Double duration  = Double.parseDouble(req.queryParams("duration"));
 
             String pattern = "yyyy-MM-dd";
             SimpleDateFormat formatter = new SimpleDateFormat(pattern);
@@ -267,24 +261,11 @@ public class APIEndpoint {
             Date dueDay_date = formatter.parse(dueDay);
             Dao<TaskList, Integer> taskDao = getTaskListRMLiteDao();
             List<TaskList> ems = taskDao.queryForEq("listId", listId);
-            /*ems.get(0).addTask(taskName, dueDay_date, date, duration,
-                    taskDao);*/
-            /*scheduleFunctions temp = new scheduleFunctions();
-            if (null.equals(this_available)) {
-                this_available = new Availability();
-            }*/
-            scheduleFunctions temp = new scheduleFunctions();
-            Pair<TaskList, Availability> new_avail = temp.scheduleOne(ems.get(0),date,dueDay_date,
-                    taskName,duration,this_available,taskDao);
+            ems.get(0).addTask(taskName, dueDay_date, date, taskDao);
             res.status(201);
             res.type("application/json");
-            this_available.setThisMap(new_avail.component2().getThisMap());
-
-
             List<TaskList> ems2 = taskDao.queryForEq("listId", listId);
 
-
-            /*return new_avail.component1().toJsonString();*/
             return ems2.get(0).toJsonString();
         });
     }
