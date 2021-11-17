@@ -18,7 +18,7 @@
 	
 
 ### Installation / Run
-- Run the file *2021-fall-group-placeholders/placeholder/src/main/java/Main.java* 
+- Run the file *2021-fall-group-placeholders/placeholder/src/main/java/Controllers/Main.java* 
 - Type in localhost:7000/ in your browser to direct to app page 
 
 ## Usage
