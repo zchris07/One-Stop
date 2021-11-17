@@ -106,7 +106,11 @@ public class testScheduleFunctions {
             Availability a2 = result1.component2();
             Pair<Double, Double> curr = a2.getThisMap().get("2021-11-22").get(0);
             assertEquals(11.0,curr.component1());
-            List<TaskList.Task> lis = l1.getTaskList();
+            List<TaskList.Task> lis = l2.getTaskList();
+            assertEquals(lis.get(0).getDuration(),12.0);
+            assertEquals(lis.get(1).getDuration(),8.0);
+            assertEquals(lis.get(2).getDuration(),4.0);
+            assertEquals(lis.get(3).getDuration(),2.0);
 
         } catch (SQLException e) {
             assertEquals(11.0,12.0);
