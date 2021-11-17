@@ -30,7 +30,7 @@ public class scheduleFunctions {
                 }
                 for (int i = 0; i < starttime.size(); i++) {
                     double time_range = endtime.get(i) - starttime.get(i);
-                    if (time_range > duration) {
+                    if (time_range >= duration) {
                         double start = starttime.get(i) + duration;
                         double end = endtime.get(i);
                         avaliable.remove(ent_date);
