@@ -90,6 +90,22 @@ The fix spelling has consistency issue- for some input strings, the Fix Spelling
 
 - When we delete a task, the time that is 'taken' by that task will be given back-- for example, suppose a task A takes 8 hours on 10/26. If we were to add a new task that starts on 10/26 and ends on 10/28, taking 6 hours, then this task will be split into a 4 hour task on 10/26 and a 2 hour task on 10/27. However, if we delete A, then when we add a new task that starts on 10/26 and ends on 10/28, takes 6 hours, then this task will be put as a 6 hour task on 10/26.
 
+### Image Detection
+- Image detection is used to convert a picture into notes. The API was successfully implemented, but due to the compatibility issue of Heroku to Google Cloud API, it is not integrated to the main app. Instead, a demo app is provided in the folder TextDetect. Note, to run the app locally, a Cloud Vision API json file is needed, and provide an environment variable GOOGLE_APPLICATION_CREDENTIALS as the path to the json file. Ideally, this should be handled by Heroku online, but there has not been a successful attempt despite many methods have been tried.
+
+- When the demo app is started, the following GUI is shown. User can provide either an URL or a local file for the conversion.
+![alt text](./docs/images/imgupload.png)
+
+- Upload a test image.
+![alt text](./docs/images/imgupload2.png)
+
+- Text detection.
+![alt text](./docs/images/detectimg.png)
+
+- What need to be done:
+	- Multiples ways can be done to find an alternative. We can try to deploy the web application on AWS, which has a better file system handling, such that the Google API credential file can be stored and easily obtained. 
+	- We can keep trying with Heroku. The ways that we have tried is summarized in this Stackoverflow post that we sent: https://stackoverflow.com/questions/69997414/deploying-heroku-app-with-a-google-credential-json.
+
 
 ## File structures
 - /placeholder/: project folder (change folder name or not)
