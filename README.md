@@ -26,7 +26,9 @@ The default end-point will re-direct to login page, if no cache was previously s
 
 ### Login/Signup Page
 - Click on the signup button on the login page if you has not created an account. Or, type in localhost:7000/main in your browser to use it as a local app.
-
+- If you forget your password, you can reset your password in localhost:7000/main page.
+- If you enter a invalid account when signing in, the system will show that the account is not exist.
+- If you enter a wrong password, the system will alarm that your password is incorrect.
 
 
 - Login with an account and password if having an existing account, or sign up for a new account otherwise. The password will be encrypted using SHA-256.
@@ -58,6 +60,7 @@ The default end-point will re-direct to login page, if no cache was previously s
 ![alt text](./docs/images/profile_2.png)
 - Once updated, the page should look like this: 
 ![alt text](./docs/images/profile_3.png)
+- We provide some images chosen as the profile image.
 
 ### Task Detail Page
 - The defualt note of a task would be empty. Click on the Edit button in order to edit task notes.
@@ -84,8 +87,9 @@ The fix spelling has consistency issue- for some input strings, the Fix Spelling
 - /placeholder/: project folder (change folder name or not)
 	- src/main/
 		- java/
+			- Controllers: including server script, dao constructors and API endpoints.	
 			- model/: database entities
-			- Main.java: server script
+			- Functionality: Including textFunction and scheduleFunction used for auto-correction in notes and auto-scheduling in schedule.
 		- resources/public/: css files, js scripts, and .vm (Velocity) templetes
 	- JBApp.db: SQLite database (to be changed to remote server database once deploying in a remote host) (change database name or not)
 
