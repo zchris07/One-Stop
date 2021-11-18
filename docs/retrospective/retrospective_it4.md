@@ -14,7 +14,7 @@ Built among previous achievements, in this iteration, we:
 
 ## Difficulties We Had
 
-We encountered a weired issue with Heroku Postgres interaction. For some reason the postgres on Heroku cannot support database table id column named other than "id". For example, for "usertable" if the id column is named "userid", the database will not work. We fixed the issue by only have data table id column named as "id". Furthermore, we discovered that the column name with mixed upper case letters and lower case letters will also cause problems, so we renamed each data table column name to avoid problems. 
+We encountered a weird issue with Heroku Postgres interaction. For some reason the postgres on Heroku cannot support database table id column named other than "id". For example, for "usertable" if the id column is named "userid", the database will not work. We fixed the issue by only have data table id column named as "id". Furthermore, we discovered that the column name with mixed upper case letters and lower case letters will also cause problems, so we renamed each data table column name to avoid problems. 
 
 ## Reflections and Make-ups
 
