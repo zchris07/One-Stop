@@ -33,7 +33,7 @@
         ##            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
         ##            <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
         ##        </form>
-        <a href="./userprofile"  class="btn btn-profile btn-circle btn-xl" id ="profile-btn"> </a>
+        <input onclick="location.href='./userprofile'" type="image" height="100" width="100"  class="btn-xl rounded-circle" id ="profile-btn" src=$imageUrl>
     </div>
 </nav>
 <div class="container col-sm-10 col-md-20 col-lg-10 mt-8">
@@ -180,16 +180,16 @@
         background-color: lightskyblue;
         border-color: steelblue;
     }
+    .text-light{
+        color: white;
+    }
+    .bg-primary{
+        color: white;
+    }
     .btn-fail {
         color: midnightblue;
         background-color: slateblue;
         border-color: darkslateblue;
-    }
-    .btn-profile {
-        background-image: url("https://www.pngfind.com/pngs/m/282-2828527_supermario-supermariomaker-mystery-mushroom-mariomushroom-8-bit-kirby.png");
-        background-size: 70px;
-        width: 70px;
-        height: 70px;
     }
     .btn-circle.btn-xl {
         width: 70px;

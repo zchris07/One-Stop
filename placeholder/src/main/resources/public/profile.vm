@@ -1,104 +1,220 @@
-#set($username = "user")
-#set($firstname="Chris")
-#set($lastname ="Yu")
-#set($organization="Johns Hopkins University")
-###set(($firstname="Chris")
+#set( $title = "User Profile" )
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE-scale=1">
-    <title>Profile page</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css" integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
+    <title>$title</title>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-custom">
-    <a class="navbar-brand" href="#">ONE STOP</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="./main">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Schedule</a>
-            </li>
-        </ul>
-        ##        <form class="form-inline my-2 my-lg-0">
-        ##            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        ##            <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
-        ##        </form>
-        <button type="button" class="btn btn-profile btn-circle btn-xl"> </button>
-    </div>
-</nav>
-<div class="container-fluid">
-    <div class="row extra_margin">
-        <div class="col-md-3">
-
-            <div class="text-center">
-                <img width="300" height="300" src="https://i.imgur.com/hepj9ZS.png" class="rounded-circle"/>
-                #if($firstname && $lastname)
-                    <h1 class="display-5">$firstname $lastname</h1>
-                    <h3 class="display-5">$organization</h3>
-                    <button type="button" class="btn btn-success mt-2">Edit information</button>
-                #else
-                #end
-            </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css" integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
 
 
+<div class="background">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">ONE STOP</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="./main">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Schedule</a>
+                </li>
+            </ul>
+            ##        <form class="form-inline my-2 my-lg-0">
+            ##            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            ##            <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+            ##        </form>
+            ##            <button type="button" class="btn btn-profile btn-circle btn-xl"></button>
         </div>
-        <div class="col-md-8">
-            <button type="button" class="btn btn-success mb-2">Edit settings</button>
-            <p class="lead">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+    </nav>
+    <div class="container-fluid">
+        <div class="backgroundImage"> </div>
+        <div class="row extra_margin">
+            <div class="col-md-3">
+##                <img width="300" height="300" src="https://i.imgur.com/hepj9ZS.png" class="rounded-circle mx-auto d-block"/>
+                <input type="image" id="profile_image" width="300" height="300" data-toggle="modal" data-target="#noteModal" class="rounded-circle mx-auto d-block"  src=$imageUrl/>
+                <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <h3 class="modal-title" id= "noteTitle" >Choose Your Profile Picture:</h3>
+                            <div class="modal-header">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <input type="image" id="image1" width="100" height="100" class="rounded-circle mx-auto d-block"  src= "https://i.imgur.com/PGaubL6b.jpg"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <input type="image" id="image2" width="100" height="100" class="rounded-circle mx-auto d-block"  src= "https://i.imgur.com/OUA0DUSb.jpg"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <input type="image" id="image3" width="100" height="100" class="rounded-circle mx-auto d-block"  src= "https://i.imgur.com/QD54tFG.jpeg"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <input type="image" id="image4" width="100" height="100" class="rounded-circle mx-auto d-block"  src= "https://i.imgur.com/Ga4HomPb.jpg"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-footer">
+##                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+##                                <button type="button" class="btn btn-primary" id="submit_profile_img">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card p-4 mt-1">
+                    ## TODO: LY - better logic here.
+                    #if($aUser[0].firstName || $aUser[0].lastName || $aUser[0].status || $aUser[0].organization)
+
+                        #if($aUser[0].firstName && $aUser[0].lastName)
+                            <h2 class="card-title">$aUser[0].firstName $aUser[0].lastName</h2>
+                        #else
+                            Please update user information using the button below with at least first name and last name.
+                        #end
+                        #if($aUser[0].email)
+                            <h4 class="display-5">$aUser[0].email</h4>
+                        #end
+                        #if($aUser[0].status)
+                            <h4 class="display-5">$aUser[0].status</h4>
+                        #end
+                        #if($aUser[0].organization)
+                            <h4 class="display-5">$aUser[0].organization</h4>
+                        #end
+
+                        ##                    <div class="card-body">
+                        ##<div class="row"></div>
+                        ##                    </div>
+                    #else
+                        <h4 class="display-5">$aUser[0].email</h4>
+                        Please update user information using the button below.
+                    #end
+                    <button type="button" class="btn btn-success btn-small btn-sm mt-2 mr-2" data-toggle="modal" data-target="#userInfoModal" >Edit Information</button>
+                    <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit User Info</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="text" class="form-control" placeholder="Firstname" aria-describedby="basic-addon2" id="user_firstname">
+                                    <input type="text" class="form-control" placeholder="Lastname" aria-describedby="basic-addon2" id="user_lastname">
+                                    <input type="text" class="form-control" placeholder="Status" aria-describedby="basic-addon2" id="user_status">
+                                    <input type="text" class="form-control" placeholder="Organization" aria-describedby="basic-addon2" id="user_organization">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" id="save_info">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <p class="lead" style="page-break-after: always">
+                    #if($aUser[0].summary)
+                        $aUser[0].summary
+                    #else
+                        Please update user summary using the button below.
+                    #end
+                </p>
+
+                <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#editSummaryModal">Edit Summary</button>
+
+                <div class="modal fade" id="editSummaryModal" tabindex="-1" role="dialog" aria-labelledby="editSummaryModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Edit User Summary</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="text" class="form-control" placeholder="User summary" aria-describedby="basic-addon2" id="user_summary">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" id="save_summary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
 </body>
 
-###if($username)
-##<div id="root">
-##    <img width="100" height="100"
-##         style = "margin: 10px"
-##            class="rounded-circle" alt="100x100" src="https://i.imgur.com/hepj9ZS.png"
-##         data-holder-rendered="true">
-##    <h1 class="display-5">$firstname $lastname</h1>
-##
-####        <p id="err-msg"></p>
-##
-##
-##        <h3>
-##            $organization
-##        </h3>
-####        <p>
-##</div>
-##
-##    </form>
-##</div>
-###else
-##    <h1> <a href="/login">Please Log in</a></h1>
-###end
+    ###if($username)
+    ##<div id="root">
+    ##    <img width="100" height="100"
+    ##         style = "margin: 10px"
+    ##            class="rounded-circle" alt="100x100" src="https://i.imgur.com/hepj9ZS.png"
+    ##         data-holder-rendered="true">
+    ##    <h1 class="display-5">$firstname $lastname</h1>
+    ##
+    ####        <p id="err-msg"></p>
+    ##
+    ##
+    ##        <h3>
+    ##            $organization
+    ##        </h3>
+    ####        <p>
+    ##</div>
+    ##
+    ##    </form>
+    ##</div>
+    ###else
+    ##    <h1> <a href="/login">Please Log in</a></h1>
+    ###end
 
-##</body>
+    ##</body>
 <style>
-div {
-padding: 0px
-}
+    .btn-small {
+        min-width: 130px;
+        max-width: 130px;
+    }
+    .navbar-custom {
+        background-color: darkblue;
+        opacity: 0.75;
+    }
+    /* Modify brand and text color */
 
-.extra_margin {
-margin-top: 10px;
-}
+    .navbar-custom .navbar-brand,
+    .navbar-custom .navbar-text {
+        color: beige;
+    }
 
-.button_margin {
-margin: 10px
-}
+    div {
+        padding: 0px
+    }
+
+    .extra_margin {
+        margin-top: 20px;
+    }
+
+    .card-body {
+        margin: 5px
+    }
 </style>
+<script src="js/user.js"></script>
+</html>

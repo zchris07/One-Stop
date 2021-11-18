@@ -21,14 +21,21 @@ public class Schedule {
 //        TableUtils.dropTable(connectionSource, TaskList.class,false);
         return DaoManager.createDao(connectionSource, TaskList.class);
     }
-    public String getAllTaskDate() throws SQLException {
-        List<TaskList> tasklists = getTaskListRMLiteDao().queryForAll();
-
-        return taskDateListToJsonString(tasklists.get(0));
+    public String getAllTaskDate(String userid) throws SQLException {
+        List<TaskList> taskLists = getTaskListRMLiteDao().queryForEq("userId", userid);
+        StringBuilder result = new StringBuilder();
+        result.append("[");
+        for (int i=0;i<taskLists.size();i++) {
+            result.append(taskDateListToJsonString(taskLists.get(i)));
+            if (i!= taskLists.size()-1){
+                result.append(",");
+            }
+        }
+        result.append("]");
+        return result.toString();
     }
     public String taskDateListToJsonString(TaskList taskList_whole) {
         StringBuilder sb = new StringBuilder();
-        sb.append("[");
         if (taskList_whole.taskList!= null){
             for (int i=0;i<taskList_whole.taskList.size();i++) {
                 sb.append(taskList_whole.taskList.get(i).taskToJsonString());
@@ -36,7 +43,6 @@ public class Schedule {
                     sb.append(",");
                 }
             }}
-        sb.append("]");
         return sb.toString();
     }
 

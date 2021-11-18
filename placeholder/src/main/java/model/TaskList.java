@@ -160,6 +160,7 @@ public class TaskList {
     @DatabaseField(columnName = "taskList", canBeNull = false, dataType = DataType.SERIALIZABLE)
     public SerializedList<Task> taskList = new SerializedList<>();
 
+
     public static class SerializedList<Task> extends ArrayList<Task> implements Serializable {
     }
 
@@ -279,6 +280,10 @@ public class TaskList {
         dao.update(builder.prepare());
     }
 
+    public String getListName() {
+        return listName;
+    }
+
     public TaskList.Task getTask(String taskName, Dao<TaskList,Integer> dao) throws SQLException{
         for (int i = 0; i < taskList.size(); i++) {
             if (Objects.equals(taskList.get(i).taskName, taskName)) {
@@ -286,10 +291,6 @@ public class TaskList {
             }
         }
         return null;
-    }
-
-    public String getListName() {
-        return listName;
     }
 
     public List<Task> getTaskList() {

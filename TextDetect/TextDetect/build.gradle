@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id "com.heroku.sdk.heroku-gradle" version "2.0.0"
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.32'
+    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.32'
+    implementation 'com.sparkjava:spark-core:2.9.3'
+    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    implementation 'com.sparkjava:spark-template-velocity:2.7.1'
+    implementation group: 'org.json', name: 'json', version: '20160810'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+
+    implementation platform('com.google.cloud:libraries-bom:24.0.0')
+    implementation 'com.google.cloud:google-cloud-vision'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes 'Main-Class' : 'functionality.Main'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    exclude 'META-INF/*.RSA'
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.DSF'
+}
+
+
+
+heroku {
+    jdkVersion = 8
+    processTypes(
+            web: "java -jar build/libs/TextDetect-1.0-SNAPSHOT.jar"
+    )
+}
