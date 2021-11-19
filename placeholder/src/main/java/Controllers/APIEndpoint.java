@@ -303,6 +303,7 @@ public class APIEndpoint {
             /*ems.get(0).delTask(taskName, taskDao);*/
             scheduleFunctions temp = new scheduleFunctions();
             TaskList.Task this_task = ems.get(0).getTask(taskName,taskDao);
+            System.out.print(this_task.getTaskName());
             Pair<TaskList, Availability> new_avail = temp.addBackTask(ems.get(0),this_task.getDate()
                     ,this_task.getDueDay(), taskName,this_task.getDuration(),this_available,taskDao);
             res.status(201);

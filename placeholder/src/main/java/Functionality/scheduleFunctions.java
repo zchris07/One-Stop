@@ -30,6 +30,9 @@ public class scheduleFunctions {
                 }
                 for (int i = 0; i < starttime.size(); i++) {
                     double time_range = endtime.get(i) - starttime.get(i);
+                    if (time_range == 0 ) {
+                        continue;
+                    }
                     if (time_range > duration) {
                         double start = starttime.get(i) + duration;
                         double end = endtime.get(i);
@@ -40,17 +43,20 @@ public class scheduleFunctions {
                         ent.getValue().add(to_add);
                         avaliable.put(ent_date_string, ent.getValue());
                         curr.addTask(to_add_name+" part "+subtask,to_add_duedate,ent_date,duration,d);
+
                         return new Pair<>(curr, new Availability(avaliable));
                     } else {
                         avaliable.remove(ent_date);
                         Pair<Double, Double> to_rem = new Pair<>(starttime.get(i), endtime.get(i));
+                        Pair<Double, Double> to_add = new Pair<>(endtime.get(i),endtime.get(i));
                         ent.getValue().remove(to_rem);
+                        ent.getValue().add(to_add);
                         curr.addTask(to_add_name+" part "+subtask,
                                 to_add_duedate,ent_date,time_range,d);
                         subtask++;
                         duration = duration - time_range;
                         /*to_add_date = ent_date;*/
-
+                        avaliable.put(ent_date_string, ent.getValue());
                     }
                 }
 
@@ -77,6 +83,8 @@ public class scheduleFunctions {
                 Double earliest = 9.0;
                 for (int i = 0; i < starttime.size(); i++) {
                     double time_range = starttime.get(i)-earliest;
+                    System.out.print(time_range+"\n");
+                    System.out.print(duration+"\n");
                     if (time_range >= duration) {
                         double start = starttime.get(i) - duration;
                         double end = endtime.get(i);
@@ -87,6 +95,8 @@ public class scheduleFunctions {
                         ent.getValue().add(to_add);
                         avaliable.put(ent_date_string, ent.getValue());
                         curr.delTask(to_add_name,d);
+                        System.out.print(start);
+                        System.out.print(end);
                         return new Pair<>(curr, new Availability(avaliable));
                     } else {
                         double start = earliest;
