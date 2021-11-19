@@ -20,7 +20,7 @@
 ### Installation / Run
 - Run the file *2021-fall-group-placeholders/placeholder/src/main/java/Controllers/Main.java* 
 - Type in localhost:7000/ in your browser to direct to app page 
-- You can run the application by visiting http://54.153.12.50:7000/ 
+- You can run the application by visiting http://18.144.173.7:7000
 - You can also run the application by visiting https://onestop-dev-ph.herokuapp.com/
 
 ## Usage
