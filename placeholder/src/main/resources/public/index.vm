@@ -147,6 +147,11 @@
                                                        min="1901-01-01" max="2030-12-31" >
                                                 <label for="start">Duration: </label>
                                                 <input type="number" id="duration" name="time takes" step = 0.1 min="0">
+
+                                                <label for="start">Importance:</label>
+                                                <input type = "number" id = "importance" name="importance" step = 1 min = "0" max = "5">
+
+
                                                 <button class="btn btn-primary" type="submit" data-toggle="modal" data-target=".bd-list-modal-lg" id = "submit_add_task">Submit</button>
                                             </div>
                                         </div>
@@ -166,6 +171,9 @@
                             <th>EndDate</th>
                             <th>Date</th>
                             <th>Duration</th>
+                            <th>Importance</th>
+                            <th>Exact Start Time</th>
+                            <th>Exact End Time</th>
                             <th></th>
                         </tr>
 

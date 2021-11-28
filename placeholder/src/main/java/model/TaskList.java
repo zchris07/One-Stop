@@ -176,14 +176,30 @@ public class TaskList {
         @DatabaseField(dataType = DataType.DATE_STRING, columnName = "date",
                 format = "yyyy-MM-dd")
         private Date date;
+        @DatabaseField(dataType = DataType.DOUBLE,columnName = "importance")
+        private Double importance;
+        @DatabaseField(dataType = DataType.DOUBLE, columnName = "exactStart")
+        private Double exactStart;
+        @DatabaseField(dataType = DataType.DOUBLE, columnName = "exactEnd")
+        private Double exactEnd;
 
+        public Task(String taskName, Date dueDay,  Date date, Double duration, Double importance, Double exactStart, Double exactEnd) {
+            this.taskName = taskName;
+            this.dueDay = dueDay;
+            this.duration = duration;
+            this.date = date;
+            this.importance = importance;
+            this.exactStart = exactStart;
+            this.exactEnd = exactEnd;
+        }
 
-        public Task(String taskName, Date dueDay, Date date,Double duration) {
+        /*public Task(String taskName, Date dueDay, Date date, Double duration, Double importance) {
             this.taskName = taskName;
             this.dueDay = dueDay;
             this.date = date;
             this.duration = duration;
-        }
+            this.importance = importance;
+        }*/
 
         public String getTaskName() {
             return taskName;
@@ -201,11 +217,22 @@ public class TaskList {
             return date;
         }
 
+        public Double getImportance() { return importance;}
+
+        public Double getExactStart() {
+            return exactStart;
+        }
+
+        public Double getExactEnd() {
+            return exactEnd;
+        }
+
         public String taskToJsonString() {
             SimpleDateFormat date_formater = new SimpleDateFormat("yyyy-MM-dd");
 
             return "{\"taskName\":\"" + taskName + "\",\"duration_day\":\"" + date_formater.format(dueDay) + "\",\"date\":\""
-                    + date_formater.format(date) + "\",\"duration\":\"" + duration +"\"}";
+                    + date_formater.format(date) + "\",\"duration\":\"" + duration +"\",\"importance\":\"" + importance +
+                    "\",\"exactStart\":\"" + exactStart+"\",\"exactEnd\":\"" + exactEnd+"\"}";
         }
     }
 
@@ -217,7 +244,7 @@ public class TaskList {
 
     public TaskList() {
     }
-    public List<Date> getTaskListdueDate(){
+    /*public List<Date> getTaskListdueDate(){
         List<Date> l_list = new ArrayList<>() ;
         for (Task task : taskList) {
             l_list.add(task.dueDay);
@@ -247,19 +274,20 @@ public class TaskList {
             l_list.add(task.duration);
         }
         return l_list;
-    }
+    }*/
 
     public Integer getId() {
         return listId;
     }
-    public void addTask(String taskName, Date dueDay, Date date, Double duration){
-        Task task = new Task(taskName, dueDay,date,duration);
+    public void addTask(String taskName, Date dueDay, Date date, Double duration,Double importance, Double exactStart, Double exactEnd){
+        Task task = new Task(taskName, dueDay,date,duration, importance, exactStart,exactEnd);
         taskList.add(task);
     }
 
 
-    public void addTask(String taskName, Date dueDay, Date date, Double duration, Dao<TaskList, Integer> dao) throws SQLException {
-        Task task = new Task(taskName, dueDay, date, duration);
+    public void addTask(String taskName, Date dueDay, Date date, Double duration, Double importance,
+                        Double exactStart, Double exactEnd, Dao<TaskList, Integer> dao) throws SQLException {
+        Task task = new Task(taskName, dueDay, date, duration,importance, exactStart, exactEnd);
         taskList.add(task);
         UpdateBuilder<TaskList, Integer> builder = dao.updateBuilder();
         builder.updateColumnValue("taskList", taskList);

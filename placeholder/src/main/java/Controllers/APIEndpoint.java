@@ -258,7 +258,7 @@ public class APIEndpoint {
             String dueDay = req.queryParams("dueDay");
             String date_string = req.queryParams("date");
             Double duration = Double.parseDouble(req.queryParams("duration"));
-
+            Double importance = Double.parseDouble(req.queryParams("importance"));
             String pattern = "yyyy-MM-dd";
             SimpleDateFormat formatter = new SimpleDateFormat(pattern);
 
@@ -274,7 +274,7 @@ public class APIEndpoint {
     }*/
             scheduleFunctions temp = new scheduleFunctions();
             Pair<TaskList, Availability> new_avail = temp.scheduleOne(ems.get(0),date,dueDay_date,
-                    taskName,duration,this_available,taskDao);
+                    taskName,duration,importance,this_available,taskDao);
             res.status(201);
             res.type("application/json");
             this_available.setThisMap(new_avail.component2().getThisMap());
