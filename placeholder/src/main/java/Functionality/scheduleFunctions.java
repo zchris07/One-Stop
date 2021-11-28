@@ -9,11 +9,12 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.time.*;
 import com.j256.ormlite.dao.Dao;
+import model.User;
 
 public class scheduleFunctions {
 
-    public Pair<TaskList, Availability> scheduleOne(TaskList curr, Date to_add_date,Date to_add_duedate,
-                                                    String to_add_name,Double duration, Double importance,Availability user, Dao<TaskList, Integer> d) throws SQLException, ParseException {
+    public Pair<TaskList, Availability> scheduleOne(TaskList curr, Date to_add_date, Date to_add_duedate,
+                                                    String to_add_name, Double duration, Double importance, User user, Dao<TaskList, Integer> d) throws SQLException, ParseException {
 
         TreeMap<Double, List<TaskList.Task>> imp_map = new TreeMap<>();
         for (TaskList.Task t :curr.getTaskList()) {
@@ -80,7 +81,6 @@ public class scheduleFunctions {
 
         while (duration>0) {
             Map.Entry<Double, List<TaskList.Task>> first_ent = imp_map.firstEntry();
-            Double small_imp = first_ent.getKey();
 
             for (TaskList.Task allT : first_ent.getValue()) {
                 if (allT.getImportance() >= importance ) {
@@ -95,21 +95,13 @@ public class scheduleFunctions {
                     Double end = allT.getExactEnd() ;
                     curr.delTask(allT.getTaskName(),d);
 
-                    curr.addTask(allT.getTaskName(), allT.getDueDay(),allT.getDate(),allT.getDuration()
+                    curr.addTask(allT.getTaskName(), allT.getDueDay(),allT.getDate(),end-start
                     ,allT.getImportance(),start,end);
 
                     curr.addTask(to_add_name+" part "+subtask,
                             to_add_duedate,allT.getDate(),duration,importance,add_start,add_end, d);
 
                     return new Pair<>(curr, new Availability(avaliable));
-
-
-
-
-
-
-
-
                     //Pair<Double, Double> to_rem = new Pair<>(starttime.get(i), endtime.get(i));
                 } else {
                     Double add_start = allT.getExactStart();
@@ -118,13 +110,14 @@ public class scheduleFunctions {
                     curr.delTask(allT.getTaskName(),d);
 
                     curr.addTask(to_add_name+" part "+subtask,
-                            to_add_duedate,allT.getDate(),duration,importance,add_start,add_end, d);
+                            to_add_duedate,allT.getDate(),smallDur,importance,add_start,add_end, d);
                     duration = duration - smallDur;
+                    subtask = subtask + 1;
 
 
                 }
             }
-
+            imp_map.remove(first_ent.getKey());
         }
 
 

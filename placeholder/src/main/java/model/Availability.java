@@ -5,7 +5,7 @@ import kotlin.Pair;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
+/*
 public class Availability {
     private Map<String, List<Pair<Double,Double>>> thisMap;
     public Availability() {
@@ -49,4 +49,4 @@ public class Availability {
 
 
 
-}
+}*/

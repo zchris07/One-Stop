@@ -273,8 +273,10 @@ public class APIEndpoint {
         this_available = new Availability();
     }*/
             scheduleFunctions temp = new scheduleFunctions();
+            Dao userDao = getUserORMLiteDao();
+            List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
             Pair<TaskList, Availability> new_avail = temp.scheduleOne(ems.get(0),date,dueDay_date,
-                    taskName,duration,importance,this_available,taskDao);
+                    taskName,duration,importance, aUser.get(0),taskDao);
             res.status(201);
             res.type("application/json");
             this_available.setThisMap(new_avail.component2().getThisMap());
