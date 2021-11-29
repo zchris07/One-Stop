@@ -19,11 +19,16 @@ document.getElementById("submit_add_task").addEventListener('click', function ()
         taskName = document.getElementById("taskName").value;
         dueDay = document.getElementById("dueDay").value;
         date_string = document.getElementById("date").value;
+        duration = document.getElementById("duration").value;
+        importance = document.getElementById("importance").value;
         console.log("clicked")
         console.log(taskName)
         console.log(dueDay)
         console.log(date_string)
-        fetch('http://localhost:7000/addTask?listId=' + currentList + '&taskName=' + taskName + '&dueDay=' +dueDay+ '&date='+ date_string, {
+        console.log(duration)
+        console.log(importance)
+        fetch('http://localhost:7000/addTask?listId=' + currentList + '&taskName=' + taskName + '&dueDay=' +dueDay+ '&date='+ date_string
+            + '&duration=' + duration + '&importance=' + importance, {
             method: 'Post',
         })
             .then(res => showTaskInList(currentList))
@@ -106,6 +111,10 @@ const showTaskInList = listId => {
 <td>Default Project</td>
 <td>${task['duration_day']}</td>
 <td>${task['date']}</td>
+<td>${task['duration']}</td>
+<td>${task['importance']}</td>
+<td>${task['exactStart']}</td>
+<td>${task['exactEnd']}</td>
 <td><button class="delete_task btn btn-fail" onclick="deleteTask('${task['taskName']}')" type="button" >Delete Task</button></td>
 <!--show detail of a task-->
 <td><button class="delete_task btn btn-fail" onclick="showDetail('${task['taskName']}')" type="button" >Task Detail</button></td>
