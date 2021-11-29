@@ -409,4 +409,22 @@ public class APIEndpoint {
             return new ModelAndView(model, "public/index.vm");
         }, new VelocityTemplateEngine());
     }
+
+    public static void updateDate(){
+        Spark.put("/editDate", (req, res) -> {
+            String listId = req.queryParams("listId");
+            String taskName = req.queryParams("taskName");
+            String editDate = req.queryParams("editeddueDay");
+            String pattern = "yyyy-MM-dd";
+            SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+            System.out.println(editDate);
+            Date editDateFormatted = formatter.parse(editDate);
+            Dao<TaskList, Integer> taskDao = getTaskListRMLiteDao();
+            List<TaskList> ems = taskDao.queryForEq("listId", listId);
+            ems.get(0).updateTaskDate(taskName,taskDao,editDateFormatted);
+            res.status(201);
+            res.type("application/json");
+            return "";
+        });
+    }
 }
