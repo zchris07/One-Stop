@@ -308,6 +308,22 @@ public class TaskList {
         dao.update(builder.prepare());
     }
 
+    public void updateTaskDate(String taskName, Dao<TaskList,Integer> dao,Date editedDate ) throws SQLException {
+        UpdateBuilder<TaskList, Integer> builder = dao.updateBuilder();
+        for (int i = 0; i < taskList.size(); i++) {
+            if (Objects.equals(taskList.get(i).taskName, taskName)) {
+                Task task =taskList.get(i) ;
+                task.date =  editedDate;
+                taskList.set(i,task);
+                break;
+            }
+        }
+
+        builder.updateColumnValue("taskList", taskList);
+        builder.where().eq("listId",listId);
+        dao.update(builder.prepare());
+    }
+
     public String getListName() {
         return listName;
     }
