@@ -47,7 +47,7 @@ public class scheduleFunctions {
                     if (time_range == 0 ) {
                         continue;
                     }
-                    if (time_range > duration) {
+                    if (time_range >= duration) {
 
                         double start = starttime.get(i) + duration;
                         double end = endtime.get(i);
@@ -146,15 +146,32 @@ public class scheduleFunctions {
         });
         for (int i = 0; i <= map_ent.size() - 1; i++) {
             if (exact_start < map_ent.get(i).getFirst()) {
-                double start = exact_start;
-                double end = map_ent.get(i).getSecond();
-                Pair<Double, Double> to_add = new Pair<>(start, end);
-                avaliable.remove(strDate);
-                map_ent.remove(i);
-                map_ent.add(to_add);
-                avaliable.put(strDate, map_ent);
-                curr.delTask(to_add_name, d);
-                return new Pair<>(curr, new Availability(avaliable));
+                if (exact_end.equals(map_ent.get(i).getFirst())) {
+                    double start = exact_start;
+                    double end = map_ent.get(i).getSecond();
+                    Pair<Double, Double> to_add = new Pair<>(start, end);
+                    System.out.println(start);
+                    System.out.println(end);
+                    avaliable.remove(strDate);
+                    map_ent.remove(i);
+                    map_ent.add(to_add);
+                    avaliable.put(strDate, map_ent);
+                    curr.delTask(to_add_name, d);
+                    return new Pair<>(curr, new Availability(avaliable));
+                } else{
+                    double start = exact_start;
+                    double end = exact_end;
+                    Pair<Double, Double> to_add = new Pair<>(start, end);
+                    System.out.println(start);
+                    System.out.println(end);
+                    avaliable.remove(strDate);
+                    map_ent.add(to_add);
+                    avaliable.put(strDate, map_ent);
+                    curr.delTask(to_add_name, d);
+                    return new Pair<>(curr, new Availability(avaliable));
+                }
+
+
             } else if (i == (map_ent.size() - 1)) {
                 double start = map_ent.get(i).getFirst();
                 double end = exact_end;
