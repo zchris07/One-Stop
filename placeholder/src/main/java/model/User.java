@@ -13,12 +13,13 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import model.Availability;
 
 @DatabaseTable(tableName = "user")
 public class User {
 
     @DatabaseField(generatedId = true)
-    private Integer userId;
+    private static Integer userId;
     @DatabaseField(canBeNull = false)
     private String hashedPassword;
     @DatabaseField(canBeNull = false, unique = true)
@@ -36,49 +37,7 @@ public class User {
     @DatabaseField(canBeNull = false)
     private String profileImage = "https://i.imgur.com/hepj9ZS.png";
     @DatabaseField(columnName = "availability", canBeNull = false, dataType = DataType.SERIALIZABLE)
-    private Availability thisMap;
-
-    private static class Availability implements Serializable{
-        private Map<String, List<Pair<Double,Double>>> thisMap;
-        public Availability() {
-
-            String dt = "2021-10-01";  // Start date
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Calendar c = Calendar.getInstance();
-            try {
-                c.setTime(sdf.parse(dt));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            Map<String, List<Pair<Double, Double>>> new_map = new LinkedHashMap<>();
-            for (int i = 0;i<= 100; i++) {
-                Calendar cal = Calendar.getInstance();
-                c.add(Calendar.DATE, 1);  // number of days to add
-                dt = sdf.format(c.getTime());  // dt is now the new date
-                Pair<Double, Double> newPair = new Pair<>(9.0, 21.0);
-                List<Pair<Double, Double>> newList = new ArrayList();
-                newList.add(newPair);
-                new_map.put(dt, newList);
-
-            }
-            this.thisMap = new_map;
-            //c.add(Calendar.DATE, 1);  // number of days to add
-            //dt = sdf.format(c.getTime());  // dt is now the new date
-        }
-        public Availability(Map<String, List<Pair<Double, Double>>> thisMap) {
-            this.thisMap = thisMap;
-        }
-        public Map<String, List<Pair<Double, Double>>> getThisMap() {
-            return thisMap;
-        }
-
-        public void setThisMap(Map<String, List<Pair<Double, Double>>> thisMap) {
-            this.thisMap = thisMap;
-        }
-    }
-
-
+    private static Availability availability = new Availability();
 
     public User(){
     }
@@ -145,12 +104,20 @@ public class User {
 
     public String getHashedPassword() {return this.hashedPassword; }
 
-    public Map<String, List<Pair<Double, Double>>> getThisMap() {
-        return thisMap.getThisMap();
+    public Availability getAvailability() {
+        return availability;
     }
 
-    public void setThisMap(Map<String, List<Pair<Double, Double>>> thisMap) {
-        this.thisMap.setThisMap(thisMap);
+    public Map<String, List<Pair<Double, Double>>> getThisMap() {
+        return this.getAvailability().getThisMap();
+    }
+
+    public static void setThisMap(Map<String, List<Pair<Double, Double>>> thisMap,Dao<Availability,Integer> userDao) throws SQLException {
+        availability.setThisMap(thisMap);
+        UpdateBuilder<Availability, Integer> builder = userDao.updateBuilder();
+        builder.updateColumnValue("availability", availability);
+        builder.where().eq("userId", userId);
+        userDao.update(builder.prepare());
     }
 
     public String toJsonString() {

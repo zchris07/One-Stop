@@ -1,9 +1,10 @@
 package Functionality;
 import kotlin.Pair;
-import model.TaskList;
 import model.Availability;
+import model.TaskList;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -125,7 +126,52 @@ public class scheduleFunctions {
     }
 
     public Pair<TaskList, Availability> addBackTask(TaskList curr, Date to_add_date,Date to_add_duedate,
-                                                    String to_add_name,Double duration, Availability user, Dao<TaskList, Integer> d) throws SQLException, ParseException {
+                                                    String to_add_name,Double duration, User user,
+                                                    Double exact_start, Double exact_end, Dao<TaskList, Integer> d) throws SQLException, ParseException {
+        Map<String, List<Pair<Double, Double>>> avaliable = user.getThisMap();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = dateFormat.format(to_add_date);
+        List<Pair<Double, Double>> map_ent = avaliable.get(strDate);
+        map_ent.sort(new Comparator<Pair<Double, Double>>() {
+            @Override
+            public int compare(Pair<Double, Double> o1, Pair<Double, Double> o2) {
+                if (o1.getFirst() < o2.getFirst()) {
+                    return -1;
+                } else if (o1.getFirst().equals(o2.getFirst())) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        });
+        for (int i = 0; i <= map_ent.size() - 1; i++) {
+            if (exact_start < map_ent.get(i).getFirst()) {
+                double start = exact_start;
+                double end = map_ent.get(i).getSecond();
+                Pair<Double, Double> to_add = new Pair<>(start, end);
+                avaliable.remove(strDate);
+                map_ent.remove(i);
+                map_ent.add(to_add);
+                avaliable.put(strDate, map_ent);
+                curr.delTask(to_add_name, d);
+                return new Pair<>(curr, new Availability(avaliable));
+            } else if (i == (map_ent.size() - 1)) {
+                double start = map_ent.get(i).getFirst();
+                double end = exact_end;
+                Pair<Double, Double> to_add = new Pair<>(start, end);
+                avaliable.remove(strDate);
+                map_ent.remove(i);
+                map_ent.add(to_add);
+                avaliable.put(strDate, map_ent);
+                curr.delTask(to_add_name, d);
+                return new Pair<>(curr, new Availability(avaliable));
+            }
+        }
+        return new Pair<>(curr, new Availability(avaliable));
+    }
+
+
+        /*
         Map<String, List<Pair<Double, Double>>> avaliable = user.getThisMap();
         for (Map.Entry<String, List<Pair<Double, Double>>> ent : avaliable.entrySet()) {
 
@@ -151,6 +197,8 @@ public class scheduleFunctions {
                         ent.getValue().add(to_add);
                         avaliable.put(ent_date_string, ent.getValue());
                         curr.delTask(to_add_name,d);
+                        System.out.println("start "+start+"end "+end+"\n");
+                        System.out.println("start "+starttime.get(i)+"end "+endtime.get(i)+"\n");
                         return new Pair<>(curr, new Availability(avaliable));
                     } else {
                         double start = earliest;
@@ -163,7 +211,7 @@ public class scheduleFunctions {
                         avaliable.put(ent_date_string,ent.getValue());
                         duration = duration - time_range;
                         earliest = endtime.get(i);
-                        /*to_add_date = ent_date;*/
+                        to_add_date = ent_date;
 
                     }
                 }
@@ -171,8 +219,7 @@ public class scheduleFunctions {
             }
 
         }
-        return new Pair<>(curr, new Availability(avaliable));
-    }
+        return new Pair<>(curr, new Availability(avaliable));*/
     public Pair<TaskList, Availability> scheduleOneTest(TaskList curr, Date to_add_date,Date to_add_duedate,
                                                         String to_add_name,Double duration, Double importance, Availability user) throws SQLException, ParseException {
         Map<String, List<Pair<Double, Double>>> avaliable = user.getThisMap();
