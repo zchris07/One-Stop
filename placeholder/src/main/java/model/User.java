@@ -2,17 +2,24 @@ package model;
 
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.table.DatabaseTable;
+import kotlin.Pair;
 
+import java.io.Serializable;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import model.Availability;
 
 @DatabaseTable(tableName = "user")
 public class User {
 
     @DatabaseField(generatedId = true)
-    private Integer userId;
+    private static Integer userId;
     @DatabaseField(canBeNull = false)
     private String hashedPassword;
     @DatabaseField(canBeNull = false, unique = true)
@@ -29,6 +36,8 @@ public class User {
     private String status;
     @DatabaseField(canBeNull = false)
     private String profileImage = "https://i.imgur.com/hepj9ZS.png";
+    @DatabaseField(columnName = "availability", canBeNull = false, dataType = DataType.SERIALIZABLE)
+    private static Availability availability = new Availability();
 
     public User(){
     }
@@ -94,6 +103,22 @@ public class User {
     }
 
     public String getHashedPassword() {return this.hashedPassword; }
+
+    public Availability getAvailability() {
+        return availability;
+    }
+
+    public Map<String, List<Pair<Double, Double>>> getThisMap() {
+        return this.getAvailability().getThisMap();
+    }
+
+    public static void setThisMap(Map<String, List<Pair<Double, Double>>> thisMap,Dao<Availability,Integer> userDao) throws SQLException {
+        availability.setThisMap(thisMap);
+        UpdateBuilder<Availability, Integer> builder = userDao.updateBuilder();
+        builder.updateColumnValue("availability", availability);
+        builder.where().eq("userId", userId);
+        userDao.update(builder.prepare());
+    }
 
     public String toJsonString() {
         StringBuilder sb = new StringBuilder();

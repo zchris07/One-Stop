@@ -2,12 +2,14 @@ package model;
 
 import kotlin.Pair;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class Availability {
-    private Map<String, List<Pair<Double,Double>>> thisMap;
+public class Availability implements Serializable {
+    private Map<String, List<Pair<Double, Double>>> thisMap;
+
     public Availability() {
 
         String dt = "2021-10-01";  // Start date
@@ -20,7 +22,7 @@ public class Availability {
         }
 
         Map<String, List<Pair<Double, Double>>> new_map = new LinkedHashMap<>();
-        for (int i = 0;i<= 100; i++) {
+        for (int i = 0; i <= 100; i++) {
             Calendar cal = Calendar.getInstance();
             c.add(Calendar.DATE, 1);  // number of days to add
             dt = sdf.format(c.getTime());  // dt is now the new date
@@ -34,9 +36,11 @@ public class Availability {
         //c.add(Calendar.DATE, 1);  // number of days to add
         //dt = sdf.format(c.getTime());  // dt is now the new date
     }
+
     public Availability(Map<String, List<Pair<Double, Double>>> thisMap) {
         this.thisMap = thisMap;
     }
+
     public Map<String, List<Pair<Double, Double>>> getThisMap() {
         return thisMap;
     }
@@ -44,9 +48,6 @@ public class Availability {
     public void setThisMap(Map<String, List<Pair<Double, Double>>> thisMap) {
         this.thisMap = thisMap;
     }
-
-
-
 
 
 }
