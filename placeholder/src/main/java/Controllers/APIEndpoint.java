@@ -183,7 +183,7 @@ public class APIEndpoint {
             Integer listIdInt = Integer.parseInt(listId);
             QueryBuilder<TaskList, Integer> builder = tasklistDao.queryBuilder();
 
-            List<TaskList> ems = builder.where().eq("userId", userid).and().eq("listId", listIdInt).query();
+            List<TaskList> ems = builder.where().eq("listId", listIdInt).query();
             res.type("application/json");
             if (ems.size() == 0) {
                 return "";
