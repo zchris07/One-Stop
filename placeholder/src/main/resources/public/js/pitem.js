@@ -108,7 +108,6 @@ const showTaskInList = listId => {
             for (let task of json["taskList"]) {
                 let html = `<tr>
 <td>${task['taskName']}</td>
-<td>Default Project</td>
 <td>${task['duration_day']}</td>
 <td>${task['date']} <button class="edit_task_date btn btn-fail" data-toggle="modal" data-target="#edited">
   Edit
