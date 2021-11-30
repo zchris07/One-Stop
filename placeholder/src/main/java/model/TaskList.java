@@ -149,16 +149,16 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@DatabaseTable(tableName = "TaskList")
+@DatabaseTable(tableName = "tasklist")
 public class TaskList {
-    @DatabaseField(generatedId = true, columnName = "listId")
-    private Integer listId;
-    @DatabaseField(columnName = "listName", canBeNull = false, unique = true)
-    private String listName;
+    @DatabaseField(generatedId = true, columnName = "id")
+    private Integer id;
+    @DatabaseField(columnName = "listname", canBeNull = false, unique = true)
+    private String listname;
     @DatabaseField(columnName = "userid", canBeNull = true)
     private String userid;
-    @DatabaseField(columnName = "taskList", canBeNull = false, dataType = DataType.SERIALIZABLE)
-    public SerializedList<Task> taskList = new SerializedList<>();
+    @DatabaseField(columnName = "tasklist", canBeNull = false, dataType = DataType.SERIALIZABLE)
+    public SerializedList<Task> tasklist = new SerializedList<>();
 
 
     public static class SerializedList<Task> extends ArrayList<Task> implements Serializable {
@@ -239,7 +239,7 @@ public class TaskList {
 
 
     public TaskList(String listName) {
-        this.listName = listName;
+        this.listname = listName;
     }
 
     public TaskList() {
@@ -277,77 +277,77 @@ public class TaskList {
     }*/
 
     public Integer getId() {
-        return listId;
+        return id;
     }
     public void addTask(String taskName, Date dueDay, Date date, Double duration,Double importance, Double exactStart, Double exactEnd){
         Task task = new Task(taskName, dueDay,date,duration, importance, exactStart,exactEnd);
-        taskList.add(task);
+        tasklist.add(task);
     }
 
 
     public void addTask(String taskName, Date dueDay, Date date, Double duration, Double importance,
                         Double exactStart, Double exactEnd, Dao<TaskList, Integer> dao) throws SQLException {
         Task task = new Task(taskName, dueDay, date, duration,importance, exactStart, exactEnd);
-        taskList.add(task);
+        tasklist.add(task);
         UpdateBuilder<TaskList, Integer> builder = dao.updateBuilder();
-        builder.updateColumnValue("taskList", taskList);
-        builder.where().eq("listId", listId);
+        builder.updateColumnValue("tasklist", tasklist);
+        builder.where().eq("id", id);
         dao.update(builder.prepare());
     }
 
     public void delTask(String taskName, Dao<TaskList, Integer> dao) throws SQLException {
-        for (int i = 0; i < taskList.size(); i++) {
-            if (Objects.equals(taskList.get(i).taskName, taskName)) {
-                taskList.remove(i);
+        for (int i = 0; i < tasklist.size(); i++) {
+            if (Objects.equals(tasklist.get(i).taskName, taskName)) {
+                tasklist.remove(i);
                 break;
             }
         }
         UpdateBuilder<TaskList, Integer> builder = dao.updateBuilder();
-        builder.updateColumnValue("taskList", taskList);
-        builder.where().eq("listId", listId);
+        builder.updateColumnValue("tasklist", tasklist);
+        builder.where().eq("id", id);
         dao.update(builder.prepare());
     }
 
     public void updateTaskDate(String taskName, Dao<TaskList,Integer> dao,Date editedDate ) throws SQLException {
         UpdateBuilder<TaskList, Integer> builder = dao.updateBuilder();
-        for (int i = 0; i < taskList.size(); i++) {
-            if (Objects.equals(taskList.get(i).taskName, taskName)) {
-                Task task =taskList.get(i) ;
+        for (int i = 0; i < tasklist.size(); i++) {
+            if (Objects.equals(tasklist.get(i).taskName, taskName)) {
+                Task task =tasklist.get(i) ;
                 task.date =  editedDate;
-                taskList.set(i,task);
+                tasklist.set(i,task);
                 break;
             }
         }
 
-        builder.updateColumnValue("taskList", taskList);
-        builder.where().eq("listId",listId);
+        builder.updateColumnValue("tasklist", tasklist);
+        builder.where().eq("id", id);
         dao.update(builder.prepare());
     }
 
     public String getListName() {
-        return listName;
+        return listname;
     }
 
     public TaskList.Task getTask(String taskName, Dao<TaskList,Integer> dao) throws SQLException{
-        for (int i = 0; i < taskList.size(); i++) {
-            if (Objects.equals(taskList.get(i).taskName, taskName)) {
-                return taskList.get(i);
+        for (int i = 0; i < tasklist.size(); i++) {
+            if (Objects.equals(tasklist.get(i).taskName, taskName)) {
+                return tasklist.get(i);
             }
         }
         return null;
     }
 
     public List<Task> getTaskList() {
-        return taskList;
+        return tasklist;
     }
 
     public String toJsonString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{\"listId\":").append(listId).append(",\"listName\":\"").append(listName).append("\",\"taskList\":[");
-        if (taskList != null) {
-            for (int i = 0; i < taskList.size(); i++) {
-                sb.append(taskList.get(i).taskToJsonString());
-                if (i != taskList.size() - 1) {
+        sb.append("{\"listId\":").append(id).append(",\"listName\":\"").append(listname).append("\",\"taskList\":[");
+        if (tasklist != null) {
+            for (int i = 0; i < tasklist.size(); i++) {
+                sb.append(tasklist.get(i).taskToJsonString());
+                if (i != tasklist.size() - 1) {
                     sb.append(",");
                 }
             }
