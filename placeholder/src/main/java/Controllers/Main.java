@@ -31,6 +31,7 @@ public class Main {
         APIEndpoint.schedulePut();
         APIEndpoint.showDetailGet();
         APIEndpoint.main();
+        APIEndpoint.updateDate();
     }
 
 }
