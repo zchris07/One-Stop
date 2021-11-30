@@ -58,6 +58,8 @@ The default end-point will re-direct to login page, if no cache was previously s
 ![alt text](./docs/images/profile_2.png)
 - Once updated, the page should look like this: 
 ![alt text](./docs/images/profile_3.png)
+- Also, users would be able to change their profile image by clicking the profile image.
+  ![alt text](./docs/images/profile_4.png)
 
 ### Task Detail Page
 - The defualt note of a task would be empty. Click on the Edit button in order to edit task notes.
