@@ -19,11 +19,16 @@ document.getElementById("submit_add_task").addEventListener('click', function ()
         taskName = document.getElementById("taskName").value;
         dueDay = document.getElementById("dueDay").value;
         date_string = document.getElementById("date").value;
+        duration = document.getElementById("duration").value;
+        importance = document.getElementById("importance").value;
         console.log("clicked")
         console.log(taskName)
         console.log(dueDay)
         console.log(date_string)
-        fetch('http://localhost:7000/addTask?listId=' + currentList + '&taskName=' + taskName + '&dueDay=' +dueDay+ '&date='+ date_string, {
+        console.log(duration)
+        console.log(importance)
+        fetch('http://localhost:7000/addTask?listId=' + currentList + '&taskName=' + taskName + '&dueDay=' +dueDay+ '&date='+ date_string
+            + '&duration=' + duration + '&importance=' + importance, {
             method: 'Post',
         })
             .then(res => showTaskInList(currentList))
@@ -105,7 +110,38 @@ const showTaskInList = listId => {
 <td>${task['taskName']}</td>
 <td>Default Project</td>
 <td>${task['duration_day']}</td>
-<td>${task['date']}</td>
+<td>${task['date']} <button class="edit_task_date btn btn-fail" data-toggle="modal" data-target="#edited">
+  Edit
+</button>
+<!-- Modal -->
+<!--<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="edit-modal"-->
+<div class="modal fade" id="edited" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModal3Label">Edit task date</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="date" id="editeddueDay" name="trip-start"
+                                                       value="2021-10-19"
+                                                       min="1901-01-01" max="2030-12-31" >
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+         <button type="button" class="btn btn-primary" onclick="editDate(taskName)">Save changes</button>
+      </div>
+      </div>
+    </div>
+  </div>
+ </td>
+  
+<td>${task['duration']}</td>
+<td>${task['importance']}</td>
+<td>${task['exactStart']}</td>
+<td>${task['exactEnd']}</td>
 <td><button class="delete_task btn btn-fail" onclick="deleteTask('${task['taskName']}')" type="button" >Delete Task</button></td>
 <!--show detail of a task-->
 <td><button class="delete_task btn btn-fail" onclick="showDetail('${task['taskName']}')" type="button" >Task Detail</button></td>
@@ -114,6 +150,12 @@ const showTaskInList = listId => {
                 document.getElementById('all-tasks').innerHTML += html;
             }
             currentList = listId;
+
+            for (let btn of document.querySelectorAll('.edit_task_date')) {
+                btn.addEventListener('click', event => {
+                    taskName = event.target.parentNode.parentNode.firstElementChild.innerHTML;
+                });
+            }
         });
 }
 
@@ -138,6 +180,11 @@ function validateTaskDuration() {
     return true;
 //
 }
+
+function onclickInput(taskName) {
+    return taskName;
+}
+
 function validateListName() {
     const listName = document.getElementById("listName").value;
     if (taskName ==="" ) {
@@ -147,6 +194,19 @@ function validateListName() {
     }
     return true;
 //
+}
+
+function editDate(taskName1){
+    const date_string = document.getElementById("editeddueDay").value;
+    // currentList
+    console.log("clicked")
+    console.log(taskName)
+    console.log(currentList)
+    console.log(date_string)
+    fetch('http://localhost:7000/editDate?listId=' + currentList + '&taskName=' + taskName+ '&editeddueDay=' + date_string , {
+        method: 'Put',
+    })
+        .then(res => window.location.reload = window.location.reload(true));
 }
 
 document.getElementById("submit_add_list").addEventListener('click', function () {

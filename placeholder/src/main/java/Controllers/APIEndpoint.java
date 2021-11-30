@@ -9,6 +9,7 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import kotlin.Pair;
 import model.*;
 import org.apache.commons.lang.ObjectUtils;
 import spark.ModelAndView;
@@ -19,12 +20,15 @@ import java.security.MessageDigest;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import Functionality.scheduleFunctions;
+
 
 import static Controllers.DaoConstructor.*;
 import static Controllers.UpdateController.*;
 
 
 public class APIEndpoint {
+    static Availability this_available = new Availability();
     public static void rootGet(){
 
         Spark.get("/", (req, res) -> {
@@ -253,7 +257,8 @@ public class APIEndpoint {
             String taskName = req.queryParams("taskName");
             String dueDay = req.queryParams("dueDay");
             String date_string = req.queryParams("date");
-
+            Double duration = Double.parseDouble(req.queryParams("duration"));
+            Double importance = Double.parseDouble(req.queryParams("importance"));
             String pattern = "yyyy-MM-dd";
             SimpleDateFormat formatter = new SimpleDateFormat(pattern);
 
@@ -261,13 +266,35 @@ public class APIEndpoint {
             Date dueDay_date = formatter.parse(dueDay);
             Dao<TaskList, Integer> taskDao = getTaskListRMLiteDao();
             List<TaskList> ems = taskDao.queryForEq("listId", listId);
+    /*ems.get(0).addTask(taskName, dueDay_date, date, duration,
+            taskDao);*/
+    /*scheduleFunctions temp = new scheduleFunctions();
+    if (null.equals(this_available)) {
+        this_available = new Availability();
+    }*/
+            scheduleFunctions temp = new scheduleFunctions();
+            Dao userDao = getUserORMLiteDao();
+            List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
+            Pair<TaskList, Availability> new_avail = temp.scheduleOne(ems.get(0),date,dueDay_date,
+                    taskName,duration,importance, aUser.get(0),taskDao);
+            res.status(201);
+            res.type("application/json");
+            User.setThisMap(new_avail.component2().getThisMap(),userDao);
+
+
+            List<TaskList> ems2 = taskDao.queryForEq("listId", listId);
+
+
+            /*return new_avail.component1().toJsonString();*/
+            return ems2.get(0).toJsonString();
+        });/*
             ems.get(0).addTask(taskName, dueDay_date, date, taskDao);
             res.status(201);
             res.type("application/json");
             List<TaskList> ems2 = taskDao.queryForEq("listId", listId);
 
             return ems2.get(0).toJsonString();
-        });
+        });*/
     }
     public static void deleteTask(){
         Spark.delete("/deleteTask", (req, res) -> {
@@ -275,11 +302,19 @@ public class APIEndpoint {
             String taskName = req.queryParams("taskName");
             Dao<TaskList, Integer> taskDao = getTaskListRMLiteDao();
             List<TaskList> ems = taskDao.queryForEq("listId", listId);
-            ems.get(0).delTask(taskName, taskDao);
+            /*ems.get(0).delTask(taskName, taskDao);*/
+            scheduleFunctions temp = new scheduleFunctions();
+            TaskList.Task this_task = ems.get(0).getTask(taskName,taskDao);
+            Dao userDao = getUserORMLiteDao();
+            List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
+            Pair<TaskList, Availability> new_avail = temp.addBackTask(ems.get(0),this_task.getDate()
+                    ,this_task.getDueDay(), taskName,this_task.getDuration(),aUser.get(0),
+                    this_task.getExactStart(),this_task.getExactEnd(),
+                    taskDao);
             res.status(201);
             res.type("application/json");
+            User.setThisMap(new_avail.component2().getThisMap(),userDao);
             List<TaskList> ems2 = taskDao.queryForEq("listId", listId);
-
             return ems2.get(0).toJsonString();
         });
     }
@@ -373,5 +408,23 @@ public class APIEndpoint {
 
             return new ModelAndView(model, "public/index.vm");
         }, new VelocityTemplateEngine());
+    }
+
+    public static void updateDate(){
+        Spark.put("/editDate", (req, res) -> {
+            String listId = req.queryParams("listId");
+            String taskName = req.queryParams("taskName");
+            String editDate = req.queryParams("editeddueDay");
+            String pattern = "yyyy-MM-dd";
+            SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+            System.out.println(editDate);
+            Date editDateFormatted = formatter.parse(editDate);
+            Dao<TaskList, Integer> taskDao = getTaskListRMLiteDao();
+            List<TaskList> ems = taskDao.queryForEq("listId", listId);
+            ems.get(0).updateTaskDate(taskName,taskDao,editDateFormatted);
+            res.status(201);
+            res.type("application/json");
+            return "";
+        });
     }
 }
