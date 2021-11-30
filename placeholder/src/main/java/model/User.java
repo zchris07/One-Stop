@@ -112,7 +112,7 @@ public class User {
         return this.getAvailability().getThisMap();
     }
 
-    public static void setThisMap(Map<String, List<Pair<Double, Double>>> thisMap,Dao<Availability,Integer> userDao) throws SQLException {
+    public static void setThisMap(Map<String, List<Pair<Double, Double>>> thisMap,Dao userDao) throws SQLException {
         availability.setThisMap(thisMap);
         UpdateBuilder<Availability, Integer> builder = userDao.updateBuilder();
         builder.updateColumnValue("availability", availability);
