@@ -125,7 +125,6 @@ function jump() {
 // document.addEventListener('DOMContentLoaded', () => {console.log(result);showCalendar(currentMonth, currentYear)});
 function showCalendar(month, year) {
     console.log(result);
-    if (result.length!==0){
         let firstDay = (new Date(year, month)).getDay();
         let daysInMonth = 32 - new Date(year, month, 32).getDate();
 
@@ -190,6 +189,5 @@ function showCalendar(month, year) {
 
             tbl.appendChild(row); // appending each row into calendar body.
         }
-    }
 
 }// document.addEventListener('DOMContentLoaded', () => {console.log(result);showCalendar(currentMonth, currentYear)});
