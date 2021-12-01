@@ -182,8 +182,11 @@ public class TaskList {
         private Double exactStart;
         @DatabaseField(dataType = DataType.DOUBLE, columnName = "exactEnd")
         private Double exactEnd;
+        @DatabaseField(dataType = DataType.BOOLEAN, columnName = "flexible")
+        private Boolean flexible;
 
-        public Task(String taskName, Date dueDay,  Date date, Double duration, Double importance, Double exactStart, Double exactEnd) {
+        public Task(String taskName, Date dueDay,  Date date, Double duration, Double importance, Double exactStart, Double exactEnd
+                ,Boolean flexible) {
             this.taskName = taskName;
             this.dueDay = dueDay;
             this.duration = duration;
@@ -191,6 +194,7 @@ public class TaskList {
             this.importance = importance;
             this.exactStart = exactStart;
             this.exactEnd = exactEnd;
+            this.flexible = flexible;
         }
 
         /*public Task(String taskName, Date dueDay, Date date, Double duration, Double importance) {
@@ -227,12 +231,16 @@ public class TaskList {
             return exactEnd;
         }
 
+        public Boolean getFlexible() {
+            return flexible;
+        }
+
         public String taskToJsonString() {
             SimpleDateFormat date_formater = new SimpleDateFormat("yyyy-MM-dd");
 
             return "{\"taskName\":\"" + taskName + "\",\"duration_day\":\"" + date_formater.format(dueDay) + "\",\"date\":\""
                     + date_formater.format(date) + "\",\"duration\":\"" + duration +"\",\"importance\":\"" + importance +
-                    "\",\"exactStart\":\"" + exactStart+"\",\"exactEnd\":\"" + exactEnd+"\"}";
+                    "\",\"exactStart\":\"" + exactStart+"\",\"exactEnd\":\"" + exactEnd +"\",\"flexible\":\"" + flexible+"\"}";
         }
     }
 
@@ -279,15 +287,16 @@ public class TaskList {
     public Integer getId() {
         return listId;
     }
-    public void addTask(String taskName, Date dueDay, Date date, Double duration,Double importance, Double exactStart, Double exactEnd){
-        Task task = new Task(taskName, dueDay,date,duration, importance, exactStart,exactEnd);
+    public void addTask(String taskName, Date dueDay, Date date, Double duration,Double importance, Double exactStart,
+                        Double exactEnd, Boolean flexible){
+        Task task = new Task(taskName, dueDay,date,duration, importance, exactStart,exactEnd,flexible);
         taskList.add(task);
     }
 
 
     public void addTask(String taskName, Date dueDay, Date date, Double duration, Double importance,
-                        Double exactStart, Double exactEnd, Dao<TaskList, Integer> dao) throws SQLException {
-        Task task = new Task(taskName, dueDay, date, duration,importance, exactStart, exactEnd);
+                        Double exactStart, Double exactEnd, Boolean flexible, Dao<TaskList, Integer> dao) throws SQLException {
+        Task task = new Task(taskName, dueDay, date, duration,importance, exactStart, exactEnd,flexible);
         taskList.add(task);
         UpdateBuilder<TaskList, Integer> builder = dao.updateBuilder();
         builder.updateColumnValue("taskList", taskList);
