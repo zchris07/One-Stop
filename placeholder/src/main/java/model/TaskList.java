@@ -290,7 +290,7 @@ public class TaskList {
     public void addTask(String taskName, Date dueDay, Date date, Double duration,Double importance, Double exactStart,
                         Double exactEnd, Boolean flexible){
         Task task = new Task(taskName, dueDay,date,duration, importance, exactStart,exactEnd,flexible);
-        taskList.add(task);
+        tasklist.add(task);
 
     }
 
@@ -298,7 +298,7 @@ public class TaskList {
     public void addTask(String taskName, Date dueDay, Date date, Double duration, Double importance,
                         Double exactStart, Double exactEnd, Boolean flexible, Dao<TaskList, Integer> dao) throws SQLException {
         Task task = new Task(taskName, dueDay, date, duration,importance, exactStart, exactEnd,flexible);
-        taskList.add(task);
+        tasklist.add(task);
         UpdateBuilder<TaskList, Integer> builder = dao.updateBuilder();
         builder.updateColumnValue("tasklist", tasklist);
         builder.where().eq("id", id);
