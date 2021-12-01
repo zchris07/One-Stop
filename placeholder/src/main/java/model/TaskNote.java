@@ -3,19 +3,21 @@ package model;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.UpdateBuilder;
+import com.j256.ormlite.table.DatabaseTable;
 
 import java.sql.SQLException;
 
+@DatabaseTable(tableName = "tasknote")
 public class TaskNote {
-    @DatabaseField(columnName="taskName",canBeNull = false,unique = true)
-    private String taskName;
+    @DatabaseField(columnName="taskname",canBeNull = false,unique = true)
+    private String taskname;
 
-    @DatabaseField(columnName="taskNote",canBeNull = false,unique = true)
-    private String taskNote = "hello world.";
+    @DatabaseField(columnName="tasknote",canBeNull = false,unique = true)
+    private String tasknote = "hello world.";
 
     public TaskNote(String _taskName, String _taskNote) {
-        this.taskName = _taskName;
-        this.taskNote = _taskNote;
+        this.taskname = _taskName;
+        this.tasknote = _taskNote;
     }
     public TaskNote() {
 
@@ -23,19 +25,19 @@ public class TaskNote {
 
     public String toJsonString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{\"taskName\":\"").append(taskName).append("\",\"taskNote\":\"").append(taskNote).append("\"");
+        sb.append("{\"taskName\":\"").append(taskname).append("\",\"taskNote\":\"").append(tasknote).append("\"");
         sb.append("}");
         return sb.toString();
     }
 
     public String toString() {
-        return taskNote;
+        return tasknote;
     }
 
     public void updateNote(String taskName, String taskNote, Dao<TaskNote,Integer> dao) throws SQLException {
         UpdateBuilder<TaskNote, Integer> builder = dao.updateBuilder();
-        builder.updateColumnValue("taskNote", taskNote);
-        builder.where().eq("taskName", taskName);
+        builder.updateColumnValue("tasknote", taskNote);
+        builder.where().eq("taskname", taskName);
         dao.update(builder.prepare());
     }
 }

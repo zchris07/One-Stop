@@ -15,7 +15,7 @@ public class UpdateController {
 
     public static void updateNote(String taskName, String taskNote, String isCheckedGrammar, String isCheckedSpelling, String isCheckedCapital, String isCheckedLongRunning, Dao<TaskNote, Integer> dao) throws SQLException {
 
-        List<TaskNote> check = dao.queryForEq("taskName", taskName);
+        List<TaskNote> check = dao.queryForEq("taskname", taskName);
 
         if (check.size() == 0) {
             textFunctions text_functions = new textFunctions();
@@ -53,8 +53,8 @@ public class UpdateController {
 
             UpdateBuilder<TaskNote, Integer> builder = dao.updateBuilder();
 
-            builder.updateColumnValue("taskNote", taskNote);
-            builder.where().eq("taskName", taskName);
+            builder.updateColumnValue("tasknote", taskNote);
+            builder.where().eq("taskname", taskName);
             dao.update(builder.prepare());
         }
     }
@@ -64,10 +64,10 @@ public class UpdateController {
         List<User> check = dao.queryForEq("email", useremail);
         UpdateBuilder<User, Integer> builder = dao.updateBuilder();
         if (firstName != "" & firstName != null) {
-            builder.updateColumnValue("firstName", firstName);
+            builder.updateColumnValue("firstname", firstName);
         }
         if (lastName != "" & lastName != null) {
-            builder.updateColumnValue("lastName", lastName);
+            builder.updateColumnValue("lastname", lastName);
         }
         if (organization != "" & organization != null) {
             builder.updateColumnValue("organization", organization);
@@ -79,7 +79,7 @@ public class UpdateController {
             builder.updateColumnValue("summary", summary);
         }
         if (image != "" & image != null) {
-            builder.updateColumnValue("profileImage", image);
+            builder.updateColumnValue("profileimage", image);
         }
         builder.where().eq("email", useremail);
         dao.update(builder.prepare());
@@ -90,7 +90,7 @@ public class UpdateController {
         MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
         messageDigest.update(password.getBytes());
         String hashedPassword = new String(messageDigest.digest());
-        builder.updateColumnValue("hashedPassword", hashedPassword);
+        builder.updateColumnValue("hashedpassword", hashedPassword);
         builder.where().eq("email", email);
         dao.update(builder.prepare());
     }
