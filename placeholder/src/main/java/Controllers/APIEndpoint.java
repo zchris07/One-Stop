@@ -488,14 +488,18 @@ public class APIEndpoint {
                         tasklists.addAll(cur);
                 }
                 model.put("lists", tasklists);
+
+                List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
+                model.put("imageUrl", aUser.get(0).getProfileImage());
             } else {
                 List<TaskList> tasklists = tasklistDao.queryForEq("userid", "");
                 model.put("lists", tasklists);
+                List<User> aUser = userDao.queryForEq("email", "");
+                model.put("imageUrl", "https://i.imgur.com/hepj9ZS.png");
             }
 
 //            for profile image
-            List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
-            model.put("imageUrl", aUser.get(0).getProfileImage());
+
 
             return new ModelAndView(model, "public/index.vm");
         }, new VelocityTemplateEngine());
