@@ -21,7 +21,7 @@ import static Controllers.DaoConstructor.*;
 public class Schedule {
 
      public String getAllTaskDate(String userid, Dao tasklistDao) throws SQLException {
-        List<TaskList> taskLists = tasklistDao.queryForEq("userId", userid);
+        List<TaskList> taskLists = tasklistDao.queryForEq("userid", userid);
         StringBuilder result = new StringBuilder();
         result.append("[");
         for (int i=0;i<taskLists.size();i++) {
@@ -35,10 +35,10 @@ public class Schedule {
     }
     public String taskDateListToJsonString(TaskList taskList_whole) {
         StringBuilder sb = new StringBuilder();
-        if (taskList_whole.taskList!= null){
-            for (int i=0;i<taskList_whole.taskList.size();i++) {
-                sb.append(taskList_whole.taskList.get(i).taskToJsonString());
-                if (i!= taskList_whole.taskList.size()-1){
+        if (taskList_whole.tasklist!= null){
+            for (int i=0;i<taskList_whole.tasklist.size();i++) {
+                sb.append(taskList_whole.tasklist.get(i).taskToJsonString());
+                if (i!= taskList_whole.tasklist.size()-1){
                     sb.append(",");
                 }
             }}
