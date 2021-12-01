@@ -4,22 +4,9 @@
     <fieldset>
         <div>
             <label for="url">Name: </label>
-            <input type="url" name="url" placeholder="Optional url" id="url"/>
+            <input type="url" name="url" placeholder="Optional url. Click detect directly" id="url"/>
         </div>
-        <br />
-        <div>
-            <input type="hidden" name="urlget" id="urlget" class="simple-file-upload">
-        </div>
-
         <input type="submit" value="Detect" id="detect" />
     </fieldset>
 </form>
 #parse("public/bottom.vm")
-<script>
-    const el = document.getElementById("urlget");
-    el.addEventListener("fileUploadSuccess", function (e) {
-        fetch('http://localhost:7000/saveurl?url=' + this.value, {
-            method: 'Post'
-        });
-    });
-</script>
