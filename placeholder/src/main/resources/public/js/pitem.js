@@ -146,13 +146,15 @@ function showDetail(taskName) {
 }
 
 const showTaskInList = listId => {
-    console.log(`listId=${listId}`)
-    fetch('http://localhost:7000/showList?listId=' + listId)
-        .then(res => res.json())
-        .then(json => {
-            document.getElementById('all-tasks').innerHTML = '';
-            for (let task of json["taskList"]) {
-                let html = `<tr>
+    currentList = listId;
+    if (currentList !== null) {
+        console.log(`listId=${listId}`);
+        fetch('http://localhost:7000/showList?listId=' + listId)
+            .then(res => res.json())
+            .then(json => {
+                document.getElementById('all-tasks').innerHTML = '';
+                for (let task of json["taskList"]) {
+                    let html = `<tr>
 <td>${task['taskName']}</td>
 <td>${task['duration_day']}</td>
 <td>${task['date']} <button class="edit_task_date btn btn-fail" data-toggle="modal" data-target="#edited">
@@ -192,16 +194,16 @@ const showTaskInList = listId => {
 <td><button class="delete_task btn btn-fail" onclick="showDetail('${task['taskName']}')" type="button" >Task Detail</button></td>
 </tr>
 `
-                document.getElementById('all-tasks').innerHTML += html;
-            }
-            currentList = listId;
+                    document.getElementById('all-tasks').innerHTML += html;
+                }
 
-            for (let btn of document.querySelectorAll('.edit_task_date')) {
-                btn.addEventListener('click', event => {
-                    taskName = event.target.parentNode.parentNode.firstElementChild.innerHTML;
-                });
-            }
-        });
+                for (let btn of document.querySelectorAll('.edit_task_date')) {
+                    btn.addEventListener('click', event => {
+                        taskName = event.target.parentNode.parentNode.firstElementChild.innerHTML;
+                    });
+                }
+            });
+}
 }
 
 for (let i of document.querySelectorAll(".list-row")) {
@@ -212,7 +214,7 @@ for (let i of document.querySelectorAll(".list-row")) {
 }
 
 window.addEventListener('DOMContentLoaded', e => {
-    showTaskInList(currentList || 1);
+    showTaskInList(currentList);
 })
 
 function validateTaskDuration() {
