@@ -1,5 +1,6 @@
 package model;
 
+import com.google.gson.internal.LinkedTreeMap;
 import kotlin.Pair;
 
 import java.io.Serializable;
@@ -21,8 +22,8 @@ public class Availability implements Serializable {
             e.printStackTrace();
         }
 
-        Map<String, List<Pair<Double, Double>>> new_map = new LinkedHashMap<>();
-        for (int i = 0; i <= 100; i++) {
+        Map<String, List<Pair<Double, Double>>> new_map = new LinkedTreeMap<>();
+        for (int i = 0; i <= 365; i++) {
             Calendar cal = Calendar.getInstance();
             c.add(Calendar.DATE, 1);  // number of days to add
             dt = sdf.format(c.getTime());  // dt is now the new date

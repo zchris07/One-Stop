@@ -44,6 +44,7 @@ public class Main {
         APIEndpoint.showDetailPut(tasknoteDao);
         APIEndpoint.addlistPost(worksonDao, tasklistDao);
         APIEndpoint.deletelist(tasklistDao);
+        APIEndpoint.addavailPost(userDao);
         APIEndpoint.addtaskPost(tasklistDao, userDao);
         APIEndpoint.deleteTask(tasklistDao, userDao);
         APIEndpoint.scheduleGet(userDao);

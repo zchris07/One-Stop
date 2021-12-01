@@ -10,6 +10,10 @@ import spark.template.velocity.VelocityTemplateEngine;
 
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.ChronoField;
 import java.util.*;
 
 import Functionality.*;
@@ -17,6 +21,20 @@ import Functionality.*;
 
 public class APIEndpoint {
     static Availability this_available = new Availability();
+
+
+    public static String convertTime (String to_change) {
+        String to_change_first = to_change.split("-")[0];
+        String to_change_second = to_change.split("-")[1];
+        double hour_first = Double.parseDouble(to_change_first.split(":")[0]);
+        double minutes_first = Double.parseDouble(to_change_first.split(":")[1]);
+        double hour_second = Double.parseDouble(to_change_second.split(":")[0]);
+        double minutes_second = Double.parseDouble(to_change_second.split(":")[1]);
+
+
+        return (hour_first+(minutes_first/60)) + "-" + (hour_second+ (minutes_second/60));
+    }
+
     public static void rootGet(){
 
         Spark.get("/", (req, res) -> {
@@ -229,6 +247,110 @@ public class APIEndpoint {
             return "";
         });
     }
+
+    public static void addavailPost(Dao userDao){
+        Spark.post("/addAvail", (req , res) -> {
+            String week = req.queryParams("weekstr");
+            String mondayAvail = req.queryParams("mondayAvail");
+            String[] mondayAvail_list = mondayAvail.split(";");
+            if (!mondayAvail.isEmpty()) {
+                update_list(mondayAvail_list);
+            }
+            String tuesdayAvail = req.queryParams("tuesdayAvail");
+            String[] tuesdayAvail_list = tuesdayAvail.split(";");
+            if (!tuesdayAvail.isEmpty()) {
+                update_list(tuesdayAvail_list);
+            }
+            String wednesdayAvail = req.queryParams("wednesdayAvail");
+            System.out.println(wednesdayAvail);
+            String[] wednesdayAvail_list = wednesdayAvail.split(";");
+            if (!wednesdayAvail.isEmpty()) {
+                update_list(wednesdayAvail_list);
+            }
+            String thursdayAvail = req.queryParams("thursdayAvail");
+            String[] thursdayAvail_list = thursdayAvail.split(";");
+            if (!thursdayAvail.isEmpty()) {
+                update_list(thursdayAvail_list);
+            }
+            String fridayAvail = req.queryParams("fridayAvail");
+            String[] fridayAvail_list = fridayAvail.split(";");
+            if (!fridayAvail.isEmpty()) {
+                update_list(fridayAvail_list);
+            }
+            String saturdayAvail = req.queryParams("saturdayAvail");
+            String[] saturdayAvail_list = saturdayAvail.split(";");
+            if (!saturdayAvail.isEmpty()) {
+                update_list(saturdayAvail_list);
+            }
+            String sundayAvail = req.queryParams("sundayAvail");
+            String[] sundayAvail_list = sundayAvail.split(";");
+            if (!sundayAvail.isEmpty()) {
+                update_list(sundayAvail_list);
+            }
+            int repeat = Integer.parseInt(req.queryParams("repeat"));
+            String weekNumber = week.split("W")[1];
+
+            LocalDate getWeek = LocalDate.now().with(ChronoField.ALIGNED_WEEK_OF_YEAR, Long.parseLong(weekNumber));
+
+            LocalDate start = getWeek.with(DayOfWeek.MONDAY);
+            //LocalDate end = start.plusDays(6);
+            //List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
+
+            Map<String, List<Pair<Double, Double>>> new_map = User.getThisMap();
+            while (repeat>0) {
+
+
+                update_map(mondayAvail_list, start, new_map);
+                update_map(tuesdayAvail_list, start.plusDays(1), new_map);
+                update_map(wednesdayAvail_list, start.plusDays(2), new_map);
+                update_map(thursdayAvail_list, start.plusDays(3), new_map);
+                update_map(fridayAvail_list, start.plusDays(4), new_map);
+                update_map(saturdayAvail_list, start.plusDays(5), new_map);
+                update_map(sundayAvail_list, start.plusDays(6), new_map);
+                start = start.plusDays(7);
+                repeat = repeat-1;
+            }
+            //Dao userDao = getUserORMLiteDao();
+            //List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
+            User.setThisMap(new_map,userDao);
+
+
+            return "";
+        });
+    }
+
+    private static void update_list(String[] mondayAvail_list) {
+        for (int i = 0; i < mondayAvail_list.length; i++) {
+            mondayAvail_list[i] = convertTime(mondayAvail_list[i]);
+        }
+    }
+
+    private static void update_map(String[] mondayAvail_list, LocalDate start, Map<String, List<Pair<Double, Double>>> new_map) {
+        if (mondayAvail_list[0].equals("")) {
+            return;
+        }
+
+
+        if (new_map.containsKey(start.toString())){
+            new_map.put(start.toString(), new ArrayList<>());
+        }
+        for (String to_add : mondayAvail_list) {
+            String mon_string = start.toString();
+            Double start_time = Double.parseDouble(to_add.split("-")[0]);
+            Double end_time = Double.parseDouble(to_add.split("-")[1]);
+            Pair<Double,Double> newPair = new Pair<>(start_time,end_time);
+            if (new_map.containsKey(mon_string)) {
+                List<Pair<Double,Double>> pair_list = new_map.get(mon_string);
+                pair_list.add(newPair);
+                new_map.put(mon_string,pair_list);
+            } else{
+                List<Pair<Double, Double>> newList = new ArrayList();
+                newList.add(newPair);
+                new_map.put(mon_string,newList);
+            }
+        }
+    }
+
     public static void addtaskPost(Dao tasklistDao, Dao userDao){
         Spark.post("/addTask", (req, res) -> {
             String listId = req.queryParams("listId");
@@ -237,6 +359,8 @@ public class APIEndpoint {
             String date_string = req.queryParams("date");
             Double duration = Double.parseDouble(req.queryParams("duration"));
             Double importance = Double.parseDouble(req.queryParams("importance"));
+            Boolean flexible = Boolean.parseBoolean(req.queryParams("flexible"));
+
             String pattern = "yyyy-MM-dd";
             SimpleDateFormat formatter = new SimpleDateFormat(pattern);
 
@@ -252,7 +376,7 @@ public class APIEndpoint {
             scheduleFunctions temp = new scheduleFunctions();
             List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
             Pair<TaskList, Availability> new_avail = temp.scheduleOne(ems.get(0),date,dueDay_date,
-                    taskName,duration,importance, aUser.get(0), tasklistDao);
+                    taskName,duration,importance, flexible, aUser.get(0), tasklistDao);
             res.status(201);
             res.type("application/json");
             User.setThisMap(new_avail.component2().getThisMap(),userDao);

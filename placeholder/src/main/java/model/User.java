@@ -108,8 +108,8 @@ public class User {
         return availability;
     }
 
-    public Map<String, List<Pair<Double, Double>>> getThisMap() {
-        return this.getAvailability().getThisMap();
+    public static Map<String, List<Pair<Double, Double>>> getThisMap() {
+        return availability.getThisMap();
     }
 
     public static void setThisMap(Map<String, List<Pair<Double, Double>>> thisMap,Dao userDao) throws SQLException {

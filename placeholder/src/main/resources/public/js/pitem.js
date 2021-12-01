@@ -21,14 +21,23 @@ document.getElementById("submit_add_task").addEventListener('click', function ()
         date_string = document.getElementById("date").value;
         duration = document.getElementById("duration").value;
         importance = document.getElementById("importance").value;
+        if (document.getElementById("flexible").checked) {
+            flexible = "true"
+        }
+        else {
+            isCheckedGrammar = "false"
+        }
+
+
         console.log("clicked")
         console.log(taskName)
         console.log(dueDay)
         console.log(date_string)
         console.log(duration)
         console.log(importance)
+        console.log(flexible)
         fetch('http://localhost:7000/addTask?listId=' + currentList + '&taskName=' + taskName + '&dueDay=' +dueDay+ '&date='+ date_string
-            + '&duration=' + duration + '&importance=' + importance, {
+            + '&duration=' + duration + '&importance=' + importance + '&flexible=' + flexible, {
             method: 'Post',
         })
             .then(res => showTaskInList(currentList))
@@ -50,6 +59,43 @@ document.getElementById("submit_add_list").addEventListener('click', function ()
             });
                 // .then(res => window.location.reload = window.location.reload(true))
             ;}
+    // }
+);
+
+document.getElementById("submit_add_avail").addEventListener('click', function () {
+        // if (validateTaskDuration()){
+        weekstr = document.getElementById("weekcount").value;
+        // userid = document.getElementById("userid").value;
+        mondayAvail = document.getElementById("monday").value;
+        tuesdayAvail = document.getElementById("tuesday").value;
+        wednesdayAvail = document.getElementById("wednesday").value;
+        thursdayAvail = document.getElementById("thursday").value;
+        fridayAvail = document.getElementById("friday").value;
+        saturdayAvail = document.getElementById("saturday").value;
+        sundayAvail = document.getElementById("sunday").value;
+        repeat = document.getElementById("repeat").value;
+
+        console.log("clicked")
+        console.log(weekstr)
+        console.log(mondayAvail)
+        console.log(tuesdayAvail)
+        console.log(wednesdayAvail)
+        console.log(thursdayAvail)
+        console.log(fridayAvail)
+        console.log(saturdayAvail)
+        console.log(sundayAvail)
+        console.log(repeat)
+
+        // fetch('http://localhost:7000/addList?listName=' + listName + '&userid=' + userid + '&colabidstring=' + colabidstring, {
+        //     method: 'Post',
+        // });
+        fetch('http://localhost:7000/addAvail?weekstr=' + weekstr + '&mondayAvail=' + mondayAvail
+            + '&tuesdayAvail=' + tuesdayAvail + '&wednesdayAvail=' + wednesdayAvail + '&thursdayAvail=' + thursdayAvail
+            + '&fridayAvail=' + fridayAvail + '&saturdayAvail=' + saturdayAvail + '&sundayAvail=' + sundayAvail + '&repeat=' + repeat, {
+            method: 'Post',
+        });
+        // .then(res => window.location.reload = window.location.reload(true))
+    }
     // }
 );
 
