@@ -434,7 +434,7 @@ public class APIEndpoint {
                 userid = "";
             }
             QueryBuilder<TaskList, Integer> builder = tasklistDao.queryBuilder();
-            List<TaskList> ems = builder.where().eq("id", userid).query();
+            List<TaskList> ems = builder.where().eq("userid", userid).query();
 //            res.type("application/json");
             return schedule.getAllTaskDate(userid, tasklistDao);
         });
