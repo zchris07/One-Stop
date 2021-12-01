@@ -191,12 +191,6 @@ public class APIEndpoint {
     }
     public static void showlistGet(Dao tasklistDao){
         Spark.get("/showList", (req, res) -> {
-            String userid;
-            if (req.cookie("userid") != null) {
-                userid = req.cookie("userid");
-            } else {
-                userid = "";
-            }
             String listId = req.queryParams("listId");
             Integer listIdInt = Integer.parseInt(listId);
             QueryBuilder<TaskList, Integer> builder = tasklistDao.queryBuilder();
