@@ -30,7 +30,7 @@ document.getElementById("submit_notes").addEventListener('click', function () {
         console.log(isCheckedCapital)
         console.log(isCheckedLongRunning)
         // /addNotes?taskName=good&taskNote=dfa
-        fetch('http://localhost:7000/addNotes?taskName='+ taskName + '&taskNote=' + taskNote +
+        fetch(path+'addNotes?taskName='+ taskName + '&taskNote=' + taskNote +
             '&isCheckedGrammar=' + isCheckedGrammar+
             '&isCheckedSpelling=' + isCheckedSpelling+ '&isCheckedCapital=' + isCheckedCapital
             +'&isCheckedLongRunning=' + isCheckedLongRunning, {

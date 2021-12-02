@@ -1,6 +1,7 @@
 #set( $title = "Sign up Page" )
 <!DOCTYPE html>
 <html lang="en">
+<script src="js/path.js"></script>
 <head>
     <meta charset="UTF-8">
     <title>Placeholder</title>

@@ -2,25 +2,32 @@ package model;
 
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.table.DatabaseTable;
+import kotlin.Pair;
 
+import java.io.Serializable;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import model.Availability;
 
 @DatabaseTable(tableName = "user")
 public class User {
 
-    @DatabaseField(generatedId = true)
-    private Integer userId;
+    @DatabaseField(generatedId = true, columnName = "id")
+    private static Integer id;
     @DatabaseField(canBeNull = false)
-    private String hashedPassword;
+    private String hashedpassword;
     @DatabaseField(canBeNull = false, unique = true)
     private String email;
     @DatabaseField(canBeNull = true)
-    private String firstName;
+    private String firstname;
     @DatabaseField(canBeNull = true)
-    private String lastName;
+    private String lastname;
     @DatabaseField(canBeNull = true)
     private String summary;
     @DatabaseField(canBeNull = true)
@@ -28,19 +35,21 @@ public class User {
     @DatabaseField(canBeNull = true)
     private String status;
     @DatabaseField(canBeNull = false)
-    private String profileImage = "https://i.imgur.com/hepj9ZS.png";
+    private String profileimage = "https://i.imgur.com/hepj9ZS.png";
+    @DatabaseField(columnName = "availability", canBeNull = false, dataType = DataType.SERIALIZABLE)
+    private static Availability availability = new Availability();
 
     public User(){
     }
 
     public User(String email, String hashedPassword) {
         this.email=email;
-        this.hashedPassword=hashedPassword;
-        this.profileImage = "https://i.imgur.com/hepj9ZS.png";
+        this.hashedpassword=hashedPassword;
+        this.profileimage = "https://i.imgur.com/hepj9ZS.png";
     }
 
     public Integer getUserId() {
-        return userId;
+        return id;
     }
 
     public String getEmail() {
@@ -52,19 +61,19 @@ public class User {
     }
 
     public String getFirstName() {
-        return firstName;
+        return firstname;
     }
 
     public void setFirstName(String firstname) {
-        this.firstName = firstname;
+        this.firstname = firstname;
     }
 
     public String getLastName() {
-        return lastName;
+        return lastname;
     }
 
     public void setLastName(String lastname) {
-        this.lastName = lastname;
+        this.lastname = lastname;
     }
 
     public String getSummary() {
@@ -86,21 +95,37 @@ public class User {
     public String getStatus() {
         return status;
     }
-    public String getProfileImage() {return profileImage;}
-    public void setProfileImage(String imageUrl) {this.profileImage = imageUrl;}
+    public String getProfileImage() {return profileimage;}
+    public void setProfileImage(String imageUrl) {this.profileimage = imageUrl;}
 
     public void setStatus(String status) {
         this.status = status;
     }
 
-    public String getHashedPassword() {return this.hashedPassword; }
+    public String getHashedPassword() {return this.hashedpassword; }
+
+    public Availability getAvailability() {
+        return availability;
+    }
+
+    public static Map<String, List<Pair<Double, Double>>> getThisMap() {
+        return availability.getThisMap();
+    }
+
+    public static void setThisMap(Map<String, List<Pair<Double, Double>>> thisMap,Dao userDao) throws SQLException {
+        availability.setThisMap(thisMap);
+        UpdateBuilder<Availability, Integer> builder = userDao.updateBuilder();
+        builder.updateColumnValue("availability", availability);
+        builder.where().eq("id", id);
+        userDao.update(builder.prepare());
+    }
 
     public String toJsonString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{\"userId\":\"").append(userId).
+        sb.append("{\"userId\":\"").append(id).
                 append("\",\"email\":\"").append(email).
-                append("\",\"firstName\":\"").append(firstName).
-                append("\",\"lastName\":\"").append(lastName).
+                append("\",\"firstName\":\"").append(firstname).
+                append("\",\"lastName\":\"").append(lastname).
                 append("\",\"summary\":\"").append(summary).
                 append("\",\"status\":\"").append(status).
                 append("\",\"organization\":\"").append(organization).append("\"");

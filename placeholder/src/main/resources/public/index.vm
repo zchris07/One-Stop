@@ -2,6 +2,7 @@
 ###set( $plists = ["list1","list2","list3"])
 <!DOCTYPE html>
 <html lang="en">
+<script src="js/path.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -50,65 +51,101 @@
             <input onclick="location.href='./userprofile'" type="image" height="100" width="100"  class="btn-xl rounded-circle" id ="profile-btn" src=$imageUrl>
         </div>
     </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm box gutter">
+    <div class="container" style="margin: 0">
+        <div class="row" style="width: 1440px; margin-left: 0px">
+            <div class="col-lg-4 box gutter">
                 <div class="row" style="margin-top: 50px;">
-                    <div class="col-md-12">
+                    <div class="col-lg-12">
                         <div class="input-group">
-##                            <input type="text" class="form-control" placeholder="List Name" aria-label="List Name" aria-describedby="basic-addon2">
+                            ##                            <input type="text" class="form-control" placeholder="List Name" aria-label="List Name" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-example-modal-lg">Create List</button>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-example-modal-lg" style="width: 100px; height: 64px">Create List</button>
+                                        </div>
+                                        <div class="col-sm">
+                                            <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-avail-modal-lg">Set Availability</button>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <label>Add A List:</label>
                                             <input type="text" class="form-control" placeholder="List Name" aria-label="Task" aria-describedby="basic-addon2" id="listName">
-##                                            <input type="text" class="form-control" placeholder="Owner Email" aria-label="Owner" aria-describedby="basic-addon2" id="userid">
+                                            ##                                            <input type="text" class="form-control" placeholder="Owner Email" aria-label="Owner" aria-describedby="basic-addon2" id="userid">
                                             <input type="text" class="form-control" placeholder="Collaborator Emails. Separate by ;" aria-label="Collaborators" aria-describedby="basic-addon2" id="colabidstring">
-                                            <div class="container" style="margin-top: 50px; margin-bottom: 50px">
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                                                    <label class="form-check-label" for="flexSwitchCheckDefault">List Functional Option</label>
-                                                </div>
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" >
-                                                    <label class="form-check-label" for="flexSwitchCheckDefault">List Functional Option</label>
-                                                </div>
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" >
-                                                    <label class="form-check-label" for="flexSwitchCheckDefault">List Functional Option</label>
-                                                </div>
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" >
-                                                    <label class="form-check-label" for="flexSwitchCheckDefault">List Functional Option</label>
-                                                </div>
-                                                <button class="btn btn-primary" type="submit" data-toggle="modal" data-target=".bd-list-modal-lg" id = "submit_add_list">Submit</button>
-                                            </div>
+                                            <button class="btn btn-primary" type="submit" data-toggle="modal" data-target=".bd-list-modal-lg" id = "submit_add_list">Submit</button>
                                         </div>
                                     </div>
                                 </div>
-##                                <button class="btn btn-fail" type="button">Delete List</button>
+                                ##                                <button class="btn btn-fail" type="button">Delete List</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- button to add task -->
+                    <div class="col-lg-15">
+                        <div class="input-group">
+                            ##                            <input type="text" class="form-control" placeholder="List Name" aria-label="List Name" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <div class="modal fade bd-avail-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <label>Set Availability</label>
+                                            <label for="week">Choose a week to set the availability:</label>
+                                            <input type="week" name="week" id="weekcount" min="2021-W43" max="2022-W43" required>
+                                            <div class="container" style="margin-top: 50px; margin-bottom: 50px">
+                                                (input has the form X-Y. Decimal place can be used to represent minutes- 8.5 refers to 8:30.
+                                                Availability can be seperated by semi-colons. Leave empty if you do not wish to change availability of that day.)
+                                                <label for="Monday">Select Monday's Availability</label>
+                                                <input type="text" class="form-control"  aria-label="Task" aria-describedby="basic-addon2" id="monday">
+                                                <label for="Tuesday">Select Tuesday's Availability</label>
+                                                <input type="text" class="form-control"  aria-label="Task" aria-describedby="basic-addon2" id="tuesday">
+                                                <label for="Wednesday">Select Wednesday's Availability</label>
+                                                <input type="text" class="form-control"  aria-label="Task" aria-describedby="basic-addon2" id="wednesday">
+                                                <label for="Thursday">Select Thursday's Availability</label>
+                                                <input type="text" class="form-control"  aria-label="Task" aria-describedby="basic-addon2" id="thursday">
+                                                <label for="Friday">Select Friday's Availability</label>
+                                                <input type="text" class="form-control"  aria-label="Task" aria-describedby="basic-addon2" id="friday">
+                                                <label for="Saturday">Select Saturday's Availability</label>
+                                                <input type="text" class="form-control"  aria-label="Task" aria-describedby="basic-addon2" id="saturday">
+                                                <label for="Sunday">Select Sunday's Availability</label>
+                                                <input type="text" class="form-control"  aria-label="Task" aria-describedby="basic-addon2" id="sunday">
+                                                <label for="repeat">How many weeks do you want to repeat? (Min:1, Max: 50)</label>
+                                                <input type="number" id="repeat" name="repeat" value = "1" step = 1 min="1">
+                                                <button class="btn btn-primary" type="submit" data-toggle="modal" data-target=".bd-avail-modal-lg" id = "submit_add_avail">Submit</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
+
+
                 <div class="container" style="margin-top: 50px; margin-bottom: 50px;">
                     <table class="table table-hover">
-##                        <tbody>
-##                        <tr style="transform: rotate(0);">
-##                            <th scope="row"><a href="#" class="stretched-link">1</a></th>
-##                            <td>List 1</td>
-##                        </tr>
-##                        <tr>
-##                            <th scope="row">2</th>
-##                            <td>List 2</td>
-##                        </tr>
-##                        <tr>
-##                            <th scope="row">3</th>
-##                            <td>List 3</td>
-##                        </tr>
-##                        </tbody>
+                        ##                        <tbody>
+                        ##                        <tr style="transform: rotate(0);">
+                        ##                            <th scope="row"><a href="#" class="stretched-link">1</a></th>
+                        ##                            <td>List 1</td>
+                        ##                        </tr>
+                        ##                        <tr>
+                        ##                            <th scope="row">2</th>
+                        ##                            <td>List 2</td>
+                        ##                        </tr>
+                        ##                        <tr>
+                        ##                            <th scope="row">3</th>
+                        ##                            <td>List 3</td>
+                        ##                        </tr>
+                        ##                        </tbody>
                         <tbody id="all-lists">
                             #foreach($taskList in $lists)
                             <tr>
@@ -120,17 +157,18 @@
                     </table>
                 </div>
             </div>
-            <div class="col-sm box gutter">
+
+            <div class="col-lg box gutter">
                 <div class="container" style="margin-top: 50px; margin-bottom: 50px;">
 
                     <!-- button to add task -->
                     <div class="row" style="margin-bottom: 50px">
-                        <div class="col-md-12">
+                        <div class="col-lg-12" style="padding: 0px">
                             <div class="input-group">
-##                                <input type="text" class="form-control" placeholder="Task" aria-label="Task" aria-describedby="basic-addon2">
+                                ##                                <input type="text" class="form-control" placeholder="Task" aria-label="Task" aria-describedby="basic-addon2">
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-list-modal-lg" id = "add_task_button">Add Task</button>
-                                    <div class="modal fade bd-list-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-task-modal-lg" id = "add_task_button" style="width: 100px">Add Task</button>
+                                    <div class="modal fade bd-task-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <h4>Add A Task:</h4>
@@ -145,7 +183,30 @@
                                                 <input type="date" id="date" name="trip-start"
                                                        value="2021-10-19"
                                                        min="1901-01-01" max="2030-12-31" >
-                                                <button class="btn btn-primary" type="submit" data-toggle="modal" data-target=".bd-list-modal-lg" id = "submit_add_task">Submit</button>
+                                                <label for="start">Duration: (must input a float)</label>
+                                                <input type="number" id="duration" name="time takes" step = 0.1 min="0" value = "1.0">
+
+                                                <label for="start">Importance: </label>
+                                                <select name="importance" id="importance">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </select>
+                                                <!-- <input type = "number" id = "importance" name="importance" step = 1 min = "0" max = "5"> -->
+
+
+                                                <!-- <label for="flexible">Is this task flexible?</label>
+                                                <input type="checkbox" id="flexible" name="flexible" style="text-align: center; vertical-align: middle;"> -->
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox", style="margin-left: auto", id="flexible" >
+                                                    <label class="form-check-label" for="flexSwitchCheckDefault">Is this task flexible?</label>
+                                                </div>
+
+
+
+                                                <button class="btn btn-primary" type="submit" data-toggle="modal" data-target=".bd-task-modal-lg" id = "submit_add_task">Submit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -160,14 +221,18 @@
                         <caption class="text-center">All Tasks</caption>
                         <tr>
                             <th>Task</th>
-                            <th>Project</th>
                             <th>EndDate</th>
                             <th>Date</th>
+                            <th>Duration</th>
+                            <th>Importance</th>
+                            <th>Exact Start Time</th>
+                            <th>Exact End Time</th>
+                            <th></th>
                             <th></th>
                         </tr>
 
                         <tbody id="all-tasks">
-##                        #foreach($pitem in $pitems)
+                            ##                        #foreach($pitem in $pitems)
 ##                        <tr>
 ##                            <td><button class="delete_task btn btn-fail" type="button" >Delete Task</button></td>
 ##                        </tr>
@@ -222,7 +287,6 @@
             </div>
         </div>
     </div>
-</div>
 </body>
 </head>
 
@@ -286,6 +350,7 @@
     }
     .box{
         position: relative;
+        margin-bottom: 50px;
     }
     .box:after {
         content:'';

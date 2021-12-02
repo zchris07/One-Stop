@@ -15,7 +15,7 @@ let firstDay = (new Date(year, month)).getDay();
 let daysInMonth = 32 - new Date(year, month, 32).getDate();
 let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-fetch('http://localhost:7000/schedule' , {
+fetch(path+'schedule' , {
     method: 'put',
 }).then(res => res.json())
     .then(json=> {
@@ -27,10 +27,10 @@ fetch('http://localhost:7000/schedule' , {
             let current_date_year =Number(result_of_task[2]);
 
             // console.log(result);
-            result.push([current_date_day,current_date_month,current_date_year,task['taskName']]);
+            result.push([current_date_day,current_date_month,current_date_year,task['taskName'],task['exactStart'],task['exactEnd']]);
 
         }
-        showCalendar(10,2021);
+        showCalendar(11,2021);
     });
 
 let tbl = document.getElementById("calendar-body"); // body of the calendar
@@ -69,7 +69,7 @@ for (let i = 0; i < 6; i++) {
             for (let date_in_result of result){
                 if (Number(date_in_result[0]) === year && Number(date_in_result[1])-1===month &&Number(date_in_result[2])===date ){
                     // cell.classList.add("text-light");
-                    to_return += "Your task:"+date_in_result[3]
+                    to_return += "Your task:"+date_in_result[3] + " start time: " + date_in_result[4] + " end time: " + date_in_result[5]
                     flag =1
 
                 }
@@ -167,7 +167,8 @@ function showCalendar(month, year) {
                     for (let date_in_result of result){
                         if (Number(date_in_result[0]) === year && Number(date_in_result[1])-1===month &&Number(date_in_result[2])===date ){
                             cell.appendChild(document.createElement('br'));
-                            to_return = " Your task: "+date_in_result[3]
+                            to_return = " Your task: "+date_in_result[3] +" start time: "+date_in_result[4] +
+                                " end time: "+ date_in_result[5]
                             cellText = document.createTextNode(to_return)
                             cell.appendChild(cellText);
                             cell.appendChild(document.createElement('br'));
