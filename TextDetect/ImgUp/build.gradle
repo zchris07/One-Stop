@@ -22,10 +22,6 @@ dependencies {
     implementation 'com.sparkjava:spark-template-velocity:2.7.1'
     implementation group: 'org.json', name: 'json', version: '20160810'
     testImplementation group: 'junit', name: 'junit', version: '4.12'
-
-    implementation platform('com.google.cloud:libraries-bom:24.0.0')
-    implementation 'com.google.cloud:google-cloud-vision'
-
 }
 
 test {
@@ -45,9 +41,11 @@ jar {
     exclude 'META-INF/*.DSF'
 }
 
+
+
 heroku {
     jdkVersion = 8
     processTypes(
-            web: "java -jar build/libs/TextDetect-1.0-SNAPSHOT.jar"
+            web: "java -jar build/libs/ImgUp-1.0-SNAPSHOT.jar"
     )
 }

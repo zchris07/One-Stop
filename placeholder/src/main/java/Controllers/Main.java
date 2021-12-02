@@ -27,10 +27,13 @@ public class Main {
         Spark.port(getPort());
         Spark.staticFiles.location("/public");
 
+        // Init pages
         APIEndpoint.rootGet();
         APIEndpoint.signupGet();
         APIEndpoint.signupPost(userDao);
         APIEndpoint.accExist();
+
+        // User pages
         APIEndpoint.loginGet();
         APIEndpoint.loginPost(userDao);
         APIEndpoint.resetGet();
@@ -39,6 +42,8 @@ public class Main {
         APIEndpoint.nonexistPswGet();
         APIEndpoint.userprofileGet(userDao);
         APIEndpoint.userprofilePut(userDao);
+
+        // List task pages
         APIEndpoint.showlistGet(tasklistDao);
         APIEndpoint.showDetailPut(tasknoteDao);
         APIEndpoint.addlistPost(worksonDao, tasklistDao);
@@ -46,10 +51,21 @@ public class Main {
         APIEndpoint.addavailPost(userDao);
         APIEndpoint.addtaskPost(tasklistDao, userDao);
         APIEndpoint.deleteTask(tasklistDao, userDao);
+
+        // Scheduling pages
         APIEndpoint.scheduleGet(userDao);
         APIEndpoint.schedulePut(tasklistDao);
         APIEndpoint.showDetailGet(tasknoteDao);
+
+        // Image detection pages
+        APIEndpoint.imgDetectUpload();
+        APIEndpoint.imgDetectSaveUrl();
+        APIEndpoint.imgDetect();
+
+        // Main page
         APIEndpoint.main(tasklistDao, worksonDao, userDao);
+
+        // Others
         APIEndpoint.updateDate(tasklistDao);
     }
 

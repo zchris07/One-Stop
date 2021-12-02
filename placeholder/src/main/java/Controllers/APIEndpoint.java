@@ -1,5 +1,11 @@
 package Controllers;
 
+
+import Functionality.Detectron;
+import Functionality.DetectTextGcs;
+import Functionality.textFunctions;
+import com.google.gson.Gson;
+
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.QueryBuilder;
 import kotlin.Pair;
@@ -466,6 +472,38 @@ public class APIEndpoint {
             return ems2.get(0).toJsonString();
         });
     }
+
+    public static void imgDetectUpload(){
+        Spark.get("/imgdetect", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return new ModelAndView(model, "public/imgdetect.vm");
+        }, new VelocityTemplateEngine());
+    }
+
+    public static void imgDetectSaveUrl(){
+        Spark.post("/saveurl", (req, res) -> {
+            String url = req.queryParams("url");
+            res.cookie("url", url);
+            return "";
+        });
+    }
+
+    public static void imgDetect(){
+        Spark.post("/detect", (req, res) -> {
+            Detectron.writeToCredential();
+
+            String url;
+            if (req.cookie("url") != null) {
+                url = req.cookie("url");
+            }
+            else
+            {
+                url = req.queryParams("url");
+            }
+            return DetectTextGcs.detectTextGcs(url);
+        });
+    }
+
     public static void main(Dao tasklistDao, Dao worksonDao, Dao userDao){
         Spark.get("/main", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
