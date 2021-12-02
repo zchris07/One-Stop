@@ -200,12 +200,6 @@ public class APIEndpoint {
     }
     public static void showlistGet(Dao tasklistDao){
         Spark.get("/showList", (req, res) -> {
-            String userid;
-            if (req.cookie("userid") != null) {
-                userid = req.cookie("userid");
-            } else {
-                userid = "";
-            }
             String listId = req.queryParams("listId");
             Integer listIdInt = Integer.parseInt(listId);
             QueryBuilder<TaskList, Integer> builder = tasklistDao.queryBuilder();
@@ -568,14 +562,18 @@ public class APIEndpoint {
                         tasklists.addAll(cur);
                 }
                 model.put("lists", tasklists);
+
+                List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
+                model.put("imageUrl", aUser.get(0).getProfileImage());
             } else {
                 List<TaskList> tasklists = tasklistDao.queryForEq("userid", "");
                 model.put("lists", tasklists);
+                List<User> aUser = userDao.queryForEq("email", "");
+                model.put("imageUrl", "https://i.imgur.com/hepj9ZS.png");
             }
 
 //            for profile image
-            List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
-            model.put("imageUrl", aUser.get(0).getProfileImage());
+
 
             return new ModelAndView(model, "public/index.vm");
         }, new VelocityTemplateEngine());

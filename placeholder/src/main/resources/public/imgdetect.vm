@@ -1,6 +1,7 @@
 #set( $title = "Main page" )
 <!DOCTYPE html>
 <html lang="en">
+<script src="js/path.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,9 +28,10 @@
     const el = document.getElementById("urlget");
     // TODO: change url to deployed host
     el.addEventListener("fileUploadSuccess", function (e) {
-        fetch('https://detect-text-oose-placeholder.herokuapp.com/saveurl?url=' + this.value, {
-        // fetch('https://detect-oose.herokuapp.com/saveurl?url=' + this.value, {
-        // fetch('http://localhost:7000/saveurl?url=' + this.value, {
+
+        // fetch('https://detect-text-oose-placeholder.herokuapp.com/saveurl?url=' + this.value, {
+        fetch(path + 'saveurl?url=' + this.value, {
+
             method: 'Post'
         });
     });

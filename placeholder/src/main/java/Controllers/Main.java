@@ -36,7 +36,6 @@ public class Main {
         // User pages
         APIEndpoint.loginGet();
         APIEndpoint.loginPost(userDao);
-        APIEndpoint.loginGet();
         APIEndpoint.resetGet();
         APIEndpoint.resetPost(userDao);
         APIEndpoint.nonexistGet();
