@@ -1,6 +1,6 @@
 package Controllers;
 
-
+import org.apache.commons.io.FileUtils;
 import Functionality.Detectron;
 import Functionality.DetectTextGcs;
 import Functionality.textFunctions;
@@ -14,6 +14,9 @@ import spark.ModelAndView;
 import spark.Spark;
 import spark.template.velocity.VelocityTemplateEngine;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 
@@ -501,6 +504,45 @@ public class APIEndpoint {
                 url = req.queryParams("url");
             }
             return DetectTextGcs.detectTextGcs(url);
+        });
+    }
+
+    public static void speechDetectUpload(){
+        Spark.get("/speechdetect", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return new ModelAndView(model, "public/speechdetect.vm");
+        }, new VelocityTemplateEngine());
+    }
+
+    public static void speechDetectSaveUrl(){
+        Spark.post("/saveurlspeech", (req, res) -> {
+            String url = req.queryParams("speechurl");
+            res.cookie("speechurl", url);
+            return "";
+        });
+    }
+
+    public static void speechDetect(){
+        Spark.post("/detectspeech", (req, res) -> {
+            Detectron.writeToCredential();
+
+            String url;
+            if (req.cookie("speechurl") != null) {
+                url = req.cookie("speechurl");
+            }
+            else
+            {
+                url = req.queryParams("speechurl");
+            }
+            try {
+                URL myURL = new URL(url);
+                File f = new File("/tmp/Record.flac");
+                FileUtils.copyURLToFile(myURL, f);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return 1;
+//            return DetectTextSpeechGcs.syncRecognizeFile("/tmp/Record.flac");
         });
     }
 

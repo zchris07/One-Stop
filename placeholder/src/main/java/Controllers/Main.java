@@ -62,6 +62,11 @@ public class Main {
         APIEndpoint.imgDetectSaveUrl();
         APIEndpoint.imgDetect();
 
+        // Speech detection pages
+        APIEndpoint.speechDetectUpload();
+        APIEndpoint.speechDetectSaveUrl();
+        APIEndpoint.speechDetect();
+
         // Main page
         APIEndpoint.main(tasklistDao, worksonDao, userDao);
 
