@@ -38,3 +38,17 @@ document.getElementById("submit_notes").addEventListener('click', function () {
         }).then(res => window.location.reload = window.location.reload(true));
     }
 );
+
+document.getElementById("img_detect").addEventListener('click', function () {
+        taskName = document.getElementById("noteTitle").innerText;
+        taskNote = document.getElementById("taskNote").value;
+
+        console.log(taskName)
+        console.log(taskNote)
+
+        // /addNotes?taskName=good&taskNote=dfa
+        fetch(path+'/imgdetect?taskName='+ taskName + '&taskNote=' + taskNote , {
+            method: 'Post',
+        }).then(res => window.location.reload = window.location.reload(true));
+    }
+);

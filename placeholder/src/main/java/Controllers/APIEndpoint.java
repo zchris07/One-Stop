@@ -1,5 +1,6 @@
 package Controllers;
 
+import com.j256.ormlite.stmt.UpdateBuilder;
 import org.apache.commons.io.FileUtils;
 import Functionality.Detectron;
 import Functionality.DetectTextGcs;
@@ -483,6 +484,18 @@ public class APIEndpoint {
         }, new VelocityTemplateEngine());
     }
 
+    public static void imgDetectGet(){
+        Spark.post("/imgdetect", (req, res) -> {
+            String taskName = req.queryParams("taskName");
+            String taskNote = req.queryParams("taskNote");
+            res.cookie("taskNameImgDet", taskName);
+            res.cookie("taskNoteImgDet", taskNote);
+            res.cookie("flagUpdateNoteImg", "1");
+            res.redirect("/imgdetect");
+            return "";
+        });
+    }
+
     public static void imgDetectSaveUrl(){
         Spark.post("/saveurl", (req, res) -> {
             String url = req.queryParams("url");
@@ -491,7 +504,7 @@ public class APIEndpoint {
         });
     }
 
-    public static void imgDetect(){
+    public static void imgDetect(Dao dao){
         Spark.post("/detect", (req, res) -> {
             Detectron.writeToCredential();
 
@@ -503,7 +516,20 @@ public class APIEndpoint {
             {
                 url = req.queryParams("url");
             }
-            return DetectTextGcs.detectTextGcs(url);
+            String imgDet = DetectTextGcs.detectTextGcs(url);
+            String flagUpdateNoteImg = req.cookie("flagUpdateNoteImg");
+            if(flagUpdateNoteImg.equals("1")){
+                String taskName = req.cookie("taskNameImgDet");
+                UpdateBuilder<TaskNote, Integer> builder = dao.updateBuilder();
+
+                builder.updateColumnValue("tasknote", imgDet);
+                builder.where().eq("taskname", taskName);
+
+                dao.update(builder.prepare());
+
+                res.cookie("flagUpdateNoteImg", "0");
+            }
+            return imgDet;
         });
     }
 

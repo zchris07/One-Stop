@@ -27,7 +27,7 @@
     const el = document.getElementById("urlget");
     // TODO: change url to deployed host
     el.addEventListener("fileUploadSuccess", function (e) {
-        fetch('https://detect-text-oose-placeholder.herokuapp.com/saveurlspeech?speechurl=' + this.value, {
+        fetch(path + 'saveurlspeech?speechurl=' + this.value, {
         // fetch('https://detect-oose.herokuapp.com/saveurlspeech?speechurl=' + this.value, {
         // fetch('http://localhost:7000/saveurlspeech?speechurl=' + this.value, {
             method: 'Post'
