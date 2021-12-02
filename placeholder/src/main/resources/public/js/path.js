@@ -1,1 +1,1 @@
-path = "http://13.57.208.18:7000/"
+path = "https://onestop-dev-ph.herokuapp.com/"
