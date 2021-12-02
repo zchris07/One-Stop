@@ -2,6 +2,7 @@
 ###set( $plists = ["list1","list2","list3"])
 <!DOCTYPE html>
 <html lang="en">
+<script src="js/path.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -58,7 +59,17 @@
                         <div class="input-group">
                             ##                            <input type="text" class="form-control" placeholder="List Name" aria-label="List Name" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-example-modal-lg">Create List</button>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-example-modal-lg" style="width: 100px; height: 64px">Create List</button>
+                                        </div>
+                                        <div class="col-sm">
+                                            <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-avail-modal-lg">Set Availability</button>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -157,8 +168,8 @@
                             <div class="input-group">
                                 ##                                <input type="text" class="form-control" placeholder="Task" aria-label="Task" aria-describedby="basic-addon2">
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-list-modal-lg" id = "add_task_button">Add Task</button>
-                                    <div class="modal fade bd-list-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-task-modal-lg" id = "add_task_button" style="width: 100px">Add Task</button>
+                                    <div class="modal fade bd-task-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <h4>Add A Task:</h4>

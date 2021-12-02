@@ -59,4 +59,5 @@ heroku {
             web: "java -jar build/libs/placeholders_app-1.0-SNAPSHOT.jar"
 
     )
+
 }

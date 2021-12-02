@@ -15,7 +15,7 @@ let firstDay = (new Date(year, month)).getDay();
 let daysInMonth = 32 - new Date(year, month, 32).getDate();
 let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-fetch('https://onestop-dev-ph.herokuapp.com/schedule' , {
+fetch(path+'schedule' , {
     method: 'put',
 }).then(res => res.json())
     .then(json=> {
@@ -30,7 +30,7 @@ fetch('https://onestop-dev-ph.herokuapp.com/schedule' , {
             result.push([current_date_day,current_date_month,current_date_year,task['taskName'],task['exactStart'],task['exactEnd']]);
 
         }
-        showCalendar(10,2021);
+        showCalendar(11,2021);
     });
 
 let tbl = document.getElementById("calendar-body"); // body of the calendar
