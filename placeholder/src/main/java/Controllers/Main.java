@@ -24,7 +24,7 @@ public class Main {
         Dao worksonDao  = DaoConstructor.getTheDao(WorksOn.class, DaoConstructor.worksonCreateTableSql);
         Dao tasknoteDao = DaoConstructor.getTheDao(TaskNote.class, DaoConstructor.tasknoteCreateTableSql);
 
-        Spark.port(PORT_NUM);
+        Spark.port(getPort());
         Spark.staticFiles.location("/public");
 
         APIEndpoint.rootGet();
@@ -33,7 +33,6 @@ public class Main {
         APIEndpoint.accExist();
         APIEndpoint.loginGet();
         APIEndpoint.loginPost(userDao);
-        APIEndpoint.loginGet();
         APIEndpoint.resetGet();
         APIEndpoint.resetPost(userDao);
         APIEndpoint.nonexistGet();

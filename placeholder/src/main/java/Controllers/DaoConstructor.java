@@ -25,7 +25,8 @@ public class DaoConstructor {
                 "summary VARCHAR(10000)," +
                 "organization VARCHAR(100)," +
                 "status VARCHAR(100)," +
-                "profileimage VARCHAR(100) NOT NULL);";
+                "profileimage VARCHAR(100) NOT NULL," +
+                "availability BYTEA NOT NULL);";
         public static String worksonCreateTableSql = "CREATE TABLE IF NOT EXISTS workson (id serial PRIMARY KEY, " +
                 "collabratorid VARCHAR(100) NOT NULL," +
                 " listid VARCHAR(100) NOT NULL);";
