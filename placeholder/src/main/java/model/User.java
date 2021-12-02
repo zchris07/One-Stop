@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import model.Availability;
 
-@DatabaseTable(tableName = "user")
+@DatabaseTable(tableName = "usertable")
 public class User {
 
     @DatabaseField(generatedId = true, columnName = "id")

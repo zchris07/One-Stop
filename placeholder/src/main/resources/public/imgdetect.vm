@@ -1,0 +1,36 @@
+#set( $title = "Main page" )
+<!DOCTYPE html>
+<html lang="en">
+<script src="js/path.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://app.simplefileupload.com/buckets/dae4c040946cb6e8a0b9bb5abbafe06a.js"></script>
+    <title>$title</title>
+</head>
+<body><form action="/detect" method="post" >
+    <fieldset>
+        <div>
+            <label for="url">Name: </label>
+            <input type="url" name="url" placeholder="Optional url" id="url"/>
+        </div>
+        <br />
+        <div>
+            <input type="hidden" name="urlget" id="urlget" class="simple-file-upload">
+        </div>
+
+        <input type="submit" value="Detect" id="detect" />
+    </fieldset>
+</form>
+</body>
+</html>
+<script>
+    const el = document.getElementById("urlget");
+    // TODO: change url to deployed host
+    el.addEventListener("fileUploadSuccess", function (e) {
+        // fetch('https://detect-text-oose-placeholder.herokuapp.com/saveurl?url=' + this.value, {
+        fetch(path + 'saveurl?url=' + this.value, {
+            method: 'Post'
+        });
+    });
+</script>

@@ -1,5 +1,11 @@
 package Controllers;
 
+
+import Functionality.Detectron;
+import Functionality.DetectTextGcs;
+import Functionality.textFunctions;
+import com.google.gson.Gson;
+
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.QueryBuilder;
 import kotlin.Pair;
@@ -191,12 +197,6 @@ public class APIEndpoint {
     }
     public static void showlistGet(Dao tasklistDao){
         Spark.get("/showList", (req, res) -> {
-            String userid;
-            if (req.cookie("userid") != null) {
-                userid = req.cookie("userid");
-            } else {
-                userid = "";
-            }
             String listId = req.queryParams("listId");
             Integer listIdInt = Integer.parseInt(listId);
             QueryBuilder<TaskList, Integer> builder = tasklistDao.queryBuilder();
@@ -472,6 +472,38 @@ public class APIEndpoint {
             return ems2.get(0).toJsonString();
         });
     }
+
+    public static void imgDetectUpload(){
+        Spark.get("/imgdetect", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return new ModelAndView(model, "public/imgdetect.vm");
+        }, new VelocityTemplateEngine());
+    }
+
+    public static void imgDetectSaveUrl(){
+        Spark.post("/saveurl", (req, res) -> {
+            String url = req.queryParams("url");
+            res.cookie("url", url);
+            return "";
+        });
+    }
+
+    public static void imgDetect(){
+        Spark.post("/detect", (req, res) -> {
+            Detectron.writeToCredential();
+
+            String url;
+            if (req.cookie("url") != null) {
+                url = req.cookie("url");
+            }
+            else
+            {
+                url = req.queryParams("url");
+            }
+            return DetectTextGcs.detectTextGcs(url);
+        });
+    }
+
     public static void main(Dao tasklistDao, Dao worksonDao, Dao userDao){
         Spark.get("/main", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -488,14 +520,18 @@ public class APIEndpoint {
                         tasklists.addAll(cur);
                 }
                 model.put("lists", tasklists);
+
+                List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
+                model.put("imageUrl", aUser.get(0).getProfileImage());
             } else {
                 List<TaskList> tasklists = tasklistDao.queryForEq("userid", "");
                 model.put("lists", tasklists);
+                List<User> aUser = userDao.queryForEq("email", "");
+                model.put("imageUrl", "https://i.imgur.com/hepj9ZS.png");
             }
 
 //            for profile image
-            List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
-            model.put("imageUrl", aUser.get(0).getProfileImage());
+
 
             return new ModelAndView(model, "public/index.vm");
         }, new VelocityTemplateEngine());
