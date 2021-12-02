@@ -28,7 +28,7 @@
     // TODO: change url to deployed host
     el.addEventListener("fileUploadSuccess", function (e) {
         // fetch('https://detect-text-oose-placeholder.herokuapp.com/saveurl?url=' + this.value, {
-        fetch('http://localhost:7000/saveurl?url=' + this.value, {
+        fetch('https://onestop-dev-ph.herokuapp.com/saveurl?url=' + this.value, {
             method: 'Post'
         });
     });
