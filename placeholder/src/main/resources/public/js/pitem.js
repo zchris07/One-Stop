@@ -36,7 +36,7 @@ document.getElementById("submit_add_task").addEventListener('click', function ()
         console.log(duration)
         console.log(importance)
         console.log(flexible)
-        fetch('http://localhost:7000/addTask?listId=' + currentList + '&taskName=' + taskName + '&dueDay=' +dueDay+ '&date='+ date_string
+        fetch('https://onestop-dev-ph.herokuapp.com/addTask?listId=' + currentList + '&taskName=' + taskName + '&dueDay=' +dueDay+ '&date='+ date_string
             + '&duration=' + duration + '&importance=' + importance + '&flexible=' + flexible, {
             method: 'Post',
         })
@@ -54,7 +54,7 @@ document.getElementById("submit_add_list").addEventListener('click', function ()
             // fetch('http://localhost:7000/addList?listName=' + listName + '&userid=' + userid + '&colabidstring=' + colabidstring, {
             //     method: 'Post',
             // });
-            fetch('http://localhost:7000/addList?listName=' + listName + '&colabidstring=' + colabidstring, {
+            fetch('https://onestop-dev-ph.herokuapp.com/addList?listName=' + listName + '&colabidstring=' + colabidstring, {
                 method: 'Post',
             });
                 // .then(res => window.location.reload = window.location.reload(true))
@@ -89,7 +89,7 @@ document.getElementById("submit_add_avail").addEventListener('click', function (
         // fetch('http://localhost:7000/addList?listName=' + listName + '&userid=' + userid + '&colabidstring=' + colabidstring, {
         //     method: 'Post',
         // });
-        fetch('http://localhost:7000/addAvail?weekstr=' + weekstr + '&mondayAvail=' + mondayAvail
+        fetch('https://onestop-dev-ph.herokuapp.com/addAvail?weekstr=' + weekstr + '&mondayAvail=' + mondayAvail
             + '&tuesdayAvail=' + tuesdayAvail + '&wednesdayAvail=' + wednesdayAvail + '&thursdayAvail=' + thursdayAvail
             + '&fridayAvail=' + fridayAvail + '&saturdayAvail=' + saturdayAvail + '&sundayAvail=' + sundayAvail + '&repeat=' + repeat, {
             method: 'Post',
@@ -107,7 +107,7 @@ for (let i of document.querySelectorAll(".delete_task"))
         console.log(taskName)
         // console.log(duration_day)
         // console.log(date_string)
-        fetch('http://localhost:7000/main?taskName=' + taskName , {
+        fetch('https://onestop-dev-ph.herokuapp.com/main?taskName=' + taskName , {
             method: 'Delete',
         }).then(res => window.location.reload = window.location.reload(true));
     })
@@ -124,7 +124,7 @@ for (let i of document.querySelectorAll(".delete_list"))
         console.log(listId)
         // console.log(duration_day)
         // console.log(date_string)
-        fetch('http://localhost:7000/deleteList?listId=' + listId , {
+        fetch('https://onestop-dev-ph.herokuapp.com/deleteList?listId=' + listId , {
             method: 'Delete',
         }).then(res => window.location.reload = window.location.reload(true));
     })
@@ -136,7 +136,7 @@ function deleteTask(taskName) {
     console.log(currentList)
     // console.log(duration_day)
     // console.log(date_string)
-    fetch('http://localhost:7000/deleteTask?listId=' + currentList + '&taskName=' + taskName , {
+    fetch('https://onestop-dev-ph.herokuapp.com/deleteTask?listId=' + currentList + '&taskName=' + taskName , {
         method: 'Delete',
     }).then(res => window.location.reload = window.location.reload(true));
 }
@@ -149,7 +149,7 @@ const showTaskInList = listId => {
     currentList = listId;
     if (currentList !== null) {
         console.log(`listId=${listId}`);
-        fetch('http://localhost:7000/showList?listId=' + listId)
+        fetch('https://onestop-dev-ph.herokuapp.com/showList?listId=' + listId)
             .then(res => res.json())
             .then(json => {
                 document.getElementById('all-tasks').innerHTML = '';
@@ -250,7 +250,7 @@ function editDate(taskName1){
     console.log(taskName)
     console.log(currentList)
     console.log(date_string)
-    fetch('http://localhost:7000/editDate?listId=' + currentList + '&taskName=' + taskName+ '&editeddueDay=' + date_string , {
+    fetch('https://onestop-dev-ph.herokuapp.com/editDate?listId=' + currentList + '&taskName=' + taskName+ '&editeddueDay=' + date_string , {
         method: 'Put',
     })
         .then(res => window.location.reload = window.location.reload(true));
@@ -259,7 +259,7 @@ function editDate(taskName1){
 document.getElementById("submit_add_list").addEventListener('click', function () {
         const listName = document.getElementById("listName").value;
         if (validateListName()){
-            fetch('http://localhost:7000/main?listNamee=' + listName , {
+            fetch('https://onestop-dev-ph.herokuapp.com/main?listNamee=' + listName , {
                 method: 'Post',
             }).then(res => window.location.reload = window.location.reload(true));}
     }

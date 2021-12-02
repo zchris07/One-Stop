@@ -15,7 +15,7 @@ let firstDay = (new Date(year, month)).getDay();
 let daysInMonth = 32 - new Date(year, month, 32).getDate();
 let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-fetch('http://localhost:7000/schedule' , {
+fetch('https://onestop-dev-ph.herokuapp.com/schedule' , {
     method: 'put',
 }).then(res => res.json())
     .then(json=> {

@@ -5,7 +5,7 @@ document.getElementById("save_info").addEventListener('click', function () {
         status       = document.getElementById("user_status").value;
         console.log("clicked")
         console.log(firstname)
-        fetch('http://localhost:7000/userprofile?firstName='+ firstname +
+        fetch('https://onestop-dev-ph.herokuapp.com/userprofile?firstName='+ firstname +
             '&lastName=' + lastname +
             '&status=' + status +
             '&organization=' + organization, {
@@ -18,7 +18,7 @@ document.getElementById("save_summary").addEventListener('click', function () {
         summary = document.getElementById("user_summary").value;
         console.log("clicked")
         console.log(summary)
-        fetch('http://localhost:7000/userprofile?summary='+ summary, {
+        fetch('https://onestop-dev-ph.herokuapp.com/userprofile?summary='+ summary, {
             method: 'Put',
         }).then(res => window.location.reload = window.location.reload(true));
     }
@@ -36,7 +36,7 @@ document.getElementById("image1").addEventListener('click', function () {
     console.log("clicked");
     let source = document.getElementById("image1").src;
     console.log(source)
-    fetch('http://localhost:7000/userprofile?profileImage='+ source, {
+    fetch('https://onestop-dev-ph.herokuapp.com/userprofile?profileImage='+ source, {
         method: 'Put',
     }).then(res => window.location.reload = window.location.reload(true));
 });
@@ -44,7 +44,7 @@ document.getElementById("image2").addEventListener('click', function () {
     console.log("clicked");
     let source = document.getElementById("image2").src;
     console.log(source)
-    fetch('http://localhost:7000/userprofile?profileImage='+ source, {
+    fetch('https://onestop-dev-ph.herokuapp.com/userprofile?profileImage='+ source, {
         method: 'Put',
     }).then(res => window.location.reload = window.location.reload(true));
 });
@@ -52,7 +52,7 @@ document.getElementById("image3").addEventListener('click', function () {
     console.log("clicked");
     let source = document.getElementById("image3").src;
     console.log(source)
-    fetch('http://localhost:7000/userprofile?profileImage='+ source, {
+    fetch('https://onestop-dev-ph.herokuapp.com/userprofile?profileImage='+ source, {
         method: 'Put',
     }).then(res => window.location.reload = window.location.reload(true));
 });
@@ -60,7 +60,7 @@ document.getElementById("image4").addEventListener('click', function () {
     console.log("clicked");
     let source = document.getElementById("image4").src;
     console.log(source)
-    fetch('http://localhost:7000/userprofile?profileImage='+ source, {
+    fetch('https://onestop-dev-ph.herokuapp.com/userprofile?profileImage='+ source, {
         method: 'Put',
     }).then(res => window.location.reload = window.location.reload(true));
 });
