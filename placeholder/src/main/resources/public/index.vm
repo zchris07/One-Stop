@@ -91,7 +91,6 @@
                         <div class="input-group">
                             ##                            <input type="text" class="form-control" placeholder="List Name" aria-label="List Name" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-avail-modal-lg">Set Availability</button>
                                 <div class="modal fade bd-avail-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -207,7 +206,7 @@
 
 
 
-                                                <button class="btn btn-primary" type="submit" data-toggle="modal" data-target=".bd-list-modal-lg" id = "submit_add_task">Submit</button>
+                                                <button class="btn btn-primary" type="submit" data-toggle="modal" data-target=".bd-task-modal-lg" id = "submit_add_task">Submit</button>
                                             </div>
                                         </div>
                                     </div>
