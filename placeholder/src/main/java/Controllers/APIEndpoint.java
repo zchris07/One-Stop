@@ -517,18 +517,18 @@ public class APIEndpoint {
                 url = req.queryParams("url");
             }
             String imgDet = DetectTextGcs.detectTextGcs(url);
-            String flagUpdateNoteImg = req.cookie("flagUpdateNoteImg");
-            if(flagUpdateNoteImg.equals("1")){
-                String taskName = req.cookie("taskNameImgDet");
-                UpdateBuilder<TaskNote, Integer> builder = dao.updateBuilder();
-
-                builder.updateColumnValue("tasknote", imgDet);
-                builder.where().eq("taskname", taskName);
-
-                dao.update(builder.prepare());
-
-                res.cookie("flagUpdateNoteImg", "0");
-            }
+//            String flagUpdateNoteImg = req.cookie("flagUpdateNoteImg");
+//            if(flagUpdateNoteImg.equals("1")){
+//                String taskName = req.cookie("taskNameImgDet");
+//                UpdateBuilder<TaskNote, Integer> builder = dao.updateBuilder();
+//
+//                builder.updateColumnValue("tasknote", imgDet);
+//                builder.where().eq("taskname", taskName);
+//
+//                dao.update(builder.prepare());
+//
+//                res.cookie("flagUpdateNoteImg", "0");
+//            }
             return imgDet;
         });
     }
