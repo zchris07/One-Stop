@@ -24,7 +24,7 @@ public class Main {
         Dao worksonDao  = DaoConstructor.getTheDao(WorksOn.class, DaoConstructor.worksonCreateTableSql);
         Dao tasknoteDao = DaoConstructor.getTheDao(TaskNote.class, DaoConstructor.tasknoteCreateTableSql);
 
-        Spark.port(PORT_NUM);
+        Spark.port(getPort());
         Spark.staticFiles.location("/public");
 
         // Init pages
@@ -62,6 +62,11 @@ public class Main {
         APIEndpoint.imgDetectUpload();
         APIEndpoint.imgDetectSaveUrl();
         APIEndpoint.imgDetect();
+
+        // Speech detection pages
+        APIEndpoint.speechDetectUpload();
+        APIEndpoint.speechDetectSaveUrl();
+        APIEndpoint.speechDetect();
 
         // Main page
         APIEndpoint.main(tasklistDao, worksonDao, userDao);

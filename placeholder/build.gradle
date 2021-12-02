@@ -1,6 +1,8 @@
 plugins {
     id 'java'
-    id 'application'
+
+    // Yihao: commented for heroku deployment. Dec 01
+//    id 'application'
 
     // Yihao: added for heroku deployment. Dec 01
     id "com.heroku.sdk.heroku-gradle" version "2.0.0"
@@ -33,6 +35,9 @@ dependencies {
     // Yihao: added for image detect. Dec 01
     implementation platform('com.google.cloud:libraries-bom:24.0.0')
     implementation 'com.google.cloud:google-cloud-vision'
+    implementation 'com.google.cloud:google-cloud-speech'
+
+    implementation 'commons-io:commons-io:2.11.0'
 }
 
 test {
@@ -61,6 +66,6 @@ jar {
 heroku {
     jdkVersion = 8
     processTypes(
-            web: "java -jar build/libs/placeholder-1.0-SNAPSHOT.jar"
+            web: "java -jar build/libs/placeholders_app-1.0-SNAPSHOT.jar"
     )
 }

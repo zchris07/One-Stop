@@ -15,8 +15,8 @@ public class Detectron {
     public static void creatCredentialFile() {
         try {
             // TODO: change path to deployed host
-//            File myObj = new File("/tmp/googlecredential.json");
-            File myObj = new File("./googlecredential.json");
+            File myObj = new File("/tmp/googlecredential.json");
+//            File myObj = new File("./googlecredential.json");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
@@ -34,8 +34,8 @@ public class Detectron {
         creatCredentialFile();
         try {
             // TODO: change path to deployed host
-//            FileWriter myWriter = new FileWriter("/tmp/googlecredential.json");
-            FileWriter myWriter = new FileWriter("./googlecredential.json");
+            FileWriter myWriter = new FileWriter("/tmp/googlecredential.json");
+//            FileWriter myWriter = new FileWriter("./googlecredential.json");
             String jsonString = System.getenv("GOOGLE_CREDENTIALS") + "}";
             JsonParser parser = new JsonParser();
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
