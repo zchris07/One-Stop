@@ -56,7 +56,7 @@ public class DaoConstructor {
                 String databaseUrl = System.getenv("DATABASE_URL");
                 if (databaseUrl == null) {
                         // Not on Heroku, so use SQLite
-                        final String URI = "jdbc:sqlite:./JBApp.db";
+                        final String URI = "jdbc:sqlite:./onestopdb.db";
                         ConnectionSource connectionSource = new JdbcConnectionSource(URI);
                         TableUtils.createTableIfNotExists(connectionSource, c);
                         return DaoManager.createDao(connectionSource, c);
