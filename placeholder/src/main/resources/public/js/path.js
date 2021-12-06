@@ -1,2 +1,2 @@
-// path = "https://onestop-dev-ph.herokuapp.com/"
-path = "http://localhost:7000/"
+path = "https://onestop-dev-ph.herokuapp.com/"
+// path = "http://localhost:7000/"
