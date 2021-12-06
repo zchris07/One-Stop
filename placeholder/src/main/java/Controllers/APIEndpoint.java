@@ -487,12 +487,13 @@ public class APIEndpoint {
     public static void imgDetectGet(){
         Spark.post("/imgdetect", (req, res) -> {
             String taskName = req.queryParams("taskName");
-            String taskNote = req.queryParams("taskNote");
-            res.cookie("taskNameImgDet", taskName);
-            res.cookie("taskNoteImgDet", taskNote);
-            res.cookie("flagUpdateNoteImg", "1");
-            res.redirect("/imgdetect");
-            return "";
+            taskName = taskName.trim();
+            System.out.println(taskName);
+
+            Map<String, Object> model = new HashMap<>();
+            model.put("taskNameImgDet", taskName);
+            model.put("flagUpdateNoteImg", "1");
+            return new ModelAndView(model, "public/imgdetect.vm");
         });
     }
 
@@ -560,15 +561,16 @@ public class APIEndpoint {
             {
                 url = req.queryParams("speechurl");
             }
-            try {
-                URL myURL = new URL(url);
-                File f = new File("/tmp/Record.flac");
-                FileUtils.copyURLToFile(myURL, f);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return 1;
+//            try {
+//                URL myURL = new URL(url);
+//                File f = new File("/tmp/Record.flac");
+//                FileUtils.copyURLToFile(myURL, f);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return 1;
 //            return DetectTextSpeechGcs.syncRecognizeFile("/tmp/Record.flac");
+            return DetectTextSpeechGcs.syncRecognizeFile("./Record.flac");
         });
     }
 

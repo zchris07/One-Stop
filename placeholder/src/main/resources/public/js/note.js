@@ -40,15 +40,11 @@ document.getElementById("submit_notes").addEventListener('click', function () {
 );
 
 document.getElementById("img_detect").addEventListener('click', function () {
-        taskName = document.getElementById("noteTitle").innerText;
-        taskNote = document.getElementById("taskNote").value;
+        const taskName = document.getElementById("noteTitle").textContent ;
+        console.log(taskName);
 
-        console.log(taskName)
-        console.log(taskNote)
-
-        // /addNotes?taskName=good&taskNote=dfa
-        fetch(path+'/imgdetect?taskName='+ taskName + '&taskNote=' + taskNote , {
-            method: 'Post',
-        }).then(res => window.location.reload = window.location.reload(true));
+        fetch(path+'imgdetect?taskName='+ taskName, {
+            method: 'Post'
+        }).then(res => window.location.href  = '/imgdetect');
     }
 );
