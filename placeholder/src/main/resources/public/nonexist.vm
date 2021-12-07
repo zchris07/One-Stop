@@ -27,7 +27,7 @@
         <div class="col">
         </div>
         <div class="col-5 box">
-            <h1>This Account Doesn't Exists!</h1>
+            <h1>This Account Doesn't Exist!</h1>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" onclick="location.href='/login'">
                 Back
