@@ -317,8 +317,8 @@ public class APIEndpoint {
                 repeat = repeat-1;
             }
             //Dao userDao = getUserORMLiteDao();
-            //List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
-            User.setThisMap(new_map,userDao);
+            List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
+            aUser.get(0).setThisMap(new_map);
 
 
             return "";
@@ -385,7 +385,7 @@ public class APIEndpoint {
                     taskName,duration,importance, flexible, aUser.get(0), tasklistDao);
             res.status(201);
             res.type("application/json");
-            User.setThisMap(new_avail.component2().getThisMap(),userDao);
+            User.setThisMap(new_avail.component2().getThisMap());
 
 
             List<TaskList> ems2 = tasklistDao.queryForEq("id", listId);
@@ -411,13 +411,13 @@ public class APIEndpoint {
             scheduleFunctions temp = new scheduleFunctions();
             TaskList.Task this_task = tasklists.get(0).getTask(taskName,tasklistDao);
             List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
-            Pair<TaskList, Availability> new_avail = temp.addBackTask(tasklists.get(0),this_task.getDate()
-                    ,this_task.getDueDay(), taskName,this_task.getDuration(),aUser.get(0),
+            Pair<TaskList, Availability> new_avail = temp.addBackTask(tasklists.get(0),this_task.getDate(),
+                    this_task.getTaskName(),aUser.get(0),
                     this_task.getExactStart(),this_task.getExactEnd(),
                     tasklistDao);
             res.status(201);
             res.type("application/json");
-            User.setThisMap(new_avail.component2().getThisMap(),userDao);
+            User.setThisMap(new_avail.component2().getThisMap());
             List<TaskList> tasklists2 = tasklistDao.queryForEq("id", listId);
             return tasklists2.get(0).toJsonString();
         });

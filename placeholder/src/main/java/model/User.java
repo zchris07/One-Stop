@@ -37,15 +37,18 @@ public class User {
     @DatabaseField(canBeNull = false)
     private String profileimage = "https://i.imgur.com/hepj9ZS.png";
     @DatabaseField(columnName = "availability", canBeNull = false, dataType = DataType.SERIALIZABLE)
-    private static Availability availability = new Availability();
+    private static Availability availability;
 
     public User(){
+        this.availability = new Availability();
+
     }
 
     public User(String email, String hashedPassword) {
         this.email=email;
         this.hashedpassword=hashedPassword;
         this.profileimage = "https://i.imgur.com/hepj9ZS.png";
+        this.availability = new Availability();
     }
 
     public Integer getUserId() {
@@ -110,6 +113,11 @@ public class User {
 
     public static Map<String, List<Pair<Double, Double>>> getThisMap() {
         return availability.getThisMap();
+    }
+
+
+    public static void setThisMap(Map<String, List<Pair<Double, Double>>> thisMap) throws SQLException {
+        availability.setThisMap(thisMap);
     }
 
     public static void setThisMap(Map<String, List<Pair<Double, Double>>> thisMap,Dao userDao) throws SQLException {
