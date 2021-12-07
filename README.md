@@ -91,7 +91,12 @@ The fix spelling has consistency issue- for some input strings, the Fix Spelling
 - When we delete a task, the time that is 'taken' by that task will be given back-- for example, suppose a task A takes 8 hours on 10/26. If we were to add a new task that starts on 10/26 and ends on 10/28, taking 6 hours, then this task will be split into a 4 hour task on 10/26 and a 2 hour task on 10/27. However, if we delete A, then when we add a new task that starts on 10/26 and ends on 10/28, takes 6 hours, then this task will be put as a 6 hour task on 10/26.
 
 ### Image Detection
-- Image detection is used to convert a picture into notes. The API was successfully implemented, but due to the compatibility issue of Heroku to Google Cloud API, it is not integrated to the main app. Instead, a demo app is provided in the folder TextDetect. Note, to run the app locally, a Cloud Vision API json file is needed, and provide an environment variable GOOGLE_APPLICATION_CREDENTIALS as the path to the json file. Ideally, this should be handled by Heroku online, but there has not been a successful attempt despite many methods have been tried.
+- Image detection is used to convert a picture into notes. The API was successfully implemented, and is integrated to the main app. It is deployed on the Heroku app and can be accessed using the "Update using image detection" button in note details. Note, to run the app locally, a Cloud Vision API json file is needed, and provide an environment variable GOOGLE_APPLICATION_CREDENTIALS as the path to the json file. Ideally, this should be handled by Heroku online. Beside the working Heroku main app with image detection function, it was also successfully deployed on AWS Elastic Beanstalk as a separate app.
+
+- Go to editing note of a task.
+![alt text](./docs/images/imgdetectnote.png)
+![alt text](./docs/images/imgdetectnote2.png)
+![alt text](./docs/images/imgdetectnote3.png)
 
 - When the demo app is started, the following GUI is shown. User can provide either an URL or a local file for the conversion.
 ![alt text](./docs/images/imgupload.png)
@@ -102,10 +107,15 @@ The fix spelling has consistency issue- for some input strings, the Fix Spelling
 - Text detection.
 ![alt text](./docs/images/detectimg.png)
 
-- What need to be done:
-	- Multiples ways can be done to find an alternative. We can try to deploy the web application on AWS, which has a better file system handling, such that the Google API credential file can be stored and easily obtained.
-	- We can keep trying with Heroku. The ways that we have tried is summarized in this Stackoverflow post that we sent: https://stackoverflow.com/questions/69997414/deploying-heroku-app-with-a-google-credential-json.
+### Speech Detection
+- Speech detection is implemented as a pre-release function. It is working on local but is not working on Heroku deployment because of lack of permission previlige to the SimpleUpload file system.
+- Speech detection works for any .flac 48000 bit-rate audio file.
+- Since it is not deployed, we only consider it as a preview function, and it is not included in our main app, though the main code is accessible in the commits.
 
+### File system
+- Non-multimedia files (such as numbers, strings, and data models) are stored in postgres database.
+- Multimedia files (such as images and audios) are stored in SimpleUpload file system server, maintained by Heroku.
+- Multimedia temperary uploads and json credentials are stored in the Heroku ephemeral file system, mostly under path /tmp/. 
 
 ## File structures
 - /placeholder/: project folder (change folder name or not)
