@@ -38,3 +38,13 @@ document.getElementById("submit_notes").addEventListener('click', function () {
         }).then(res => window.location.reload = window.location.reload(true));
     }
 );
+
+document.getElementById("img_detect").addEventListener('click', function () {
+        const taskName = document.getElementById("noteTitle").textContent ;
+        console.log(taskName);
+
+        fetch(path+'imgdetect?taskName='+ taskName, {
+            method: 'Post'
+        }).then(res => window.location.href  = '/imgdetect');
+    }
+);

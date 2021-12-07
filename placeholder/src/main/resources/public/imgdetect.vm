@@ -15,6 +15,13 @@
             <input type="url" name="url" placeholder="Optional url" id="url"/>
         </div>
         <br />
+        #if ($taskNameImgDet)
+        <div>
+            <h1>$taskNameImgDet</h1>
+        </div>
+        <br />
+        #end
+
         <div>
             <input type="hidden" name="urlget" id="urlget" class="simple-file-upload">
         </div>

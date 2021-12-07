@@ -1,5 +1,6 @@
 package Controllers;
 
+import com.j256.ormlite.stmt.UpdateBuilder;
 import org.apache.commons.io.FileUtils;
 import Functionality.Detectron;
 import Functionality.DetectTextGcs;
@@ -204,12 +205,12 @@ public class APIEndpoint {
             Integer listIdInt = Integer.parseInt(listId);
             QueryBuilder<TaskList, Integer> builder = tasklistDao.queryBuilder();
 
-            List<TaskList> ems = builder.where().eq("id", listIdInt).query();
+            List<TaskList> tasklists = builder.where().eq("id", listIdInt).query();
             res.type("application/json");
-            if (ems.size() == 0) {
+            if (tasklists.size() == 0) {
                 return "";
             }
-            return ems.get(0).toJsonString();
+            return tasklists.get(0).toJsonString();
         });
     }
     public static void addlistPost(Dao worksonDao, Dao tasklistDao){
@@ -235,17 +236,17 @@ public class APIEndpoint {
             TaskList tasklist = new TaskList(listName);
             tasklist.setUserid(userid);
             tasklistDao.create(tasklist);
-            List<TaskList> ems = tasklistDao.queryForEq("listname", listName);
+            List<TaskList> tasklists = tasklistDao.queryForEq("listname", listName);
             res.status(201);
             res.type("application/json");
-            return ems.get(0).toJsonString();
+            return tasklists.get(0).toJsonString();
         });
     }
     public static void deletelist(Dao tasklistDao){
         Spark.delete("/deleteList", (req, res) -> {
             String listId = req.queryParams("listId");
-            List<TaskList> ems = tasklistDao.queryForEq("id", listId);
-            tasklistDao.delete(ems.get(0));
+            List<TaskList> tasklists = tasklistDao.queryForEq("id", listId);
+            tasklistDao.delete(tasklists.get(0));
             res.status(204);
             return "";
         });
@@ -369,7 +370,7 @@ public class APIEndpoint {
 
             Date date = formatter.parse(date_string);
             Date dueDay_date = formatter.parse(dueDay);
-            List<TaskList> ems = tasklistDao.queryForEq("id", listId);
+            List<TaskList> tasklists = tasklistDao.queryForEq("id", listId);
     /*ems.get(0).addTask(taskName, dueDay_date, date, duration,
             taskDao);*/
     /*scheduleFunctions temp = new scheduleFunctions();
@@ -378,7 +379,7 @@ public class APIEndpoint {
     }*/
             scheduleFunctions temp = new scheduleFunctions();
             List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
-            Pair<TaskList, Availability> new_avail = temp.scheduleOne(ems.get(0),date,dueDay_date,
+            Pair<TaskList, Availability> new_avail = temp.scheduleOne(tasklists.get(0),date,dueDay_date,
                     taskName,duration,importance, flexible, aUser.get(0), tasklistDao);
             res.status(201);
             res.type("application/json");
@@ -403,20 +404,20 @@ public class APIEndpoint {
         Spark.delete("/deleteTask", (req, res) -> {
             String listId = req.queryParams("listId");
             String taskName = req.queryParams("taskName");
-            List<TaskList> ems = tasklistDao.queryForEq("id", listId);
+            List<TaskList> tasklists = tasklistDao.queryForEq("id", listId);
             /*ems.get(0).delTask(taskName, taskDao);*/
             scheduleFunctions temp = new scheduleFunctions();
-            TaskList.Task this_task = ems.get(0).getTask(taskName,tasklistDao);
+            TaskList.Task this_task = tasklists.get(0).getTask(taskName,tasklistDao);
             List<User> aUser = userDao.queryForEq("email", req.cookie("userid"));
-            Pair<TaskList, Availability> new_avail = temp.addBackTask(ems.get(0),this_task.getDate()
+            Pair<TaskList, Availability> new_avail = temp.addBackTask(tasklists.get(0),this_task.getDate()
                     ,this_task.getDueDay(), taskName,this_task.getDuration(),aUser.get(0),
                     this_task.getExactStart(),this_task.getExactEnd(),
                     tasklistDao);
             res.status(201);
             res.type("application/json");
             User.setThisMap(new_avail.component2().getThisMap(),userDao);
-            List<TaskList> ems2 = tasklistDao.queryForEq("id", listId);
-            return ems2.get(0).toJsonString();
+            List<TaskList> tasklists2 = tasklistDao.queryForEq("id", listId);
+            return tasklists2.get(0).toJsonString();
         });
     }
     public static void scheduleGet(Dao userDao){
@@ -437,7 +438,7 @@ public class APIEndpoint {
                 userid = "";
             }
             QueryBuilder<TaskList, Integer> builder = tasklistDao.queryBuilder();
-            List<TaskList> ems = builder.where().eq("userid", userid).query();
+            List<TaskList> tasklists = builder.where().eq("userid", userid).query();
 //            res.type("application/json");
             return schedule.getAllTaskDate(userid, tasklistDao);
         });
@@ -446,10 +447,10 @@ public class APIEndpoint {
         Spark.get("/showDetail", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             String taskName = req.queryParams("taskName");
-            List<TaskNote> ems = tasknoteDao.queryForEq("taskname", taskName);
+            List<TaskNote> tasklists = tasknoteDao.queryForEq("taskname", taskName);
             String notes = "";
-            if (ems.size() != 0) {
-                notes = ems.get(0).toString();
+            if (tasklists.size() != 0) {
+                notes = tasklists.get(0).toString();
             }
             model.put("taskName", taskName);
             model.put("notes", notes);
@@ -471,8 +472,8 @@ public class APIEndpoint {
             UpdateController.updateNote(taskName, taskNote, isCheckedGrammar, isCheckedSpelling, isCheckedCapital, isCheckedLongRunning, tasknoteDao);
             res.status(201);
             res.type("application/json");
-            List<TaskNote> ems2 = tasknoteDao.queryForEq("taskname", taskName);
-            return ems2.get(0).toJsonString();
+            List<TaskNote> tasklists2 = tasknoteDao.queryForEq("taskname", taskName);
+            return tasklists2.get(0).toJsonString();
         });
     }
 
@@ -483,6 +484,19 @@ public class APIEndpoint {
         }, new VelocityTemplateEngine());
     }
 
+    public static void imgDetectGet(){
+        Spark.post("/imgdetect", (req, res) -> {
+            String taskName = req.queryParams("taskName");
+            taskName = taskName.trim();
+            System.out.println(taskName);
+
+            Map<String, Object> model = new HashMap<>();
+            model.put("taskNameImgDet", taskName);
+            model.put("flagUpdateNoteImg", "1");
+            return new ModelAndView(model, "public/imgdetect.vm");
+        });
+    }
+
     public static void imgDetectSaveUrl(){
         Spark.post("/saveurl", (req, res) -> {
             String url = req.queryParams("url");
@@ -491,7 +505,7 @@ public class APIEndpoint {
         });
     }
 
-    public static void imgDetect(){
+    public static void imgDetect(Dao dao){
         Spark.post("/detect", (req, res) -> {
             Detectron.writeToCredential();
 
@@ -503,7 +517,20 @@ public class APIEndpoint {
             {
                 url = req.queryParams("url");
             }
-            return DetectTextGcs.detectTextGcs(url);
+            String imgDet = DetectTextGcs.detectTextGcs(url);
+//            String flagUpdateNoteImg = req.cookie("flagUpdateNoteImg");
+//            if(flagUpdateNoteImg.equals("1")){
+//                String taskName = req.cookie("taskNameImgDet");
+//                UpdateBuilder<TaskNote, Integer> builder = dao.updateBuilder();
+//
+//                builder.updateColumnValue("tasknote", imgDet);
+//                builder.where().eq("taskname", taskName);
+//
+//                dao.update(builder.prepare());
+//
+//                res.cookie("flagUpdateNoteImg", "0");
+//            }
+            return imgDet;
         });
     }
 
@@ -534,15 +561,16 @@ public class APIEndpoint {
             {
                 url = req.queryParams("speechurl");
             }
-            try {
-                URL myURL = new URL(url);
-                File f = new File("/tmp/Record.flac");
-                FileUtils.copyURLToFile(myURL, f);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return 1;
+//            try {
+//                URL myURL = new URL(url);
+//                File f = new File("/tmp/Record.flac");
+//                FileUtils.copyURLToFile(myURL, f);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return 1;
 //            return DetectTextSpeechGcs.syncRecognizeFile("/tmp/Record.flac");
+            return DetectTextSpeechGcs.syncRecognizeFile("./Record.flac");
         });
     }
 
@@ -588,8 +616,8 @@ public class APIEndpoint {
             SimpleDateFormat formatter = new SimpleDateFormat(pattern);
             System.out.println(editDate);
             Date editDateFormatted = formatter.parse(editDate);
-            List<TaskList> ems = tasklistDao.queryForEq("id", listId);
-            ems.get(0).updateTaskDate(taskName,tasklistDao,editDateFormatted);
+            List<TaskList> tasklists = tasklistDao.queryForEq("id", listId);
+            tasklists.get(0).updateTaskDate(taskName,tasklistDao,editDateFormatted);
             res.status(201);
             res.type("application/json");
             return "";

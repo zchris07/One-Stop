@@ -59,8 +59,9 @@ public class Main {
 
         // Image detection pages
         APIEndpoint.imgDetectUpload();
+        APIEndpoint.imgDetectGet();
         APIEndpoint.imgDetectSaveUrl();
-        APIEndpoint.imgDetect();
+        APIEndpoint.imgDetect(tasknoteDao);
 
         // Speech detection pages
         APIEndpoint.speechDetectUpload();

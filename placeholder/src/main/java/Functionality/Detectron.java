@@ -16,7 +16,7 @@ public class Detectron {
         try {
             // TODO: change path to deployed host
             File myObj = new File("/tmp/googlecredential.json");
-            //File myObj = new File("./googlecredential.json");
+//            File myObj = new File("./googlecredential.json");
 
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
