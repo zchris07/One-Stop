@@ -18,6 +18,8 @@ import spark.template.velocity.VelocityTemplateEngine;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 
@@ -453,7 +455,7 @@ public class APIEndpoint {
                 notes = tasklists.get(0).toString();
             }
             model.put("taskName", taskName);
-            model.put("notes", notes);
+            model.put("notes", URLDecoder.decode(notes, "UTF-8"));
             return new ModelAndView(model, "public/detail.vm");
         }, new VelocityTemplateEngine());
     }
@@ -469,7 +471,7 @@ public class APIEndpoint {
             //System.out.println(isCheckedCapital);
             String isCheckedLongRunning = req.queryParams("isCheckedLongRunning");
 
-            UpdateController.updateNote(taskName, taskNote, isCheckedGrammar, isCheckedSpelling, isCheckedCapital, isCheckedLongRunning, tasknoteDao);
+            UpdateController.updateNote(taskName, URLEncoder.encode(taskNote, "UTF-8"), isCheckedGrammar, isCheckedSpelling, isCheckedCapital, isCheckedLongRunning, tasknoteDao);
             res.status(201);
             res.type("application/json");
             List<TaskNote> tasklists2 = tasknoteDao.queryForEq("taskname", taskName);
@@ -493,6 +495,8 @@ public class APIEndpoint {
             Map<String, Object> model = new HashMap<>();
             model.put("taskNameImgDet", taskName);
             model.put("flagUpdateNoteImg", "1");
+            res.cookie("taskNameImgDet", URLEncoder.encode(taskName, "UTF-8"));
+            res.cookie("flagUpdateNoteImg", "1");
             return new ModelAndView(model, "public/imgdetect.vm");
         });
     }
@@ -518,19 +522,23 @@ public class APIEndpoint {
                 url = req.queryParams("url");
             }
             String imgDet = DetectTextGcs.detectTextGcs(url);
-//            String flagUpdateNoteImg = req.cookie("flagUpdateNoteImg");
-//            if(flagUpdateNoteImg.equals("1")){
-//                String taskName = req.cookie("taskNameImgDet");
-//                UpdateBuilder<TaskNote, Integer> builder = dao.updateBuilder();
-//
-//                builder.updateColumnValue("tasknote", imgDet);
-//                builder.where().eq("taskname", taskName);
-//
-//                dao.update(builder.prepare());
-//
-//                res.cookie("flagUpdateNoteImg", "0");
-//            }
-            return imgDet;
+            String flagUpdateNoteImg = req.cookie("flagUpdateNoteImg");
+            if(flagUpdateNoteImg.equals("1")){
+                String taskName = URLDecoder.decode(req.cookie("taskNameImgDet"), "UTF-8");
+                UpdateBuilder<TaskNote, Integer> builder = dao.updateBuilder();
+                imgDet = imgDet.trim();
+                imgDet = URLEncoder.encode(imgDet, "UTF-8");
+                builder.updateColumnValue("tasknote", imgDet);
+                builder.where().eq("taskname", taskName);
+
+                dao.update(builder.prepare());
+
+                res.cookie("flagUpdateNoteImg", "0");
+                res.redirect("/showDetail?taskName=" + taskName);
+            }
+
+            //return imgDet;
+            return null;
         });
     }
 
