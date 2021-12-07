@@ -6,6 +6,8 @@ import com.j256.ormlite.stmt.UpdateBuilder;
 import model.TaskNote;
 import model.User;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -13,7 +15,7 @@ import java.util.List;
 
 public class UpdateController {
 
-    public static void updateNote(String taskName, String taskNote, String isCheckedGrammar, String isCheckedSpelling, String isCheckedCapital, String isCheckedLongRunning, Dao<TaskNote, Integer> dao) throws SQLException {
+    public static void updateNote(String taskName, String taskNote, String isCheckedGrammar, String isCheckedSpelling, String isCheckedCapital, String isCheckedLongRunning, Dao<TaskNote, Integer> dao) throws SQLException, UnsupportedEncodingException {
 
         List<TaskNote> check = dao.queryForEq("taskname", taskName);
 
@@ -53,7 +55,7 @@ public class UpdateController {
 
             UpdateBuilder<TaskNote, Integer> builder = dao.updateBuilder();
 
-            builder.updateColumnValue("tasknote", taskNote);
+            builder.updateColumnValue("tasknote", URLEncoder.encode(taskNote, "UTF-8"));
             builder.where().eq("taskname", taskName);
             dao.update(builder.prepare());
         }
