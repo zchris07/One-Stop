@@ -107,10 +107,13 @@ The fix spelling has consistency issue- for some input strings, the Fix Spelling
 - Text detection.
 ![alt text](./docs/images/detectimg.png)
 
+- After successfully detects the image, the note content will be updated automatically.
+
 ### Speech Detection
 - Speech detection is implemented as a pre-release function. It is working on local but is not working on Heroku deployment because of lack of permission previlige to the SimpleUpload file system.
 - Speech detection works for any .flac 48000 bit-rate audio file.
 - Since it is not deployed, we only consider it as a preview function, and it is not included in our main app, though the main code is accessible in the commits.
+- Speech detection works the same way as image detection described in the last section.
 
 ### File system
 - Non-multimedia files (such as numbers, strings, and data models) are stored in postgres database.
