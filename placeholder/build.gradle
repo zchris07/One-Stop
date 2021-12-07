@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+
     id "com.heroku.sdk.heroku-gradle" version "2.0.0"
 }
 
@@ -31,6 +32,9 @@ dependencies {
     // Yihao: added for image detect. Dec 01
     implementation platform('com.google.cloud:libraries-bom:24.0.0')
     implementation 'com.google.cloud:google-cloud-vision'
+    implementation 'com.google.cloud:google-cloud-speech'
+
+    implementation 'commons-io:commons-io:2.11.0'
 }
 
 test {

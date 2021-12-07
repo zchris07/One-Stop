@@ -1,6 +1,7 @@
 package Controllers;
 
-
+import com.j256.ormlite.stmt.UpdateBuilder;
+import org.apache.commons.io.FileUtils;
 import Functionality.Detectron;
 import Functionality.DetectTextGcs;
 import Functionality.textFunctions;
@@ -14,6 +15,9 @@ import spark.ModelAndView;
 import spark.Spark;
 import spark.template.velocity.VelocityTemplateEngine;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 
@@ -480,6 +484,19 @@ public class APIEndpoint {
         }, new VelocityTemplateEngine());
     }
 
+    public static void imgDetectGet(){
+        Spark.post("/imgdetect", (req, res) -> {
+            String taskName = req.queryParams("taskName");
+            taskName = taskName.trim();
+            System.out.println(taskName);
+
+            Map<String, Object> model = new HashMap<>();
+            model.put("taskNameImgDet", taskName);
+            model.put("flagUpdateNoteImg", "1");
+            return new ModelAndView(model, "public/imgdetect.vm");
+        });
+    }
+
     public static void imgDetectSaveUrl(){
         Spark.post("/saveurl", (req, res) -> {
             String url = req.queryParams("url");
@@ -488,7 +505,7 @@ public class APIEndpoint {
         });
     }
 
-    public static void imgDetect(){
+    public static void imgDetect(Dao dao){
         Spark.post("/detect", (req, res) -> {
             Detectron.writeToCredential();
 
@@ -500,7 +517,60 @@ public class APIEndpoint {
             {
                 url = req.queryParams("url");
             }
-            return DetectTextGcs.detectTextGcs(url);
+            String imgDet = DetectTextGcs.detectTextGcs(url);
+//            String flagUpdateNoteImg = req.cookie("flagUpdateNoteImg");
+//            if(flagUpdateNoteImg.equals("1")){
+//                String taskName = req.cookie("taskNameImgDet");
+//                UpdateBuilder<TaskNote, Integer> builder = dao.updateBuilder();
+//
+//                builder.updateColumnValue("tasknote", imgDet);
+//                builder.where().eq("taskname", taskName);
+//
+//                dao.update(builder.prepare());
+//
+//                res.cookie("flagUpdateNoteImg", "0");
+//            }
+            return imgDet;
+        });
+    }
+
+    public static void speechDetectUpload(){
+        Spark.get("/speechdetect", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return new ModelAndView(model, "public/speechdetect.vm");
+        }, new VelocityTemplateEngine());
+    }
+
+    public static void speechDetectSaveUrl(){
+        Spark.post("/saveurlspeech", (req, res) -> {
+            String url = req.queryParams("speechurl");
+            res.cookie("speechurl", url);
+            return "";
+        });
+    }
+
+    public static void speechDetect(){
+        Spark.post("/detectspeech", (req, res) -> {
+            Detectron.writeToCredential();
+
+            String url;
+            if (req.cookie("speechurl") != null) {
+                url = req.cookie("speechurl");
+            }
+            else
+            {
+                url = req.queryParams("speechurl");
+            }
+//            try {
+//                URL myURL = new URL(url);
+//                File f = new File("/tmp/Record.flac");
+//                FileUtils.copyURLToFile(myURL, f);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return 1;
+//            return DetectTextSpeechGcs.syncRecognizeFile("/tmp/Record.flac");
+            return DetectTextSpeechGcs.syncRecognizeFile("./Record.flac");
         });
     }
 
