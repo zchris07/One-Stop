@@ -5,14 +5,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css" integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css"
+          integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
     <title>$title</title>
 </head>
 <body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css" integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css"
+      integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
 
 
 <div class="background">
@@ -32,37 +34,44 @@
                     <a class="nav-link" href="./schedule">Schedule</a>
                 </li>
             </ul>
-            ##        <form class="form-inline my-2 my-lg-0">
-            ##            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            ##            <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
-            ##        </form>
-            ##            <button type="button" class="btn btn-profile btn-circle btn-xl"></button>
         </div>
     </nav>
     <div class="container-fluid">
-        <div class="backgroundImage"> </div>
+        <div class="backgroundImage"></div>
         <div class="row extra_margin">
             <div class="col-md-3">
-##                <img width="300" height="300" src="https://i.imgur.com/hepj9ZS.png" class="rounded-circle mx-auto d-block"/>
-                <input type="image" id="profile_image" width="300" height="300" data-toggle="modal" data-target="#noteModal" class="rounded-circle mx-auto d-block"  src=$imageUrl/>
-                <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="container" height="60%">
+                    <div class="overlay">Click to change profile picture</div>
+                    <input type="image" id="profile_image" width="300" height="300" data-toggle="modal"
+                           data-target="#noteModal" class="rounded-circle mx-auto d-block" src=$imageUrl/>
+                </div>
+                <div class="modal fade" id="noteModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
-                            <h3 class="modal-title" id= "noteTitle" >Choose Your Profile Picture:</h3>
+                            <h3 class="modal-title" id="noteTitle">Choose Your Profile Picture:</h3>
                             <div class="modal-header">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-sm">
-                                            <input type="image" id="image1" width="100" height="100" class="rounded-circle mx-auto d-block"  src= "https://i.imgur.com/PGaubL6b.jpg"/>
+                                            <input type="image" id="image1" width="100" height="100"
+                                                   class="rounded-circle mx-auto d-block"
+                                                   src="https://i.imgur.com/PGaubL6b.jpg"/>
                                         </div>
                                         <div class="col-sm">
-                                            <input type="image" id="image2" width="100" height="100" class="rounded-circle mx-auto d-block"  src= "https://i.imgur.com/OUA0DUSb.jpg"/>
+                                            <input type="image" id="image2" width="100" height="100"
+                                                   class="rounded-circle mx-auto d-block"
+                                                   src="https://i.imgur.com/OUA0DUSb.jpg"/>
                                         </div>
                                         <div class="col-sm">
-                                            <input type="image" id="image3" width="100" height="100" class="rounded-circle mx-auto d-block"  src= "https://i.imgur.com/QD54tFG.jpeg"/>
+                                            <input type="image" id="image3" width="100" height="100"
+                                                   class="rounded-circle mx-auto d-block"
+                                                   src="https://i.imgur.com/QD54tFG.jpeg"/>
                                         </div>
                                         <div class="col-sm">
-                                            <input type="image" id="image4" width="100" height="100" class="rounded-circle mx-auto d-block"  src= "https://i.imgur.com/Ga4HomPb.jpg"/>
+                                            <input type="image" id="image4" width="100" height="100"
+                                                   class="rounded-circle mx-auto d-block"
+                                                   src="https://i.imgur.com/Ga4HomPb.jpg"/>
                                         </div>
                                     </div>
                                 </div>
@@ -71,8 +80,7 @@
                                 </button>
                             </div>
                             <div class="modal-footer">
-##                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-##                                <button type="button" class="btn btn-primary" id="submit_profile_img">Submit</button>
+
                             </div>
                         </div>
                     </div>
@@ -84,7 +92,8 @@
                         #if($aUser[0].firstName && $aUser[0].lastName)
                             <h2 class="card-title">$aUser[0].firstName $aUser[0].lastName</h2>
                         #else
-                            Please update user information using the button below with at least first name and last name.
+                            Please update user information using the button below with at least first name and last
+                            name.
                         #end
                         #if($aUser[0].email)
                             <h4 class="display-5">$aUser[0].email</h4>
@@ -96,15 +105,15 @@
                             <h4 class="display-5">$aUser[0].organization</h4>
                         #end
 
-                        ##                    <div class="card-body">
-                        ##<div class="row"></div>
-                        ##                    </div>
                     #else
                         <h4 class="display-5">$aUser[0].email</h4>
                         Please update user information using the button below.
                     #end
-                    <button type="button" class="btn btn-success btn-small btn-sm mt-2 mr-2" data-toggle="modal" data-target="#userInfoModal" >Edit Information</button>
-                    <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel" aria-hidden="true">
+                    <button type="button" class="btn btn-success btn-small btn-sm mt-2 mr-2" data-toggle="modal"
+                            data-target="#userInfoModal">Edit Information
+                    </button>
+                    <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog"
+                         aria-labelledby="userInfoModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -114,10 +123,14 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <input type="text" class="form-control" placeholder="Firstname" aria-describedby="basic-addon2" id="user_firstname">
-                                    <input type="text" class="form-control" placeholder="Lastname" aria-describedby="basic-addon2" id="user_lastname">
-                                    <input type="text" class="form-control" placeholder="Status" aria-describedby="basic-addon2" id="user_status">
-                                    <input type="text" class="form-control" placeholder="Organization" aria-describedby="basic-addon2" id="user_organization">
+                                    <input type="text" class="form-control" placeholder="Firstname"
+                                           aria-describedby="basic-addon2" id="user_firstname">
+                                    <input type="text" class="form-control" placeholder="Lastname"
+                                           aria-describedby="basic-addon2" id="user_lastname">
+                                    <input type="text" class="form-control" placeholder="Status"
+                                           aria-describedby="basic-addon2" id="user_status">
+                                    <input type="text" class="form-control" placeholder="Organization"
+                                           aria-describedby="basic-addon2" id="user_organization">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -137,9 +150,12 @@
                     #end
                 </p>
 
-                <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#editSummaryModal">Edit Summary</button>
+                <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#editSummaryModal">
+                    Edit Summary
+                </button>
 
-                <div class="modal fade" id="editSummaryModal" tabindex="-1" role="dialog" aria-labelledby="editSummaryModalLabel" aria-hidden="true">
+                <div class="modal fade" id="editSummaryModal" tabindex="-1" role="dialog"
+                     aria-labelledby="editSummaryModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -149,7 +165,8 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <input type="text" class="form-control" placeholder="User summary" aria-describedby="basic-addon2" id="user_summary">
+                                <input type="text" class="form-control" placeholder="User summary"
+                                       aria-describedby="basic-addon2" id="user_summary">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -164,40 +181,61 @@
     </div>
 </div>
 </body>
-
-    ###if($username)
-    ##<div id="root">
-    ##    <img width="100" height="100"
-    ##         style = "margin: 10px"
-    ##            class="rounded-circle" alt="100x100" src="https://i.imgur.com/hepj9ZS.png"
-    ##         data-holder-rendered="true">
-    ##    <h1 class="display-5">$firstname $lastname</h1>
-    ##
-    ####        <p id="err-msg"></p>
-    ##
-    ##
-    ##        <h3>
-    ##            $organization
-    ##        </h3>
-    ####        <p>
-    ##</div>
-    ##
-    ##    </form>
-    ##</div>
-    ###else
-    ##    <h1> <a href="/login">Please Log in</a></h1>
-    ###end
-
-    ##</body>
 <style>
+
+    .overlay {
+        height: 60%;
+        align-items: center;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        left: 0;
+        opacity: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: opacity 0.25s;
+        z-index: -1;
+    }
+
+    .container:hover .overlay {
+        opacity: 1;
+        z-index: -1;
+    }
+
+    #profile_image {
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+        z-index: 1;
+    }
+
+    .text {
+        color: white;
+        font-size: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    #profile_image:hover {
+        opacity: 0.7;
+    }
+
     .btn-small {
         min-width: 130px;
         max-width: 130px;
     }
+
     .navbar-custom {
         background-color: darkblue;
         opacity: 0.75;
     }
+
     /* Modify brand and text color */
 
     .navbar-custom .navbar-brand,
@@ -216,6 +254,7 @@
     .card-body {
         margin: 5px
     }
+
 </style>
 <script src="js/user.js"></script>
 </html>
