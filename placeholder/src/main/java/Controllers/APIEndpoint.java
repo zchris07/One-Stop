@@ -471,7 +471,7 @@ public class APIEndpoint {
             //System.out.println(isCheckedCapital);
             String isCheckedLongRunning = req.queryParams("isCheckedLongRunning");
 
-            UpdateController.updateNote(taskName, URLEncoder.encode(taskNote, "UTF-8"), isCheckedGrammar, isCheckedSpelling, isCheckedCapital, isCheckedLongRunning, tasknoteDao);
+            UpdateController.updateNote(taskName, taskNote, isCheckedGrammar, isCheckedSpelling, isCheckedCapital, isCheckedLongRunning, tasknoteDao);
             res.status(201);
             res.type("application/json");
             List<TaskNote> tasklists2 = tasknoteDao.queryForEq("taskname", taskName);
